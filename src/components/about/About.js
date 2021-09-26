@@ -6,6 +6,7 @@ const About = () => {
     <div>
       <div className='aaa'>aaaaa</div>
       <div>bbb</div>
+      <div>ccc</div>
     </div>
   )
 }
