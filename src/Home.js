@@ -11,8 +11,7 @@ import AllLaunch from './components/allLaunch/AllLaunch'
 const Home = () => {
   return (
     <div>
-      HOME
-      <AllLaunch data={AllLaunches} cores={Cores}/>
+      {/* <AllLaunch data={AllLaunches} cores={Cores}/> */}
       {/* <Timeline /> */}
       <Test />
       <SingleLaunch />

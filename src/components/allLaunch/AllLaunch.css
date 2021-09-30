@@ -2,6 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  background: #d9e2e8;
 }
 
 .allLaunch-card {
@@ -10,6 +11,11 @@
   width: 20%;
   margin-top: 3%;
   border-style: solid;
+  border-color: #d9e2e8;;
+  border-radius: 27px;
+  background: #d9e2e8;
+  box-shadow:  14px 14px 28px #cad2d8,
+              -14px -14px 28px #e8f2f8;
 }
 
 .allLaunch-card-first {
