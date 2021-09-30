@@ -1,0 +1,6 @@
+.year {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}

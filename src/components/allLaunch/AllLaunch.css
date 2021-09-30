@@ -1,0 +1,58 @@
+.allLaunch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.allLaunch-card {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-top: 3%;
+  border-style: solid;
+}
+
+.allLaunch-card-first {
+  display: flex;
+  justify-content: space-between;
+}
+
+.allLaunch-card-first-number {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 4%;
+  width: 30%;
+  font-size: 9vh;
+}
+
+.allLaunch-card-first-img {
+  display: flex;
+  width: 40%;
+  padding: 2px;
+}
+
+.allLaunch-card-first-img-img {
+  width: 100%;
+}
+
+.allLaunch-card-second {
+  display: flex;
+  text-align: start;
+  padding-left: 5%;
+  font-size: 3vh;
+}
+
+.allLaunch-card-fourth {
+  display: flex;
+  justify-content: flex-start;
+  padding: 2px;
+}
+
+.reused {
+  color: rgb(47, 206, 41);
+}
+
+.unreused {
+  color: rgb(169, 172, 169);
+}
+
