@@ -46,6 +46,7 @@ const AllLaunch = (props) => {
                   )
                 }
               })}
+              <p className="core-name">.{launch.cores[0].flight}</p>
             </div>
 
           </div>
