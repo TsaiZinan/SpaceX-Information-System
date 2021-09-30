@@ -33,18 +33,19 @@ const AllLaunch = (props) => {
             </div>
 
             <div className="allLaunch-card-third">
-              {cores.map((core, coreIndex) => {
-                // core.id === launch.cores[0].core ? console.log(core.serial) : null
-                if (core.id === launch.cores[0].core) {
-                  return (
-                    <p>{core.serial}</p>
-                  )
-                }
-              })}
+              
             </div>
 
             <div className="allLaunch-card-fourth">
               {launch.cores[0].reused === true ? <FaRecycle className="reused"/> : <FaRecycle className="unreused"/>}
+              {cores.map((core, coreIndex) => {
+                // core.id === launch.cores[0].core ? console.log(core.serial) : null
+                if (core.id === launch.cores[0].core) {
+                  return (
+                    <p className="core-name">{core.serial}</p>
+                  )
+                }
+              })}
             </div>
 
           </div>

@@ -44,6 +44,7 @@
 
 .allLaunch-card-fourth {
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   padding: 2px;
 }
@@ -54,5 +55,9 @@
 
 .unreused {
   color: rgb(169, 172, 169);
+}
+
+.core-name {
+  margin: 1px;
 }
 
