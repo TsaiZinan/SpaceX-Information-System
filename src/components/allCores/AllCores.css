@@ -1,0 +1,36 @@
+.allCores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #d9e2e8;
+}
+
+.singleCore {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 30px;
+  padding: 1.5%;
+
+  width: 80%;
+
+  border-radius: 19px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1;
+  
+}
+
+.singleCore-name {
+  padding-bottom: 0.75%;
+  font-size: 3vh;
+}
+
+.launch-patch {
+  max-width: 50px;
+}
+
+.singleCore-launch {
+  display: flex;
+  flex-direction: row;
+}
