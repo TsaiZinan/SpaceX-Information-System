@@ -10,8 +10,12 @@ function App() {
     <Router>
       <div className="App">
         <Nav />
-        <Route path='/' component={Home} />
-        <Route path='/launches' component={Launches} />
+        
+        <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/launches' component={Launches} />
+        </Switch>
+
       </div>
     </Router>
 
