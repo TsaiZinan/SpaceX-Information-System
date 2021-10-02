@@ -1,18 +1,21 @@
 .allCores {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* flex-direction: column; */
+  /* align-items: center; */
   background-color: #d9e2e8;
 }
 
 .singleCore {
+  /* display: inline-block; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 30px;
-  padding: 1.5%;
+  /* padding: 1.5%; */
 
-  width: 80%;
+  /* width: 80%; */
 
   border-radius: 19px;
   background: #d9e2e8;
@@ -22,8 +25,19 @@
 }
 
 .singleCore-name {
+  width: 100%;
+  height: 5vh;
   padding-bottom: 0.75%;
-  font-size: 3vh;
+  font-size: 4vh;
+
+  border-radius: 19px;
+  background: #e3e6e9;
+  box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1;
+}
+
+.launch-patches {
+  padding: 1.5%;
 }
 
 .launch-patch {
@@ -33,4 +47,5 @@
 .singleCore-launch {
   display: flex;
   flex-direction: row;
+  padding: 1.5%;
 }
