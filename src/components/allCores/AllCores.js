@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
+
 import './AllCores.css'
 
 const AllCores = (props) => {
@@ -8,7 +10,7 @@ const AllCores = (props) => {
 
   return (
     <div className='allCores'>
-      
+
       {console.log(launchesData)}
       {console.log(coresData)}
       {coresData.map((core, coreIndex) => {
@@ -34,7 +36,31 @@ const AllCores = (props) => {
 
                           <div id={idLaunchesIndex}>
                             <img className='launch-patch' src={idLaunches.links.patch.small} alt="" />
-                            {/* <p>{idLaunches.name}</p> */}
+                            <div className='launch-hoverBox'>
+                              <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
+                              <div className='launch-hoverBox-name'>
+                                {idLaunches.name}
+                              </div>
+                              <div className='launch-hoverBox-links'>
+
+                                <a href={idLaunches.links.webcast}>
+                                  <SiYoutube className='launch-hoverBox-link' />
+                                </a>
+                                <a href={idLaunches.links.reddit.launch}>
+                                  <SiReddit className='launch-hoverBox-link' />
+                                </a>
+                                <a href={idLaunches.links.wikipedia}>
+                                  <SiWikipedia className='launch-hoverBox-link' />
+                                </a>
+                                <a href={idLaunches.links.presskit}>
+                                  <SiSpacex className='launch-hoverBox-link' />
+                                </a>
+
+                              </div>
+                              <div className='launch-hoverBox-details'>
+                                {idLaunches.details}
+                              </div>
+                            </div>
                           </div>
 
                         )
