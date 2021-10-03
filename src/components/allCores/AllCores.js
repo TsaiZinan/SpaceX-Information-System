@@ -25,7 +25,7 @@ const AllCores = (props) => {
               {core.launches.map((idCoreLaunches, idCoreLaunchesIndex) => {
                 // console.log(idCoreLaunches)
                 return (
-                  <div id='idCoreLaunchesIndex'>
+                  <div className='launch-patch-div' id='idCoreLaunchesIndex'>
                     {launchesData.map((idLaunches, idLaunchesIndex) => {
 
                       if (idCoreLaunches === idLaunches.id) {

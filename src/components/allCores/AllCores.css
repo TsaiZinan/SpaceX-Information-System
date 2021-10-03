@@ -9,9 +9,9 @@
 .singleCore {
   display: flex;
   flex-direction: column;
-  margin: 30px;
+  margin: 20px;
 
-  min-width: 200px;
+  min-width: 180px;
   /* width: fit-content; */
 
   border-radius: 19px;
@@ -41,9 +41,14 @@
 
 .launch-patches {
   display: flex;
+  padding: 10px;
 }
 
+.launch-patch-div {
+  margin: 0 5px 0 5px;
+}
+
+
 .launch-patch {
-  max-width: 50px;
-  padding: 20%;
+  max-width: 70px;
 }
