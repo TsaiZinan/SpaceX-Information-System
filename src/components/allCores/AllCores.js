@@ -8,7 +8,7 @@ const AllCores = (props) => {
 
   return (
     <div className='allCores'>
-      all cores
+      
       {console.log(launchesData)}
       {console.log(coresData)}
       {coresData.map((core, coreIndex) => {
@@ -18,7 +18,7 @@ const AllCores = (props) => {
               {core.serial}
             </div>
 
-            <div className='singleCore-launch'>
+            <div className='launch-patches' >
               {console.log(core.serial)}
               {console.log(core.reuse_count)}
 

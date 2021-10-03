@@ -5,7 +5,7 @@ import { LatestLaunch, Cores, AllLaunches } from './data'
 
 const CoresPage = () => {
   return (
-    <div>
+    <div className='coresPage'>
       <AllCores cores={Cores} launches={AllLaunches}/>
     </div>
   )
