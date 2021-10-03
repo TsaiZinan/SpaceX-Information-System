@@ -95,6 +95,13 @@
   color: black;
 }
 
+.launch-hoverBox-date {
+  font-size: 2vh;
+  text-align: center;
+
+  padding: 3% 10% 0% 10%;
+}
+
 .launch-hoverBox-details {
   font-size: 1.75vh;
   text-align: justify;

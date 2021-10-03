@@ -37,10 +37,17 @@ const AllCores = (props) => {
                           <div id={idLaunchesIndex}>
                             <img className='launch-patch' src={idLaunches.links.patch.small} alt="" />
                             <div className='launch-hoverBox'>
+
                               <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
+
                               <div className='launch-hoverBox-name'>
                                 {idLaunches.name}
                               </div>
+
+                              <div className='launch-hoverBox-date'>
+                                {idLaunches.date_utc.substring(0, 10)}
+                              </div>
+
                               <div className='launch-hoverBox-links'>
 
                                 <a href={idLaunches.links.webcast}>
@@ -57,9 +64,11 @@ const AllCores = (props) => {
                                 </a>
 
                               </div>
+
                               <div className='launch-hoverBox-details'>
                                 {idLaunches.details}
                               </div>
+
                             </div>
                           </div>
 
