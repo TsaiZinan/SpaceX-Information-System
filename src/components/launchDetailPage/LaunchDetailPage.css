@@ -1,0 +1,21 @@
+.launchDetail {
+  display: flex;
+  flex-direction: column;
+}
+
+.launchDetail-backButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 5vh;
+  height: 5.5vh;
+  width: 5.5vh;
+  margin-left: 4vh;
+
+  color: black;
+  border-radius: 15px;
+  background: #d9e2e8;
+  box-shadow:  14px 14px 28px #cad2d8,
+              -14px -14px 28px #e8f2f8;
+}
