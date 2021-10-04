@@ -1,0 +1,121 @@
+.allCores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 95%;
+  background-color: #d9e2e8;
+}
+
+.singleCore {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+
+  min-width: 180px;
+  /* width: fit-content; */
+
+  border-radius: 19px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1;
+  
+}
+
+.singleCore-name {
+  width: fit-content;
+  
+  font-size: 3vh;
+
+  /* move upper */
+  margin-top: -15px;
+  margin-left: 10px;
+
+  padding: 0 5% 0 5%;
+  
+
+  border-radius: 10px;
+  background: #eff5f8;
+  box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1;
+}
+
+.launch-patches {
+  display: flex;
+  padding: 10px;
+}
+
+.launch-patch-div {
+  margin: 0 5px 0 5px;
+}
+
+.launch-patch {
+  max-width: 70px;
+}
+
+.launch-hoverBox {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  z-index: 2;
+
+  visibility: hidden;
+
+  margin-top: -30px;
+  margin-left: -105px;
+  font-size: 3vh;
+
+  /* height: 400px; */
+  width: 300px;
+
+  border-radius: 10px;
+  background: #e3e6e9;
+  box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1;
+}
+
+.launch-hoverBox-img {
+  width: 80px;
+  margin-top: -50px;
+  margin-left: 105px;
+}
+
+.launch-hoverBox-name {
+  padding: 5% 5% 0% 5%;
+}
+
+.launch-hoverBox-links {
+  display: flex;
+  font-size: 3vh;
+  padding: 5% 0% 0% 9%;
+}
+
+.launch-hoverBox-link {
+  padding: 5px;
+  color: black;
+}
+
+.launch-hoverBox-date {
+  font-size: 2vh;
+  text-align: center;
+
+  padding: 3% 10% 0% 10%;
+}
+
+.launch-hoverBox-details {
+  font-size: 1.75vh;
+  text-align: justify;
+
+  padding: 3% 10% 10% 10%;
+}
+
+.launch-patch-div:hover .launch-hoverBox {
+  background-color: #eff5f8;
+  visibility: visible;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.launch-patch-div:hover .launch-patch {
+  visibility: hidden;
+}

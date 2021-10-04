@@ -17,7 +17,9 @@ const Nav = () => {
           <Link to='/launches'>
             <li>Launches</li>
           </Link>
-          <li>Cores</li>
+          <Link to='/cores'>
+            <li>Cores</li>
+          </Link>
           <li>Test</li>
         </ul>
       </nav>
