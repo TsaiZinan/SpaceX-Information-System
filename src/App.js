@@ -5,6 +5,7 @@ import Nav from './components/nav/Nav';
 import Home from './Home';
 import Launches from './Launches';
 import CoresPage from './CoresPage';
+import TimelinePage from './components/timelinePage/TimelinePage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/launches' component={Launches} />
           <Route path='/cores' component={CoresPage} />
+          <Route path='/timeline' component={TimelinePage} />
         </Switch>
 
       </div>
