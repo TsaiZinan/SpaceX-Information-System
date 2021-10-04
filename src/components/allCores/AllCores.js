@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
@@ -41,7 +42,10 @@ const AllCores = (props) => {
                               <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
 
                               <div className='launch-hoverBox-name'>
-                                {idLaunches.name}
+                                <Link to={`/launch/${idLaunches.flight_number}`} className="launch-hoverBox-name">
+                                  {idLaunches.name}
+                                </Link>
+
                               </div>
 
                               <div className='launch-hoverBox-date'>
