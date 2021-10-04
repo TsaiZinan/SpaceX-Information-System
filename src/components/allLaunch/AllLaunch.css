@@ -29,6 +29,9 @@
   padding-left: 4%;
   width: 30%;
   font-size: 9vh;
+  list-style: none;
+  color: black;
+  text-decoration: none;
 }
 
 .allLaunch-card-first-img {
