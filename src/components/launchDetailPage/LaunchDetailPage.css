@@ -3,7 +3,22 @@
   flex-direction: column;
 }
 
-.launchDetail-backButton {
+.launchDetail-controlPanal {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0 5% 0 5%;
+  justify-content: space-between;
+}
+
+.launchDetail-controlPanal-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 14vh;
+}
+
+.launchDetail-Button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,11 +26,84 @@
   font-size: 5vh;
   height: 5.5vh;
   width: 5.5vh;
-  margin-left: 4vh;
+  /* margin-left: 4vh; */
 
   color: black;
-  border-radius: 15px;
+  border-radius: 10px;
   background: #d9e2e8;
-  box-shadow:  14px 14px 28px #cad2d8,
-              -14px -14px 28px #e8f2f8;
+  box-shadow:  5px 5px 11px #c5ced3,
+               -5px -5px 11px #edf6fd;
+}
+
+.launchDetail-first {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 2.5% 5% 2.5% 5%;
+  /* height: 30vw; */
+
+  border-radius: 26px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 21px #c1c9ce,
+               -10px -10px 21px #f1fbff;
+}
+
+.launchDetail-embedVideo {
+  min-width: 50%;
+  min-height: 500px;
+  margin: 20px;
+
+  border-radius: 20px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 21px #c1c9ce,
+               -10px -10px 21px #f1fbff;
+}
+
+.launchDetail-basicInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 48%;
+  margin: 20px 20px 20px 0;
+
+  border-radius: 20px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 21px #c1c9ce,
+               -10px -10px 21px #f1fbff;
+}
+
+.launchDetail-basicInfo-launch-numpatch {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* height: 50%; */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.launchDetail-basicInfo-core {
+  height: 40%;
+  margin: 20px 20px 20px 20px;
+
+  border-radius: 14px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 21px #c1c9ce,
+               -10px -10px 21px #f1fbff;
+}
+
+.launchDetail-second {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 0 5% 0 5%;
+  padding: 2%;
+
+  text-align: justify;
+  /* height: 30vw; */
+
+  border-radius: 26px;
+  background: #d9e2e8;
+  box-shadow:  10px 10px 21px #c1c9ce,
+               -10px -10px 21px #f1fbff;
 }
