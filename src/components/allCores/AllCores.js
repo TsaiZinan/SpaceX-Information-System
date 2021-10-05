@@ -12,8 +12,8 @@ const AllCores = (props) => {
   return (
     <div className='allCores'>
 
-      {console.log(launchesData)}
-      {console.log(coresData)}
+      {/* {console.log(launchesData)}
+      {console.log(coresData)} */}
       {coresData.map((core, coreIndex) => {
         return (
           <div className='singleCore' id={coreIndex}>
@@ -22,8 +22,8 @@ const AllCores = (props) => {
             </div>
 
             <div className='launch-patches' >
-              {console.log(core.serial)}
-              {console.log(core.reuse_count)}
+              {/* {console.log(core.serial)}
+              {console.log(core.reuse_count)} */}
 
               {core.launches.map((idCoreLaunches, idCoreLaunchesIndex) => {
                 // console.log(idCoreLaunches)
@@ -32,7 +32,7 @@ const AllCores = (props) => {
                     {launchesData.map((idLaunches, idLaunchesIndex) => {
 
                       if (idCoreLaunches === idLaunches.id) {
-                        console.log(idLaunches.name)
+                        // console.log(idLaunches.name)
                         return (
 
                           <div id={idLaunchesIndex}>
