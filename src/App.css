@@ -7,3 +7,16 @@
   display: flex;
   justify-content: center;
 }
+
+.TimelinePage{
+
+  text-align: left;
+  background-color: #d9e2e8;
+}
+
+
+.PageTitle{
+
+  text-align: center;
+  background-color: #d9e2e8;
+}
