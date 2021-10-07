@@ -10,9 +10,38 @@ const LaunchDetailPage = (props) => {
   const launchNumber = props.match.params.number;
   const number = launchNumber - 1;
   const singleLaunchData = launchesData[number]
-  console.log(number)
+
 
   const launchDataLength = launchesData.length;
+
+  // console.log(coresData)
+
+  // id: core id | data: core data | mode: 0=>serial number; 1=>reused times
+  let coreFetch = (id, data, mode) => {
+    let serialNumber = 'NET';
+    let reuse_count = 0;
+    // console.log(data);
+    data.map(core => {
+      // core.id === id ? serialNumber = core.serial : null
+      if (core.id === id) {
+        serialNumber = core.serial;
+        reuse_count = core.reuse_count;
+      }
+    })
+
+    switch (mode) {
+      case 0:
+        return serialNumber
+        break;
+
+      case 1:
+        return reuse_count
+        break;
+
+      default: return serialNumber
+        break;
+    }
+  }
 
   return (
     <div className='launchDetail'>
@@ -59,7 +88,7 @@ const LaunchDetailPage = (props) => {
               </div>
               {/* <div>{singleLaunchData.flight_number}</div> */}
               <div className='launchDetail-basicInfo-launchTimeSite'>
-                
+
                 {/* <div>{singleLaunchData.launchpad}</div> */}
                 <div>{singleLaunchData.date_utc.substring(0, 10)}</div>
               </div>
@@ -73,7 +102,7 @@ const LaunchDetailPage = (props) => {
         </div>
 
         <div className='launchDetail-basicInfo-core'>
-          <div>First Stage:{singleLaunchData.cores[0].core}</div>
+          <div>First Stage:{coreFetch(singleLaunchData.cores[0].core, coresData, 0)}</div>
           <div>Reused Times: {singleLaunchData.cores[0].flight}</div>
           <div>Landing Type: {singleLaunchData.cores[0].landing_type}</div>
           <div>Landing Site: {singleLaunchData.cores[0].landpad}</div>
