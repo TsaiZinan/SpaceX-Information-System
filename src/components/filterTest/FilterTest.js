@@ -55,6 +55,13 @@ const FilterTest = () => {
 
   // console.log(multiYears.includes(parseInt(2020)));
 
+  const filter = (launchDateUTC, reused) => {
+    if (multiYears.includes(parseInt(launchDateUTC.substring(0, 4)))) {
+      console.log('trueeeeeeeee')
+    } else {
+      console.log('falseeeeeeeeeeeeeee')
+    }
+  }
 
 
   const [testNum, setTestNum] = useState(false)
@@ -97,7 +104,7 @@ const FilterTest = () => {
           {console.log(testNum==true)}
         </div>
 
-
+        <button onClick={() => filter("2018-09-13T07:07:00.000Z")}>x</button>
 
 
       </div>
@@ -116,7 +123,7 @@ const FilterTest = () => {
           // }
 
           // if (reused === launch.cores[0].reused && year === parseInt(launch.date_utc.substring(0, 4)) ) {
-          if (parseInt(launch.date_utc.substring(0, 4)) === 2020) {
+          if (filter(launch.date_utc === true)) {
             return (
               <div className='filter-node'>
                 <div>Number: {launch.flight_number}</div>
