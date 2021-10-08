@@ -21,6 +21,9 @@ const Nav = () => {
             <li>Cores</li>
           </Link>
           <li>Test</li>
+          <Link to='/filter'>
+            <li>Filter Test</li>
+          </Link>
         </ul>
       </nav>
     </div>

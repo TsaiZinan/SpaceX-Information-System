@@ -6,6 +6,7 @@ import Home from './Home';
 import Launches from './Launches';
 import CoresPage from './CoresPage';
 import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
+import FilterTest from './components/filterTest/FilterTest';
 
 import { LatestLaunch, Cores, AllLaunches } from './data'
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/launches' exact component={Launches} />
           <Route path='/cores' exact component={CoresPage} />
+          <Route path='/filter' exact component={FilterTest} />
           <Route
             path='/launch/:number' 
             render={(props) => (
