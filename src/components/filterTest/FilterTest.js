@@ -1,15 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './FilterTest.css'
 import { LatestLaunch, Cores, AllLaunches } from '../../data'
 
 const FilterTest = () => {
-
-  const [reused, setReused] = useState(false);
-
-  let reusedSwitch = () => {
-    setReused(!reused)
-  }
 
   function removeItemOnce(arr, value) {
     var index = arr.indexOf(value);
@@ -19,11 +13,19 @@ const FilterTest = () => {
     return arr;
   }
 
-  const [multiYears, setMultiYears] = useState([2017, 2018])
+  const [reused, setReused] = useState(false);
 
-  // console.log(multiYears)
+  let reusedSwitch = () => {
+    setReused(!reused)
+  }
+
+  const [labb, setLabb] = useState(true)
+  
+
+  const [multiYears, setMultiYears] = useState([])
 
   const changeYear = input => {
+    setLabb(!labb);
     if (multiYears.includes(input)) {
       console.log('yes, before:')
       console.log(multiYears)
@@ -44,22 +46,28 @@ const FilterTest = () => {
   }
 
 
-  var yearyear;
-  if (multiYears.includes(2020)) {
-    yearyear = <div>Yes 2020</div>
-    console.log('-----is include')
-  } else {
-    yearyear = <div>No 2020</div>
-    console.log('-----not include')
-  }
+  // var yearyear;
+  // if (multiYears.includes(2020)) {
+  //   yearyear = <div>Yes 2020</div>
+  //   console.log('-----is include')
+  // } else {
+  //   yearyear = <div>No 2020</div>
+  //   console.log('-----not include')
+  // }
 
   // console.log(multiYears.includes(parseInt(2020)));
 
-  const filter = (launchDateUTC, reused) => {
-    if (multiYears.includes(parseInt(launchDateUTC.substring(0, 4)))) {
-      console.log('trueeeeeeeee')
+  const filter = (launchDateUTC, reusedData) => {
+    let yearStatement = multiYears.includes(parseInt(launchDateUTC.substring(0, 4)));
+    var reusedStatement;
+    reusedData === reused ? reusedStatement = true : reusedStatement = false;
+
+    if (yearStatement && reusedStatement) {
+      // console.log('trueeeeeeeee')
+      return true;
     } else {
-      console.log('falseeeeeeeeeeeeeee')
+      // console.log('falseeeeeeeeeeeeeee')
+      return false;
     }
   }
 
@@ -79,6 +87,14 @@ const FilterTest = () => {
     testyear = <div>No</div>
   }
 
+  useEffect(() => {
+    console.log('use effect--------------------------------------')
+    switchNum()
+  },[labb]);
+
+  useEffect(() => {
+    console.log('Something happened')
+  }, [JSON.stringify(multiYears)]);
 
 
   return (
@@ -86,27 +102,32 @@ const FilterTest = () => {
       <div>
         <button onClick={reusedSwitch}>Reused: {reused.toString()}</button>
 
+        <input type="checkbox" name='2017' onChange={() => changeYear(2017)} />
+        <label htmlFor="2017">2017</label>
 
-        <input type="checkbox" name='2020' onChange={() => changeYear(2020)} />
-        <label htmlFor="2020">2020</label>
+        <input type="checkbox" name='2018' onChange={() => changeYear(2018)} />
+        <label htmlFor="2018">2018</label>
 
         <input type="checkbox" name='2019' onChange={() => changeYear(2019)} />
         <label htmlFor="2019">2019</label>
 
-        <button onClick={() => changeYear(2020)}>+-2020</button>
-        {yearyear}
-        {console.log([2017, 2020].includes(parseInt('2020')))}
+        <input type="checkbox" name='2020' onChange={() => changeYear(2020)} />
+        <label htmlFor="2020">2020</label>
+
+        <input type="checkbox" name='2021' onChange={() => changeYear(2021)} />
+        <label htmlFor="2021">2021</label>
+
+        <input type="checkbox" name='reused' onChange={() => reusedSwitch()} />
+        <label htmlFor="reused">reused</label>
+
+        {/* <button onClick={() => changeYear(2020)}>+-2020</button> */}
+        
 
         <div>
-          <button onClick={() => switchNum()}>Y/N</button>
+          <button onClick={() => switchNum()}>WTF</button>
           {testyear}
-          {console.log('num')}
-          {console.log(testNum==true)}
+
         </div>
-
-        <button onClick={() => filter("2018-09-13T07:07:00.000Z")}>x</button>
-
-
       </div>
 
 
@@ -116,14 +137,7 @@ const FilterTest = () => {
       <div className='filter-nodes'>
         {/* {console.log(AllLaunches)} */}
         {AllLaunches.map((launch, launchIndex) => {
-          // if (reused === launch.cores[0].reused && multiYears.includes(parseInt(launch.date_utc.substring(0, 4)))) {
-          //   console.log(launch.date_utc.substring(0, 4)+'yes')
-          // } else {
-          //   console.log(launch.date_utc.substring(0, 4)+'no')
-          // }
-
-          // if (reused === launch.cores[0].reused && year === parseInt(launch.date_utc.substring(0, 4)) ) {
-          if (filter(launch.date_utc === true)) {
+          if (filter(launch.date_utc, launch.cores[0].reused) === true) {
             return (
               <div className='filter-node'>
                 <div>Number: {launch.flight_number}</div>
@@ -134,20 +148,6 @@ const FilterTest = () => {
           } else { return (null) }
 
 
-          // reused === launch.cores[0].reused ? {
-          //   return (
-          //     <div>N</div>
-          //   )
-          // } : null
-
-          // return (
-          //   <div className='filter-node'>
-          //     <div>Number: {launch.flight_number}</div>
-
-          //     <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div>
-
-          //   </div>
-          // )
         })}
       </div>
 
