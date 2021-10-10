@@ -19,44 +19,25 @@ const FilterTest = () => {
     setReused(!reused)
   }
 
-  const [labb, setLabb] = useState(true)
-  
+  // array Trigger to trigger the page refresher
+  const [arrayTrigger, setarrayTrigger] = useState(true)
 
+
+  // for the multiple selecting of years
   const [multiYears, setMultiYears] = useState([])
 
   const changeYear = input => {
-    setLabb(!labb);
+    setarrayTrigger(!arrayTrigger);
     if (multiYears.includes(input)) {
-      console.log('yes, before:')
-      console.log(multiYears)
-      // setMultiYears(multiYears.filter(e => e !== input))
       setMultiYears(removeItemOnce(multiYears, input))
-      console.log('yes, after:')
-      console.log(multiYears)
-      console.log('-----')
     } else {
-      console.log('no, before:')
-      console.log(multiYears)
       multiYears.push(input);
       setMultiYears(multiYears);
-      console.log('no, after:')
-      console.log(multiYears)
-      console.log('-----')
     }
   }
 
 
-  // var yearyear;
-  // if (multiYears.includes(2020)) {
-  //   yearyear = <div>Yes 2020</div>
-  //   console.log('-----is include')
-  // } else {
-  //   yearyear = <div>No 2020</div>
-  //   console.log('-----not include')
-  // }
-
-  // console.log(multiYears.includes(parseInt(2020)));
-
+  // for the filter condition
   const filter = (launchDateUTC, reusedData) => {
     let yearStatement = multiYears.includes(parseInt(launchDateUTC.substring(0, 4)));
     var reusedStatement;
@@ -71,39 +52,77 @@ const FilterTest = () => {
     }
   }
 
+  // still working on because of the bug:
+  // can't run two function in one onChange
+  const YearSelectCheckbox = (props) => {
+    const [checked, setChecked] = useState(true);
 
-  const [testNum, setTestNum] = useState(false)
+    let changeChecked = () => {
+      setChecked(!checked)
+      console.log('work')
+    }
 
-  const switchNum = () => {
-    setTestNum(!testNum)
+    const handleChange = () => {
+      setChecked(!checked);
+    };
+
+    function eventHandler1() {
+      console.log('eventHandler1 called!');
+    }
+
+    function eventHandler2() {
+      console.log('eventHandler2 called!');
+    }
+
+
+    const act = (year) => {
+      console.log(checked)
+      // not work with changeYear(2017)
+      // handleChange();
+      console.log(checked)
+      // changeYear(2017)
+      changeYear(year)
+      eventHandler1()
+    }
+
+    return (
+      <label>
+        <input
+          type="checkbox"
+          value={props.value}
+          checked={checked}
+          onChange={() => act(props.year)}
+        />
+        {props.label}
+      </label>
+    )
   }
 
-  var testyear;
-
-  // if (multiYears.includes(2020)) {
-  if (testNum === true) {
-    testyear = <div>Yes</div>
-  } else {
-    testyear = <div>No</div>
-  }
-
-  useEffect(() => {
-    console.log('use effect--------------------------------------')
-    switchNum()
-  },[labb]);
-
-  useEffect(() => {
-    console.log('Something happened')
-  }, [JSON.stringify(multiYears)]);
 
 
   return (
     <div className='filter'>
-      <div>
-        <button onClick={reusedSwitch}>Reused: {reused.toString()}</button>
+      <div className='filter-years'>
 
-        <input type="checkbox" name='2017' onChange={() => changeYear(2017)} />
-        <label htmlFor="2017">2017</label>
+
+        {/* <YearSelectButton year={2006} /> */}
+
+        {/* <YearSelectCheckbox label='200017' value={2017} /> */}
+
+
+
+        {[2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021].map((year) => {
+          return (
+            <label>
+              <input type="checkbox" name='2016' onChange={() => changeYear(year)} />
+              {year}
+            </label>
+          )
+        })}
+
+
+        {/* <input type="checkbox" name='2017' onChange={() => changeYear(2017)} />
+        <label htmlFor='2017'>2017</label>
 
         <input type="checkbox" name='2018' onChange={() => changeYear(2018)} />
         <label htmlFor="2018">2018</label>
@@ -115,19 +134,17 @@ const FilterTest = () => {
         <label htmlFor="2020">2020</label>
 
         <input type="checkbox" name='2021' onChange={() => changeYear(2021)} />
-        <label htmlFor="2021">2021</label>
+        <label htmlFor="2021">2021</label> */}
 
+
+
+
+      </div>
+
+      <div>
+        <button onClick={reusedSwitch}>Reused: {reused.toString()}</button>
         <input type="checkbox" name='reused' onChange={() => reusedSwitch()} />
         <label htmlFor="reused">reused</label>
-
-        {/* <button onClick={() => changeYear(2020)}>+-2020</button> */}
-        
-
-        <div>
-          <button onClick={() => switchNum()}>WTF</button>
-          {testyear}
-
-        </div>
       </div>
 
 
