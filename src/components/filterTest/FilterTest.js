@@ -5,96 +5,60 @@ import { LatestLaunch, Cores, AllLaunches } from '../../data'
 
 const FilterTest = () => {
 
-  function removeItemOnce(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-    return arr;
-  }
+  // for the selecting of reused state
+  const [reusedState, setReusedState] = useState([]);
 
-  const [reused, setReused] = useState(false);
+  // for the multiple selecting of years
+  const [yearState, setyearState] = useState([])
 
-  let reusedSwitch = () => {
-    setReused(!reused)
-  }
+
 
   // array Trigger to trigger the page refresher
   const [arrayTrigger, setarrayTrigger] = useState(true)
 
 
-  // for the multiple selecting of years
-  const [multiYears, setMultiYears] = useState([])
-
-  const changeYear = input => {
+  // for change the items in array. if exist, remove it, otherwise add into array
+  const stateSelect = (input, array, setFunction) => {
+    function removeItemOnce(arr, value) {
+      var index = arr.indexOf(value);
+      if (index > -1) {
+        arr.splice(index, 1);
+      }
+      return arr;
+    }
     setarrayTrigger(!arrayTrigger);
-    if (multiYears.includes(input)) {
-      setMultiYears(removeItemOnce(multiYears, input))
+    if (array.includes(input)) {
+      setFunction(removeItemOnce(array, input))
     } else {
-      multiYears.push(input);
-      setMultiYears(multiYears);
+      array.push(input);
+      setFunction(array);
     }
   }
 
 
   // for the filter condition
   const filter = (launchDateUTC, reusedData) => {
-    let yearStatement = multiYears.includes(parseInt(launchDateUTC.substring(0, 4)));
-    var reusedStatement;
-    reusedData === reused ? reusedStatement = true : reusedStatement = false;
+    let yearStatement = yearState.includes(parseInt(launchDateUTC.substring(0, 4)));
+    let reusedStatement = reusedState.includes(reusedData);
+
 
     if (yearStatement && reusedStatement) {
-      // console.log('trueeeeeeeee')
       return true;
     } else {
-      // console.log('falseeeeeeeeeeeeeee')
       return false;
     }
   }
 
-  // still working on because of the bug:
-  // can't run two function in one onChange
-  const YearSelectCheckbox = (props) => {
-    const [checked, setChecked] = useState(true);
 
-    let changeChecked = () => {
-      setChecked(!checked)
-      console.log('work')
-    }
-
-    const handleChange = () => {
-      setChecked(!checked);
-    };
-
-    function eventHandler1() {
-      console.log('eventHandler1 called!');
-    }
-
-    function eventHandler2() {
-      console.log('eventHandler2 called!');
-    }
-
-
-    const act = (year) => {
-      console.log(checked)
-      // not work with changeYear(2017)
-      // handleChange();
-      console.log(checked)
-      // changeYear(2017)
-      changeYear(year)
-      eventHandler1()
-    }
-
+  const SelectButton = props => {
+    // name: button name | unit: item in array | array: state array | fun: the function which handle the items
     return (
-      <label>
-        <input
-          type="checkbox"
-          value={props.value}
-          checked={checked}
-          onChange={() => act(props.year)}
-        />
-        {props.label}
-      </label>
+      <button
+        className={props.array.includes(props.unit) ? 'SelectButton-active' : 'SelectButton-inactive'}
+        onClick={props.fun}
+      >
+        {props.name}
+      </button>
     )
   }
 
@@ -102,53 +66,21 @@ const FilterTest = () => {
 
   return (
     <div className='filter'>
+
       <div className='filter-years'>
-
-
-        {/* <YearSelectButton year={2006} /> */}
-
-        {/* <YearSelectCheckbox label='200017' value={2017} /> */}
-
-
-
         {[2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021].map((year) => {
           return (
-            <label>
-              <input type="checkbox" name='2016' onChange={() => changeYear(year)} />
-              {year}
-            </label>
+            <SelectButton name={year} unit={year} array={yearState} fun={() => stateSelect(year, yearState, setyearState)} />
           )
         })}
-
-
-        {/* <input type="checkbox" name='2017' onChange={() => changeYear(2017)} />
-        <label htmlFor='2017'>2017</label>
-
-        <input type="checkbox" name='2018' onChange={() => changeYear(2018)} />
-        <label htmlFor="2018">2018</label>
-
-        <input type="checkbox" name='2019' onChange={() => changeYear(2019)} />
-        <label htmlFor="2019">2019</label>
-
-        <input type="checkbox" name='2020' onChange={() => changeYear(2020)} />
-        <label htmlFor="2020">2020</label>
-
-        <input type="checkbox" name='2021' onChange={() => changeYear(2021)} />
-        <label htmlFor="2021">2021</label> */}
-
-
-
-
       </div>
 
-      <div>
-        <button onClick={reusedSwitch}>Reused: {reused.toString()}</button>
-        <input type="checkbox" name='reused' onChange={() => reusedSwitch()} />
-        <label htmlFor="reused">reused</label>
+      <div className='filter-reused'>
+        <SelectButton name={'Reused'} unit={true} array={reusedState} fun={() => stateSelect(true, reusedState, setReusedState)} />
+        <SelectButton name={'Unreused'} unit={false} array={reusedState} fun={() => stateSelect(false, reusedState, setReusedState)} />
+        {/* {console.log(reusedState)}
+        {console.log(yearState)} */}
       </div>
-
-
-
 
 
       <div className='filter-nodes'>
@@ -156,15 +88,13 @@ const FilterTest = () => {
         {AllLaunches.map((launch, launchIndex) => {
           if (filter(launch.date_utc, launch.cores[0].reused) === true) {
             return (
-              <div className='filter-node'>
+              <div className={launch.cores[0].reused === true ? 'filter-node-reused' : 'filter-node-unreused'} id={launchIndex}>
                 <div>Number: {launch.flight_number}</div>
                 <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div>
                 <div>Year: {launch.date_utc.substring(0, 4)}</div>
               </div>
             )
           } else { return (null) }
-
-
         })}
       </div>
 
