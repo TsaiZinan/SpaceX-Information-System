@@ -26,6 +26,11 @@
   margin: 10px;
   border-style: solid;
   color: rgb(57, 128, 57);
+
+  border-radius: 8px;
+  background: #d9e2e8;
+  box-shadow:  7px 7px 14px #c5ced3,
+               -7px -7px 14px #edf6fd;
 }
 
 .filter-node-unreused {
@@ -33,14 +38,37 @@
   margin: 10px;
   border-style: solid;
   color: rgb(206, 102, 102);
+
+  border-radius: 8px;
+  background: #d9e2e8;
+  box-shadow:  7px 7px 14px #c5ced3,
+               -7px -7px 14px #edf6fd;
 }
 
+
+
 .SelectButton-active {
-  background-color: rgb(158, 158, 197);
-  color: white;
-  margin: 5px;
+  /* background-color: rgb(158, 158, 197);
+  color: white; */
+  font-size: 1.5vw;
+  margin: 0.5vw;
+
+  border-color: #d9e2e8;
+
+  border-radius: 6px;
+  background: #d9e2e8;
+  box-shadow: inset 5px 5px 7px #c8d0d5,
+              inset -5px -5px 7px #eaf4fb;
 }
 
 .SelectButton-inactive {
-  margin: 5px;
+  font-size: 1.5vw;
+  margin: 0.5vw;
+  
+  border-color: #d9e2e8;;
+
+  border-radius: 6px;
+  background: #d9e2e8;
+  box-shadow: 5px 5px 7px #c8d0d5,
+            -5px -5px 7px #eaf4fb;
 }

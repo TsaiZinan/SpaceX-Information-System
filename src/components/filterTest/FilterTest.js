@@ -6,10 +6,10 @@ import { LatestLaunch, Cores, AllLaunches } from '../../data'
 const FilterTest = () => {
 
   // for the selecting of reused state
-  const [reusedState, setReusedState] = useState([]);
+  const [reusedState, setReusedState] = useState([true, false]);
 
   // for the multiple selecting of years
-  const [yearState, setyearState] = useState([])
+  const [yearState, setyearState] = useState([2021])
 
 
 
@@ -76,7 +76,12 @@ const FilterTest = () => {
       </div>
 
       <div className='filter-reused'>
-        <SelectButton name={'Reused'} unit={true} array={reusedState} fun={() => stateSelect(true, reusedState, setReusedState)} />
+        <SelectButton
+          name={'Reused'}
+          unit={true}
+          array={reusedState}
+          fun={() => stateSelect(true, reusedState, setReusedState)}
+        />
         <SelectButton name={'Unreused'} unit={false} array={reusedState} fun={() => stateSelect(false, reusedState, setReusedState)} />
         {/* {console.log(reusedState)}
         {console.log(yearState)} */}
