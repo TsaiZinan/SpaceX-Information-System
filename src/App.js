@@ -5,10 +5,14 @@ import Nav from './components/nav/Nav';
 import Home from './Home';
 import Launches from './Launches';
 import CoresPage from './CoresPage';
+
 import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
 import FilterTest from './components/filterTest/FilterTest';
 
 import { LatestLaunch, Cores, AllLaunches } from './data'
+
+import TimelinePage from './components/timelinePage/TimelinePage';
+
 
 function App() {
   return (
@@ -18,6 +22,7 @@ function App() {
 
         <Switch>
           <Route path='/' exact component={Home} />
+
           <Route path='/launches' exact component={Launches} />
           <Route path='/cores' exact component={CoresPage} />
           <Route path='/filter' exact component={FilterTest} />
@@ -28,6 +33,10 @@ function App() {
             )}
           />
           {/* <Route path='/launch/:number' element={<LaunchDetailPage />} /> */}
+
+
+          <Route path='/timeline' exact component={TimelinePage} />
+
         </Switch>
 
       </div>
