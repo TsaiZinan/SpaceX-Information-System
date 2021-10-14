@@ -12588,3 +12588,545 @@ export const AllLaunches = [
     "id": "608d3d23ffcee803616cbde2"
   }
 ]
+
+export const LandingPads = [
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/KHBk6jO.png"
+      ]
+    },
+    "name": "LZ-1",
+    "full_name": "Landing Zone 1",
+    "status": "active",
+    "type": "RTLS",
+    "locality": "Cape Canaveral",
+    "region": "Florida",
+    "latitude": 28.485833,
+    "longitude": -80.544444,
+    "landing_attempts": 18,
+    "landing_successes": 17,
+    "wikipedia": "https://en.wikipedia.org/wiki/Landing_Zones_1_and_2",
+    "details": "SpaceX's first east coast landing pad is Landing Zone 1, where the historic first Falcon 9 landing occurred in December 2015. LC-13 was originally used as a launch pad for early Atlas missiles and rockets from Lockheed Martin. LC-1 was later expanded to include Landing Zone 2 for side booster RTLS Falcon Heavy missions, and it was first used in February 2018 for that purpose.",
+    "launches": [
+      "5eb87cefffd86e000604b342",
+      "5eb87cf9ffd86e000604b349",
+      "5eb87cfeffd86e000604b34d",
+      "5eb87d01ffd86e000604b350",
+      "5eb87d03ffd86e000604b352",
+      "5eb87d07ffd86e000604b356",
+      "5eb87d09ffd86e000604b358",
+      "5eb87d0effd86e000604b35c",
+      "5eb87d10ffd86e000604b35e",
+      "5eb87d13ffd86e000604b360",
+      "5eb87d26ffd86e000604b371",
+      "5eb87d2dffd86e000604b376",
+      "5eb87d35ffd86e000604b37a",
+      "5eb87d36ffd86e000604b37b",
+      "5eb87d42ffd86e000604b384",
+      "5eb87d47ffd86e000604b38a",
+      "5f8399fb818d8b59f5740d43",
+      "600f9b6d8f798e2a4d5f979f"
+    ],
+    "id": "5e9e3032383ecb267a34e7c7"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/YE8PMYX.png"
+      ]
+    },
+    "name": "LZ-2",
+    "full_name": "Landing Zone 2",
+    "status": "active",
+    "type": "RTLS",
+    "locality": "Cape Canaveral",
+    "region": "Florida",
+    "latitude": 28.485833,
+    "longitude": -80.544444,
+    "landing_attempts": 3,
+    "landing_successes": 3,
+    "wikipedia": "https://en.wikipedia.org/wiki/Landing_Zones_1_and_2",
+    "details": "SpaceX's first east coast landing pad is Landing Zone 1, where the historic first Falcon 9 landing occurred in December 2015. LC-13 was originally used as a launch pad for early Atlas missiles and rockets from Lockheed Martin. LC-1 was later expanded to include Landing Zone 2 for side booster RTLS Falcon Heavy missions, and it was first used in February 2018 for that purpose.",
+    "launches": [
+      "5eb87d13ffd86e000604b360",
+      "5eb87d2dffd86e000604b376",
+      "5eb87d35ffd86e000604b37a"
+    ],
+    "id": "5e9e3032383ecb90a834e7c8"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/647XbH6.png"
+      ]
+    },
+    "name": "LZ-4",
+    "full_name": "Landing Zone 4",
+    "status": "active",
+    "type": "RTLS",
+    "locality": "Vandenberg Air Force Base",
+    "region": "California",
+    "latitude": 34.632989,
+    "longitude": -120.615167,
+    "landing_attempts": 3,
+    "landing_successes": 3,
+    "wikipedia": "https://en.wikipedia.org/wiki/Vandenberg_AFB_Space_Launch_Complex_4#LZ-4_landing_history",
+    "details": "SpaceX's west coast landing pad. The pad is adjacent to SLC-4E, SpaceX's west coast launch site. The pad was under construction for about a year starting in 2016. After concerns with seal mating season, this pad was first used for the SAOCOM 1A mission in October 2018. Officially referred to as LZ-4 in FCC filings.",
+    "launches": [
+      "5eb87d23ffd86e000604b36e",
+      "5eb87d31ffd86e000604b379",
+      "5ed983aa1f30554030d45c31"
+    ],
+    "id": "5e9e3032383ecb554034e7c9"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/rbpkg01.png"
+      ]
+    },
+    "name": "OCISLY",
+    "full_name": "Of Course I Still Love You",
+    "status": "active",
+    "type": "ASDS",
+    "locality": "Port Canaveral",
+    "region": "Florida",
+    "latitude": 33.7291858,
+    "longitude": -118.262015,
+    "landing_attempts": 54,
+    "landing_successes": 47,
+    "wikipedia": "https://en.wikipedia.org/wiki/Autonomous_spaceport_drone_ship",
+    "details": "The second ASDS barge, Of Course I Still Love You (OCISLY), had been under construction in a Louisiana shipyard since early 2015 using a different hull—Marmac 304—in order to service launches on the east coast. It was built as a replacement for the first Just Read the Instructions and entered operational service for Falcon 9 Flight 19 in late June 2015. As of June 2015, its home port was Jacksonville, Florida, but after December 2015, it was transferred 160 miles (260 km) further south, at Port Canaveral. While the dimensions of the ship are nearly identical to the first ASDS, several enhancements were made including a steel blast wall erected between the aft containers and the landing deck. The ship was in place for a first-stage landing test on the CRS-7 mission, which failed on launch on 28 June 2015. On 8 April 2016 the first stage, which launched the Dragon CRS-8 spacecraft, successfully landed for the first time ever on OCISLY, which is also the first ever drone ship landing. In February 2018, the Falcon Heavy Test Flight's central core exploded upon impact next to OCISLY that damaged two of the four thrusters on the drone ship. Two thrusters were removed from the Marmac 303 barge in order to repair OCISLY.",
+    "launches": [
+      "5eb87ceeffd86e000604b341",
+      "5eb87cf2ffd86e000604b344",
+      "5eb87cf3ffd86e000604b345",
+      "5eb87cf5ffd86e000604b346",
+      "5eb87cf6ffd86e000604b347",
+      "5eb87cf8ffd86e000604b348",
+      "5eb87cfaffd86e000604b34a",
+      "5eb87cfbffd86e000604b34b",
+      "5eb87d00ffd86e000604b34f",
+      "5eb87d04ffd86e000604b353",
+      "5eb87d0cffd86e000604b35a",
+      "5eb87d0dffd86e000604b35b",
+      "5eb87d13ffd86e000604b360",
+      "5eb87d18ffd86e000604b365",
+      "5eb87d19ffd86e000604b366",
+      "5eb87d1effd86e000604b36a",
+      "5eb87d20ffd86e000604b36c",
+      "5eb87d22ffd86e000604b36d",
+      "5eb87d24ffd86e000604b36f",
+      "5eb87d2affd86e000604b374",
+      "5eb87d2bffd86e000604b375",
+      "5eb87d2dffd86e000604b376",
+      "5eb87d2effd86e000604b377",
+      "5eb87d30ffd86e000604b378",
+      "5eb87d35ffd86e000604b37a",
+      "5eb87d39ffd86e000604b37d",
+      "5eb87d39ffd86e000604b37e",
+      "5eb87d3bffd86e000604b37f",
+      "5eb87d3cffd86e000604b380",
+      "5eb87d3fffd86e000604b382",
+      "5eb87d41ffd86e000604b383",
+      "5eb87d43ffd86e000604b385",
+      "5eb87d44ffd86e000604b386",
+      "5eb87d46ffd86e000604b388",
+      "5eb87d46ffd86e000604b389",
+      "5ed9819a1f30554030d45c29",
+      "5ed981d91f30554030d45c2a",
+      "5ef6a1e90059c33cee4a828a",
+      "5ef6a2090059c33cee4a828b",
+      "5ef6a2bf0059c33cee4a828c",
+      "5eb87d4cffd86e000604b38d",
+      "5fb95b3f3a88ae63c954603c",
+      "5eb87d4effd86e000604b391",
+      "5fd386aa7faea57d297c86c1",
+      "5ff6554f9257f579ee3a6c5f",
+      "600f9a5e8f798e2a4d5f979c",
+      "5fbfecfe54ceb10a5664c80b",
+      "600f9a8d8f798e2a4d5f979e",
+      "60428aafc041c16716f73cd7",
+      "60428ac4c041c16716f73cd8",
+      "5fe3af58b3467846b324215f",
+      "605b4b7daa5433645e37d040",
+      "6079bd1c9a06446e8c61bf76",
+      "605b4b95aa5433645e37d041",
+      "5fe3af84b3467846b3242161",
+      "60e3bf0d73359e1e20335c37"
+    ],
+    "id": "5e9e3032383ecb6bb234e7ca"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/gZUJ04V.png"
+      ]
+    },
+    "name": "JRTI-1",
+    "full_name": "Just Read The Instructions V1",
+    "status": "retired",
+    "type": "ASDS",
+    "locality": "Port Canaveral",
+    "region": "Florida",
+    "latitude": 28.4104,
+    "longitude": -80.6188,
+    "landing_attempts": 2,
+    "landing_successes": 0,
+    "wikipedia": "https://en.wikipedia.org/wiki/Autonomous_spaceport_drone_ship",
+    "details": "The ASDS landing location for the first landing test was in the Atlantic approximately 200 miles (320 km) northeast of the launch location at Cape Canaveral, and 165 miles (266 km) southeast of Charleston, South Carolina. SpaceX's Just Read the Instructions, based on the Marmac 300 deck barge, in position for a landing test on Falcon 9 Flight 17 in April 2015. On 23 January 2015, during repairs to the ship following the unsuccessful first test, Musk announced that the ship was to be named Just Read the Instructions, with a sister ship planned for west coast launches to be named Of Course I Still Love You. On 29 January, SpaceX released a manipulated photo of the ship with the name illustrating how it would look once painted. Both ships are named after two General Contact Units, spaceships commanded by autonomous artificial intelligences, that appear in The Player of Games, a Culture novel by Iain M. Banks. The first Just Read the Instructions was retired in May 2015 after approximately six months of service in the Atlantic, and its duties were assumed by Of Course I Still Love You. The former ASDS was modified by removing the wing extensions that had extended the barge surface and the equipment (thrusters, cameras and communications gear) that had been added to refit it as an ASDS; these items were saved for future reuse.",
+    "launches": [
+      "5eb87ce8ffd86e000604b33c",
+      "5eb87cecffd86e000604b33f"
+    ],
+    "id": "5e9e3032383ecb761634e7cb"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/46y4O15.png"
+      ]
+    },
+    "name": "JRTI",
+    "full_name": "Just Read The Instructions",
+    "status": "active",
+    "type": "ASDS",
+    "locality": "Port of Los Angeles",
+    "region": "California",
+    "latitude": 33.7291858,
+    "longitude": -118.262015,
+    "landing_attempts": 22,
+    "landing_successes": 21,
+    "wikipedia": "https://en.wikipedia.org/wiki/Autonomous_spaceport_drone_ship",
+    "details": "The third ASDS barge, using the Marmac 303 hull, was built during 2015 in a Louisiana shipyard, and the barge transited the Panama Canal in June 2015 carrying its wing extensions as cargo on the deck because the ASDS, when complete, would be too wide to pass through the canal. The home port for the Marmac 303 is the Port of Los Angeles, at the AltaSea marine research and business campus in San Pedro's outer harbor. The landing platform and tender vessels began docking there in July 2015 in advance of the main construction of AltaSea which is scheduled for 2017. SpaceX announced that the Marmac 303 would be the second ASDS to be named Just Read the Instructions (JRtI) in January 2016, shortly before its first use as a landing platform for Falcon 9 Flight 21. On 17 January 2016, JRtI was put to first use in an attempt to recover a Falcon 9 first-stage booster from the Jason-3 mission from Vandenberg. The booster successfully landed on the deck; however, a lockout collet failed to engage on one of the legs causing the rocket to tip over, exploding on impact with the deck.[23] On January 14, 2017, SpaceX launched Falcon 9 Flight 29 from Vandenberg and landed the first stage on the JRtI that was located about 370 km (230 mi) downrange in the Pacific Ocean, making it the first successful landing in the Pacific.",
+    "launches": [
+      "5eb87cf0ffd86e000604b343",
+      "5eb87cfdffd86e000604b34c",
+      "5eb87d05ffd86e000604b354",
+      "5eb87d08ffd86e000604b357",
+      "5eb87d0affd86e000604b359",
+      "5eb87d1fffd86e000604b36b",
+      "5eb87d25ffd86e000604b370",
+      "5eb87d28ffd86e000604b373",
+      "5eb87d45ffd86e000604b387",
+      "5eb87d4affd86e000604b38b",
+      "5eb87d50ffd86e000604b394",
+      "5ef6a2e70059c33cee4a8293",
+      "5eb87d4dffd86e000604b38e",
+      "5eb87d4bffd86e000604b38c",
+      "5eb87d4fffd86e000604b393",
+      "5fbfecce54ceb10a5664c80a",
+      "600f9a718f798e2a4d5f979d",
+      "605b4b6aaa5433645e37d03f",
+      "6079bd399a06446e8c61bf77",
+      "5fe3af6db3467846b3242160",
+      "5eb87d4effd86e000604b390",
+      "607a37565a906a44023e0866"
+    ],
+    "id": "5e9e3033383ecbb9e534e7cc"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/PkrS8vQ.png"
+      ]
+    },
+    "name": "ASOG",
+    "full_name": "A Shortfall of Gravitas",
+    "status": "active",
+    "type": "ASDS",
+    "locality": "Port Canaveral",
+    "region": "Florida",
+    "latitude": 28.4104,
+    "longitude": -80.6188,
+    "landing_attempts": 1,
+    "landing_successes": 1,
+    "wikipedia": "https://en.wikipedia.org/wiki/Autonomous_spaceport_drone_ship",
+    "details": "The fourth ASDS barge was announced to be under construction in February 2018 and it will become the second active east coast-based ASDS. It will be homeported at Port Canaveral. This future simultaneously usable ASDS, along with OCISLY, is called A Shortfall of Gravitas (ASoG) and like the rest of the fleet, its naming is based on names used in the Culture series. The droneship is expected to be operational in mid-2019.",
+    "launches": [
+      "5fe3b11eb3467846b324216c"
+    ],
+    "id": "5e9e3033383ecb075134e7cd"
+  }
+]
+
+export const LaunchPads = [
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/7uXe1Kv.png"
+      ]
+    },
+    "name": "VAFB SLC 3W",
+    "full_name": "Vandenberg Space Force Base Space Launch Complex 3W",
+    "locality": "Vandenberg Space Force Base",
+    "region": "California",
+    "latitude": 34.6440904,
+    "longitude": -120.5931438,
+    "launch_attempts": 0,
+    "launch_successes": 0,
+    "rockets": [
+      "5e9d0d95eda69955f709d1eb"
+    ],
+    "timezone": "America/Los_Angeles",
+    "launches": [],
+    "status": "retired",
+    "details": "SpaceX's original west coast launch pad for Falcon 1. It was used in a static fire test but was never employed for a launch, and was abandoned due to range scheduling conflicts arising from overflying other active pads.",
+    "id": "5e9e4501f5090910d4566f83"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/9oEMXwa.png"
+      ]
+    },
+    "name": "CCSFS SLC 40",
+    "full_name": "Cape Canaveral Space Force Station Space Launch Complex 40",
+    "locality": "Cape Canaveral",
+    "region": "Florida",
+    "latitude": 28.5618571,
+    "longitude": -80.577366,
+    "launch_attempts": 75,
+    "launch_successes": 73,
+    "rockets": [
+      "5e9d0d95eda69973a809d1ec"
+    ],
+    "timezone": "America/New_York",
+    "launches": [
+      "5eb87cddffd86e000604b32f",
+      "5eb87cdeffd86e000604b330",
+      "5eb87cdfffd86e000604b331",
+      "5eb87ce0ffd86e000604b332",
+      "5eb87ce1ffd86e000604b333",
+      "5eb87ce2ffd86e000604b335",
+      "5eb87ce3ffd86e000604b336",
+      "5eb87ce4ffd86e000604b337",
+      "5eb87ce4ffd86e000604b338",
+      "5eb87ce5ffd86e000604b339",
+      "5eb87ce6ffd86e000604b33a",
+      "5eb87ce7ffd86e000604b33b",
+      "5eb87ce8ffd86e000604b33c",
+      "5eb87ceaffd86e000604b33d",
+      "5eb87ceaffd86e000604b33e",
+      "5eb87cecffd86e000604b33f",
+      "5eb87cedffd86e000604b340",
+      "5eb87ceeffd86e000604b341",
+      "5eb87cefffd86e000604b342",
+      "5eb87cf2ffd86e000604b344",
+      "5eb87cf3ffd86e000604b345",
+      "5eb87cf5ffd86e000604b346",
+      "5eb87cf6ffd86e000604b347",
+      "5eb87cf8ffd86e000604b348",
+      "5eb87cf9ffd86e000604b349",
+      "5eb87cfaffd86e000604b34a",
+      "5eb87cfbffd86e000604b34b",
+      "5eb87d0effd86e000604b35c",
+      "5eb87d10ffd86e000604b35e",
+      "5eb87d11ffd86e000604b35f",
+      "5eb87d15ffd86e000604b362",
+      "5eb87d16ffd86e000604b364",
+      "5eb87d18ffd86e000604b365",
+      "5eb87d1bffd86e000604b368",
+      "5eb87d1cffd86e000604b369",
+      "5eb87d1effd86e000604b36a",
+      "5eb87d20ffd86e000604b36c",
+      "5eb87d22ffd86e000604b36d",
+      "5eb87d26ffd86e000604b371",
+      "5eb87d27ffd86e000604b372",
+      "5eb87d2affd86e000604b374",
+      "5eb87d2effd86e000604b377",
+      "5eb87d30ffd86e000604b378",
+      "5eb87d36ffd86e000604b37b",
+      "5eb87d37ffd86e000604b37c",
+      "5eb87d39ffd86e000604b37d",
+      "5eb87d39ffd86e000604b37e",
+      "5eb87d3bffd86e000604b37f",
+      "5eb87d3cffd86e000604b380",
+      "5eb87d3fffd86e000604b382",
+      "5eb87d41ffd86e000604b383",
+      "5eb87d42ffd86e000604b384",
+      "5eb87d45ffd86e000604b387",
+      "5eb87d46ffd86e000604b389",
+      "5eb87d4affd86e000604b38b",
+      "5eb87d50ffd86e000604b394",
+      "5ed981d91f30554030d45c2a",
+      "5eb87d47ffd86e000604b38a",
+      "5ef6a2e70059c33cee4a8293",
+      "5eb87d4cffd86e000604b38d",
+      "5fb95b3f3a88ae63c954603c",
+      "5eb87d4bffd86e000604b38c",
+      "5eb87d4fffd86e000604b393",
+      "5fd386aa7faea57d297c86c1",
+      "5ff6554f9257f579ee3a6c5f",
+      "600f9a5e8f798e2a4d5f979c",
+      "600f9a718f798e2a4d5f979d",
+      "60428aafc041c16716f73cd7",
+      "60428ac4c041c16716f73cd8",
+      "605b4b6aaa5433645e37d03f",
+      "6079bd1c9a06446e8c61bf76",
+      "6079bd399a06446e8c61bf77",
+      "5fe3af6db3467846b3242160",
+      "5eb87d4effd86e000604b390",
+      "600f9b6d8f798e2a4d5f979f"
+    ],
+    "status": "active",
+    "details": "SpaceX's primary Falcon 9 pad, where all east coast Falcon 9s launched prior to the AMOS-6 anomaly. Previously used alongside SLC-41 to launch Titan rockets for the US Air Force, the pad was heavily damaged by the AMOS-6 anomaly in September 2016. It returned to flight with CRS-13 on December 15, 2017, boasting an upgraded throwback-style Transporter-Erector modeled after that at LC-39A.",
+    "id": "5e9e4501f509094ba4566f84"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/ZzTTC5p.png"
+      ]
+    },
+    "name": "STLS",
+    "full_name": "SpaceX South Texas Launch Site",
+    "locality": "Boca Chica Village",
+    "region": "Texas",
+    "latitude": 25.9972641,
+    "longitude": -97.1560845,
+    "launch_attempts": 0,
+    "launch_successes": 0,
+    "rockets": [],
+    "timezone": "America/Chicago",
+    "launches": [],
+    "status": "under construction",
+    "details": "SpaceX's new private launch site currently under construction for suborbital test flights of Starship, and potentially orbital flights of the full super heavy stack (previously referred to as BFR) in the future. Currently planned to enter use with static fires and test hops of the Starhopper, with the first tethered hop successfully occurring in March 2019. It was previously going to be used for Falcon 9 and Falcon Heavy flights, but this no longer appears to be likely due to its construction timeline and existing launch sites being sufficient to handle present demand. Due to the Caribbean islands and off-shore oil wells, it will be limited to very few possible launch trajectories, and current Texas law only allows a limited number of beach closures per year for orbital launches.",
+    "id": "5e9e4502f5090927f8566f85"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/GGPgsVs.png"
+      ]
+    },
+    "name": "Kwajalein Atoll",
+    "full_name": "Kwajalein Atoll Omelek Island",
+    "locality": "Omelek Island",
+    "region": "Marshall Islands",
+    "latitude": 9.0477206,
+    "longitude": 167.7431292,
+    "launch_attempts": 5,
+    "launch_successes": 2,
+    "rockets": [
+      "5e9d0d95eda69955f709d1eb"
+    ],
+    "timezone": "Pacific/Kwajalein",
+    "launches": [
+      "5eb87cd9ffd86e000604b32a",
+      "5eb87cdaffd86e000604b32b",
+      "5eb87cdbffd86e000604b32c",
+      "5eb87cdbffd86e000604b32d",
+      "5eb87cdcffd86e000604b32e"
+    ],
+    "status": "retired",
+    "details": "SpaceX's original pad, where all of the Falcon 1 flights occurred (from 2006 to 2009). It would have also been the launch site of the Falcon 1e and the Falcon 9, but it was abandoned as SpaceX ended the Falcon 1 program and decided against upgrading it to support Falcon 9, likely due to its remote location and ensuing logistics complexities.",
+    "id": "5e9e4502f5090995de566f86"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/asp5L08.png"
+      ]
+    },
+    "name": "VAFB SLC 4E",
+    "full_name": "Vandenberg Space Force Base Space Launch Complex 4E",
+    "locality": "Vandenberg Space Force Base",
+    "region": "California",
+    "latitude": 34.632093,
+    "longitude": -120.610829,
+    "launch_attempts": 17,
+    "launch_successes": 17,
+    "rockets": [
+      "5e9d0d95eda69973a809d1ec"
+    ],
+    "timezone": "America/Los_Angeles",
+    "launches": [
+      "5eb87ce1ffd86e000604b334",
+      "5eb87cf0ffd86e000604b343",
+      "5eb87cfdffd86e000604b34c",
+      "5eb87d05ffd86e000604b354",
+      "5eb87d08ffd86e000604b357",
+      "5eb87d0affd86e000604b359",
+      "5eb87d0fffd86e000604b35d",
+      "5eb87d14ffd86e000604b361",
+      "5eb87d16ffd86e000604b363",
+      "5eb87d1affd86e000604b367",
+      "5eb87d1fffd86e000604b36b",
+      "5eb87d23ffd86e000604b36e",
+      "5eb87d25ffd86e000604b370",
+      "5eb87d28ffd86e000604b373",
+      "5eb87d31ffd86e000604b379",
+      "5ed983aa1f30554030d45c31",
+      "60e3bf0d73359e1e20335c37"
+    ],
+    "status": "active",
+    "details": "SpaceX's primary west coast launch pad for polar orbits and sun-synchronous orbits, primarily used for Iridium NEXT and scientific satellite launches. The pad was used for the debut of Falcon 9 v1.1 in the rocket's first ever non-dragon mission, CASSIOPE, in September 2013. It is SpaceX's only remaining pad with the old-style transporter/erector, which reclines prior to launch instead of using a throwback procedure. It is also capable of launching Falcon Heavy (although some pad modifications would be needed, but no west coast Falcon Heavy missions are currently planned).",
+    "id": "5e9e4502f509092b78566f87"
+  },
+  {
+    "images": {
+      "large": [
+        "https://i.imgur.com/1jwU0Pk.png"
+      ]
+    },
+    "name": "KSC LC 39A",
+    "full_name": "Kennedy Space Center Historic Launch Complex 39A",
+    "locality": "Cape Canaveral",
+    "region": "Florida",
+    "latitude": 28.6080585,
+    "longitude": -80.6039558,
+    "launch_attempts": 39,
+    "launch_successes": 39,
+    "rockets": [
+      "5e9d0d95eda69973a809d1ec",
+      "5e9d0d95eda69974db09d1ed"
+    ],
+    "timezone": "America/New_York",
+    "launches": [
+      "5eb87cfeffd86e000604b34d",
+      "5eb87cfeffd86e000604b34e",
+      "5eb87d00ffd86e000604b34f",
+      "5eb87d01ffd86e000604b350",
+      "5eb87d01ffd86e000604b351",
+      "5eb87d03ffd86e000604b352",
+      "5eb87d04ffd86e000604b353",
+      "5eb87d06ffd86e000604b355",
+      "5eb87d07ffd86e000604b356",
+      "5eb87d09ffd86e000604b358",
+      "5eb87d0cffd86e000604b35a",
+      "5eb87d0dffd86e000604b35b",
+      "5eb87d13ffd86e000604b360",
+      "5eb87d19ffd86e000604b366",
+      "5eb87d24ffd86e000604b36f",
+      "5eb87d2bffd86e000604b375",
+      "5eb87d2dffd86e000604b376",
+      "5eb87d35ffd86e000604b37a",
+      "5eb87d3dffd86e000604b381",
+      "5eb87d43ffd86e000604b385",
+      "5eb87d44ffd86e000604b386",
+      "5eb87d46ffd86e000604b388",
+      "5ed9819a1f30554030d45c29",
+      "5ef6a1e90059c33cee4a828a",
+      "5ef6a2090059c33cee4a828b",
+      "5ef6a2bf0059c33cee4a828c",
+      "5eb87d4dffd86e000604b38e",
+      "5eb87d4effd86e000604b391",
+      "5f8399fb818d8b59f5740d43",
+      "5fbfecce54ceb10a5664c80a",
+      "5fbfecfe54ceb10a5664c80b",
+      "600f9a8d8f798e2a4d5f979e",
+      "5fe3af58b3467846b324215f",
+      "605b4b7daa5433645e37d040",
+      "605b4b95aa5433645e37d041",
+      "5fe3af84b3467846b3242161",
+      "5fe3b11eb3467846b324216c",
+      "607a37565a906a44023e0866",
+      "6161d2006db1a92bfba85356"
+    ],
+    "status": "active",
+    "details": "NASA's historic pad that launched most of the Saturn V and Space Shuttle missions, including Apollo 11. SpaceX initially leased solely for Falcon Heavy and Crew Dragon launches, but the company has also used it for others as well following the damage to SLC-40 in the AMOS-6 explosion. After completing the necessary modifications, the first launch SpaceX performed on the pad was CRS-10 in February 2017. After SLC-40 was back online, 39A was upgraded to support Falcon Heavy and complete the removal of the shuttle-era Rotating Service Structure. More recently, a crew access arm and other safety equipment has been installed in order to launch commercial crew missions. 39A also occasionally launches other Falcon 9 missions between Falcon Heavy and Crew Dragon launches, depending on pad scheduling. The pad may also potentially be upgraded in the future for use with the BFR.",
+    "id": "5e9e4502f509094188566f88"
+  }
+]
