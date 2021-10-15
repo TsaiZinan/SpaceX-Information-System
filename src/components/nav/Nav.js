@@ -23,12 +23,15 @@ const Nav = () => {
 
           <li>Test</li>
           <Link to='/filter'>
-            <li>Filter Test</li>
+            <li>Filter</li>
           </Link>
 
           <Link to='/timeline'>
             <li>Timeline</li>
+          </Link>
 
+          <Link to='/test'>
+            <li>Test</li>
           </Link>
         </ul>
       </nav>
