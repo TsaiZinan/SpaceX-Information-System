@@ -1,0 +1,66 @@
+.filter {
+  background-color: rgb(247, 200, 67);
+  padding-top: 20px;
+}
+
+/* .filter-years {
+  margin: 10px 0 10px 0;
+} */
+
+
+.filter-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2vw 0 100vh 0;
+  
+}
+
+.filter-node {
+  margin: 0.8vw;
+  padding: 0.5vw;
+  width: 140px;
+
+  background-color: white;
+
+  font-weight: 600;
+
+  border-style: solid;
+  border-radius: 7px;
+}
+
+.filter-node-reused {
+  
+  background-color: rgb(154, 204, 131);
+}
+
+.filter-node-unreused {
+  
+  background-color: rgb(245, 167, 155);
+}
+
+
+button {
+  padding: 10px;
+  margin: 5px;
+
+  font-weight: 600;
+  font-size: 25px;
+
+
+  border: solid;
+  border-radius: 7px;
+
+  outline: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
+
+.SelectButton-active {
+  color: black;
+  background-color: rgb(186, 183, 209);
+}
+
+.SelectButton-inactive {
+  color: rgb(158, 155, 155);
+}
