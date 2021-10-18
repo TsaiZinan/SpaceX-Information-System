@@ -3,13 +3,52 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+
+  font-size: 20px;
+  font-weight: 500;
   
 }
 
-.hexForm {
+.color-picker {
+  display: flex;
+  flex-direction: row;
+
+  padding: 2%;
+}
+
+.color-picker-individual {
+  margin: 1vw;
+}
+
+.component-display {
   display: flex;
   flex-direction: column;
-  align-items: center;
 
-  padding-top: 50px;
+
+  width: 90vw;
+  padding: 10px;
+  border-style: solid;
+  border-radius: 7px;
+}
+
+.display-node {
+  display: flex;
+  flex-direction: row;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0.8vw;
+  padding: 0.5vw;
+  width: 140px;
+
+  background-color: white;
+
+  font-weight: 600;
+
+  border-style: solid;
+  border-radius: 7px;
 }

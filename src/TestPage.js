@@ -8,9 +8,8 @@ const TestPage = () => {
 
   return (
     <div>
-      Test Page
       <Link to='/style'>
-        <button>Style</button>
+        <button>Color Palette</button>
         
       </Link>
       
