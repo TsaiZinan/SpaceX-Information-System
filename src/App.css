@@ -7,3 +7,19 @@
   display: flex;
   justify-content: center;
 }
+
+button {
+  padding: 10px;
+  margin: 5px;
+
+  font-weight: 600;
+  font-size: 25px;
+
+
+  border: solid;
+  border-radius: 7px;
+
+  outline: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
