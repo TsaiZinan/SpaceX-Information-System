@@ -53,53 +53,70 @@ const StyleTest = () => {
       <div className='color-picker'>
         {/* <ColorPicker name='nnn' colorVar={myButtonFontColor} funct={setMyButtonFontColor}/> */}
 
-        <div className='color-picker-individual'>
-          Background
-          <HexColorPicker color={myBackgroundColor} onChange={setMyBackgroundColor} />
-          {myBackgroundColor}
+        <div className='color-picker-component'>
+          <div className='color-picker-individual'>
+            Background
+            <HexColorPicker color={myBackgroundColor} onChange={setMyBackgroundColor} />
+            {myBackgroundColor}
+          </div>
         </div>
 
-        <div className='color-picker-individual'>
-          Button Background
-          <HexColorPicker color={myButtonColor} onChange={setMyButtonColor} />
-          {myButtonColor}
+        <div className='color-picker-component'>
+          <div className='color-picker-individual'>
+            Button Background
+            <HexColorPicker color={myButtonColor} onChange={setMyButtonColor} />
+            {myButtonColor}
+          </div>
+
+          <div className='color-picker-individual'>
+            Button Font
+            <HexColorPicker color={myButtonFontColor} onChange={setMyButtonFontColor} />
+            {myButtonFontColor}
+          </div>
         </div>
 
-        <div className='color-picker-individual'>
-          Button Font
-          <HexColorPicker color={myButtonFontColor} onChange={setMyButtonFontColor} />
-          {myButtonFontColor}
+        <div className='color-picker-component'>
+          <div className='color-picker-individual'>
+            Node Reuse
+            <HexColorPicker color={myReuseNodeColor} onChange={setMyReuseNodeColor} />
+            {myReuseNodeColor}
+          </div>
+
+          <div className='color-picker-individual'>
+            Node Unreuse
+            <HexColorPicker color={myUnreuseNodeColor} onChange={setMyUnreuseNodeColor} />
+            {myUnreuseNodeColor}
+          </div>
+
+          <div className='color-picker-individual'>
+            Node Font
+            <HexColorPicker color={myNodeFontColor} onChange={setMyNodeFontColor} />
+            {myNodeFontColor}
+          </div>
         </div>
 
-        <div className='color-picker-individual'>
-          Node Reuse
-          <HexColorPicker color={myReuseNodeColor} onChange={setMyReuseNodeColor} />
-          {myReuseNodeColor}
-        </div>
 
-        <div className='color-picker-individual'>
-          Node Unreuse
-          <HexColorPicker color={myUnreuseNodeColor} onChange={setMyUnreuseNodeColor} />
-          {myUnreuseNodeColor}
-        </div>
 
-        <div className='color-picker-individual'>
-          Node Font
-          <HexColorPicker color={myNodeFontColor} onChange={setMyNodeFontColor} />
-          {myNodeFontColor}
-        </div>
+
 
 
       </div>
 
       <div className='component-display'>
 
-        <button
-          style={{ backgroundColor: myButtonColor, color: myButtonFontColor }}
-        >Button</button>
+        <div className='display-button'>
+          <button
+            style={{ backgroundColor: myButtonColor, color: myButtonFontColor }}
+          >Button</button>
+
+          <button
+            style={{ backgroundColor: '#ffffff', color: '#9e9b9b' }}
+          >Button</button>
+        </div>
+
 
         <div className='display-node'>
-          <DisplayNode mode='reuse'/>
+          <DisplayNode mode='reuse' />
           <DisplayNode mode='unreuse' />
         </div>
 

@@ -16,6 +16,17 @@
   padding: 2%;
 }
 
+.color-picker-component {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0 1vw 0 1vw;
+  padding: 0 1vw 0 1vw;
+
+  border-style: solid;
+  border-radius: 7px;
+}
+
 .color-picker-individual {
   margin: 1vw;
 }
@@ -31,6 +42,10 @@
   border-radius: 7px;
 }
 
+.display-button {
+  display: flex;
+}
+
 .display-node {
   display: flex;
   flex-direction: row;
@@ -41,7 +56,7 @@
   align-items: center;
   justify-content: center;
 
-  margin: 0.8vw;
+  margin: 0.3vw;
   padding: 0.5vw;
   width: 140px;
 
