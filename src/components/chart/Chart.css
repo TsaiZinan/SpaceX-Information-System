@@ -1,0 +1,8 @@
+.chart {
+  display: flex;
+  justify-content: center;
+}
+
+.single-chart {
+  width: 30%;
+}
