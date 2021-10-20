@@ -12,6 +12,10 @@ const TestPage = () => {
         <button>Color Palette</button>
         
       </Link>
+      <Link to='/chart'>
+        <button>Chart</button>
+        
+      </Link>
       
     </div>
   )

@@ -10,6 +10,7 @@ import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
 import FilterTest from './components/filterTest/FilterTest';
 import TestPage from './TestPage';
 import StyleTest from './components/styleTest/StyleTest';
+import Chart from './components/chart/Chart';
 
 import { LatestLaunch, Cores, AllLaunches } from './data'
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/filter' exact component={FilterTest} />
           <Route path='/test' exact component={TestPage} />
           <Route path='/style' exact component={StyleTest} />
+          <Route path='/chart' exact component={Chart} />
           <Route
             path='/launch/:number' 
             render={(props) => (
