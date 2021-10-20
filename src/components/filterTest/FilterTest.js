@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import './FilterTest.css'
+// import './FilterTest.css'
+import './FilterTest2.css'
 import { LatestLaunch, Cores, AllLaunches, LaunchPads } from '../../data'
 
 const FilterTest = () => {
@@ -175,12 +176,12 @@ const FilterTest = () => {
         {AllLaunches.map((launch, launchIndex) => {
           if (filter(launch.date_utc, launch.cores[0].reused, launch.launchpad) === true) {
             return (
-              <div className={launch.cores[0].reused === true ? 'filter-node-reused' : 'filter-node-unreused'} id={launchIndex}>
+              <div className={launch.cores[0].reused === true ? 'filter-node filter-node-reused' : 'filter-node filter-node-unreused'} id={launchIndex}>
                 <div>Number: {launch.flight_number}</div>
                 <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div>
                 <div>Year: {launch.date_utc.substring(0, 4)}</div>
                 {/* {console.log(launch.launchpad)} */}
-                <div>Site: {launchPadFetch(launch.launchpad, LaunchPads, 0)}</div>
+                <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div>
               </div>
             )
           } else { return (null) }

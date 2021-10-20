@@ -9,6 +9,7 @@ import CoresPage from './CoresPage';
 import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
 import FilterTest from './components/filterTest/FilterTest';
 import TestPage from './TestPage';
+import StyleTest from './components/styleTest/StyleTest';
 
 import { LatestLaunch, Cores, AllLaunches } from './data'
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/cores' exact component={CoresPage} />
           <Route path='/filter' exact component={FilterTest} />
           <Route path='/test' exact component={TestPage} />
+          <Route path='/style' exact component={StyleTest} />
           <Route
             path='/launch/:number' 
             render={(props) => (
