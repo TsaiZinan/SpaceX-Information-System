@@ -59,7 +59,7 @@ const PadChart = (props) => {
   };
 
   return (
-    <div>
+    <div className='single-chart'>
       <Doughnut data={launchPadsData} />
     </div>
   )
