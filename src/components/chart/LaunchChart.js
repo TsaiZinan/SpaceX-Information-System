@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 function count_duplicate(a) {
   let counts = {}
@@ -63,7 +64,7 @@ const LaunchChart = (props) => {
   const [monthArray, setMonthArray] = useState({})
 
   useEffect(() => {
-    
+
     const test = () => {
       var year = [];
       var month = [];
@@ -91,7 +92,7 @@ const LaunchChart = (props) => {
 
 
 
-  const yearData = {
+  const yearLineData = {
     labels: yearLable,
     datasets: [
       {
@@ -104,7 +105,7 @@ const LaunchChart = (props) => {
     ],
   };
 
-  const monthData = {
+  const monthLineData = {
     // labels: ['1', '2', '3', '4', '5', '6'],
     labels: Object.keys(monthArray),
     datasets: [
@@ -119,12 +120,58 @@ const LaunchChart = (props) => {
     ],
   };
 
-  const options = {
+  const lineOptions = {
     scales: {
       y: {
         beginAtZero: true
       }
     }
+  };
+
+  const yearBardata = {
+    labels: yearLable,
+    datasets: [
+      {
+        label: '# of Votes',
+        data: yearValue,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const monthBardata = {
+    labels: Object.keys(monthArray),
+    datasets: [
+      {
+        label: '# of Votes',
+        data: Object.values(monthArray),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  
+  const barOptions = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   };
 
   // console.log(yearArray)
@@ -135,8 +182,10 @@ const LaunchChart = (props) => {
 
   return (
     <div className='single-chart'>
-      <Line data={yearData} options={options} />
-      <Line data={monthData} options={options} />
+      <Line data={yearLineData} options={lineOptions} />
+      <Line data={monthLineData} options={lineOptions} />
+      <Bar data={yearBardata} options={barOptions} />
+      <Bar data={monthBardata} options={barOptions} />
     </div>
   )
 }
