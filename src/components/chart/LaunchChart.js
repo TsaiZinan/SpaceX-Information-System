@@ -18,7 +18,7 @@ function count_duplicate(a) {
 
 
 
-
+// add the existing month object to empty month object because the existing month object miss the monthes which have no launch
 const combineMonth = (latestMon, valueMon) => {
   // generate an empty month object
   const generateMonth = (latestMonth) => {
@@ -28,14 +28,14 @@ const combineMonth = (latestMon, valueMon) => {
       for (let m = 1; m < 13; m++) {
         var yearKey = y.toString()
         var monthKey = m.toString()
-  
+
         if (m < 10) {
           monthKey = '0' + monthKey
         }
-  
+
         var key = yearKey + '-' + monthKey
         emptyObject[key] = 0;
-  
+
         if (key === latestMonth) { break; }
       }
     }
@@ -44,7 +44,7 @@ const combineMonth = (latestMon, valueMon) => {
 
   // add the existing month object to empty month object because the existing month object miss the monthes which have no launch
   function extend(obj, src) {
-    Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+    Object.keys(src).forEach(function (key) { obj[key] = src[key]; });
     return obj;
   }
 
@@ -68,12 +68,12 @@ const LaunchChart = (props) => {
     const test = () => {
       var year = [];
       var month = [];
-      
+
       launchesData.forEach(launch => {
         year.push(launch.date_utc.substring(0, 4));
         month.push(launch.date_utc.substring(0, 7));
       });
-      
+
       setYearArray(count_duplicate(year))
       setMonthArray(combineMonth(latestMonth, count_duplicate(month)))
     }
@@ -132,10 +132,10 @@ const LaunchChart = (props) => {
     labels: yearLable,
     datasets: [
       {
-        label: '# of Votes',
+        label: '# of Launches',
         data: yearValue,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 1)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -149,10 +149,10 @@ const LaunchChart = (props) => {
     labels: Object.keys(monthArray),
     datasets: [
       {
-        label: '# of Votes',
+        label: '# of Launches',
         data: Object.values(monthArray),
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
+          'rgba(255, 99, 132, 1)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -161,7 +161,7 @@ const LaunchChart = (props) => {
       },
     ],
   };
-  
+
   const barOptions = {
     scales: {
       yAxes: [
@@ -174,11 +174,6 @@ const LaunchChart = (props) => {
     },
   };
 
-  // console.log(yearArray)
-  // console.log(monthArray)
-
-  // console.log(Object.values(yearArray))
-  // console.log(Object.keys(yearArray))
 
   return (
     <div className='single-chart'>
