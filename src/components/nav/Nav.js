@@ -7,33 +7,24 @@ const Nav = () => {
   return (
     <div>
       <nav className='nav'>
-        <h1>
-          Space Info
-        </h1>
-        <ul className='nav-links'>
-          <Link to='/'>
-            <li>HOME</li>
+        <div className='nav-title'>
+          SpaceX Information System
+        </div>
+        <div className='nav-links'>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            <div className='nav-link'>Summary</div>
           </Link>
-          <Link to='/launches'>
-            <li>Launches</li>
+          <Link to='/launches' style={{ textDecoration: 'none' }}>
+            <div className='nav-link'>Launches</div>
           </Link>
-          <Link to='/cores'>
-            <li>Cores</li>
-          </Link>
-
-          <li>Test</li>
-          <Link to='/filter'>
-            <li>Filter</li>
+          <Link to='/cores' style={{ textDecoration: 'none' }}>
+            <div className='nav-link'>Cores</div>
           </Link>
 
-          <Link to='/timeline'>
-            <li>Timeline</li>
+          <Link to='/test' style={{ textDecoration: 'none' }}>
+            <div className='nav-link'>Experiment</div>
           </Link>
-
-          <Link to='/test'>
-            <li>Test</li>
-          </Link>
-        </ul>
+        </div>
       </nav>
     </div>
   )
