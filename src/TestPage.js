@@ -27,6 +27,10 @@ const TestPage = () => {
         <button>Timeline</button>
       </Link>
 
+      <Link to='/launches'>
+        <button>Launches</button>
+      </Link>
+
     </div>
   )
 }

@@ -15,9 +15,9 @@ const Chart = () => {
   return (
     <div className='chart'>
 
-      <PadChart data={LaunchPads}/>
+      
       <LaunchChart data={AllLaunches} latest={LatestLaunch}/>
-
+      <PadChart data={LaunchPads}/>
     </div>
   )
 }

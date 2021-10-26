@@ -14,7 +14,7 @@ const Nav = () => {
           <Link to='/' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>Summary</div>
           </Link>
-          <Link to='/launches' style={{ textDecoration: 'none' }}>
+          <Link to='/filter' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>Launches</div>
           </Link>
           <Link to='/cores' style={{ textDecoration: 'none' }}>

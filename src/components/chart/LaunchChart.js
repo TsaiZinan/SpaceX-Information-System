@@ -99,8 +99,10 @@ const LaunchChart = (props) => {
         label: '# of Launches',
         data: yearValue,
         fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor: 'rgb(124, 169, 192, 1)',
+        borderColor: 'rgba(124, 169, 192, 0.5)',
+        tension: 0.2,
+        pointStyle: 'circle',
       },
     ],
   };
@@ -114,8 +116,8 @@ const LaunchChart = (props) => {
         // data: [12, 19, 3, 5, 2, 3],
         data: Object.values(monthArray),
         fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor: 'rgb(231, 125, 50, 1)',
+        borderColor: 'rgb(231, 125, 50, 0.3)',
       },
     ],
   };
@@ -123,7 +125,22 @@ const LaunchChart = (props) => {
   const lineOptions = {
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        grid: {
+          lineWidth: 0
+        },
+        // lineWidth: 2
+        // tickColor: 'rgba(235, 229, 217, 1)'
+      },
+      x: {
+        grid: {
+          lineWidth: 0
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'bottom'
       }
     }
   };
@@ -135,10 +152,10 @@ const LaunchChart = (props) => {
         label: '# of Launches',
         data: yearValue,
         backgroundColor: [
-          'rgba(255, 99, 132, 1)',
+          'rgba(246, 177, 161, 1)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
+          'rgba(246, 177, 161, 1)',
         ],
         borderWidth: 1,
       },
@@ -152,10 +169,10 @@ const LaunchChart = (props) => {
         label: '# of Launches',
         data: Object.values(monthArray),
         backgroundColor: [
-          'rgba(255, 99, 132, 1)',
+          'rgba(40, 166, 145, 1)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
+          'rgba(40, 166, 145, 1)',
         ],
         borderWidth: 1,
       },
@@ -171,16 +188,40 @@ const LaunchChart = (props) => {
           },
         },
       ],
+      x: {
+        grid: {
+          lineWidth: 0
+        },
+      },
+
     },
+    plugins: {
+      legend: {
+        position: 'bottom'
+      }
+    }
   };
 
 
   return (
     <div className='single-chart'>
-      <Line data={yearLineData} options={lineOptions} />
+      {/* <div className='chart-node'>
+        <Line data={yearLineData} options={lineOptions} />
+      </div>
+      <div className='chart-node'>
+        <Line data={monthLineData} options={lineOptions} />
+      </div> */}
+      <div className='chart-node'>
+        <Bar data={yearBardata} options={barOptions} />
+      </div>
+      <div className='chart-node'>
+        <Bar data={monthBardata} options={barOptions} />
+      </div>
+
+      {/* <Line data={yearLineData} options={lineOptions} />
       <Line data={monthLineData} options={lineOptions} />
       <Bar data={yearBardata} options={barOptions} />
-      <Bar data={monthBardata} options={barOptions} />
+      <Bar data={monthBardata} options={barOptions} /> */}
     </div>
   )
 }
