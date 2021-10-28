@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
@@ -11,8 +12,8 @@ const AllCores = (props) => {
   return (
     <div className='allCores'>
 
-      {console.log(launchesData)}
-      {console.log(coresData)}
+      {/* {console.log(launchesData)}
+      {console.log(coresData)} */}
       {coresData.map((core, coreIndex) => {
         return (
           <div className='singleCore' id={coreIndex}>
@@ -21,8 +22,8 @@ const AllCores = (props) => {
             </div>
 
             <div className='launch-patches' >
-              {console.log(core.serial)}
-              {console.log(core.reuse_count)}
+              {/* {console.log(core.serial)}
+              {console.log(core.reuse_count)} */}
 
               {core.launches.map((idCoreLaunches, idCoreLaunchesIndex) => {
                 // console.log(idCoreLaunches)
@@ -31,7 +32,7 @@ const AllCores = (props) => {
                     {launchesData.map((idLaunches, idLaunchesIndex) => {
 
                       if (idCoreLaunches === idLaunches.id) {
-                        console.log(idLaunches.name)
+                        // console.log(idLaunches.name)
                         return (
 
                           <div id={idLaunchesIndex}>
@@ -41,7 +42,10 @@ const AllCores = (props) => {
                               <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
 
                               <div className='launch-hoverBox-name'>
-                                {idLaunches.name}
+                                <Link to={`/launch/${idLaunches.flight_number}`} className="launch-hoverBox-name">
+                                  {idLaunches.name}
+                                </Link>
+
                               </div>
 
                               <div className='launch-hoverBox-date'>

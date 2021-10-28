@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './AllLaunch.css'
 
 import { FaRecycle } from "react-icons/fa";
@@ -10,16 +11,19 @@ const AllLaunch = (props) => {
   return (
     <div className="allLaunch">
 
-      {console.log(cores)}
+      {/* {console.log(cores)} */}
 
       {allLaunchData.map((launch, index) => {
         return (
+
           <div className="allLaunch-card">
 
             <div className="allLaunch-card-first">
 
               <div className="allLaunch-card-first-number">
-                {launch.flight_number}
+                <Link to={`/launch/${launch.flight_number}`} className="allLaunch-card-first-number">
+                  {launch.flight_number}
+                </Link>
               </div>
 
               <div className="allLaunch-card-first-img">
@@ -33,11 +37,11 @@ const AllLaunch = (props) => {
             </div>
 
             <div className="allLaunch-card-third">
-              
+
             </div>
 
             <div className="allLaunch-card-fourth">
-              {launch.cores[0].reused === true ? <FaRecycle className="reused"/> : <FaRecycle className="unreused"/>}
+              {launch.cores[0].reused === true ? <FaRecycle className="reused" /> : <FaRecycle className="unreused" />}
               {cores.map((core, coreIndex) => {
                 // core.id === launch.cores[0].core ? console.log(core.serial) : null
                 if (core.id === launch.cores[0].core) {
@@ -50,6 +54,7 @@ const AllLaunch = (props) => {
             </div>
 
           </div>
+
         )
       })}
     </div>

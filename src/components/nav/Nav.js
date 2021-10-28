@@ -20,8 +20,18 @@ const Nav = () => {
           <Link to='/cores'>
             <li>Cores</li>
           </Link>
+
+          <li>Test</li>
+          <Link to='/filter'>
+            <li>Filter</li>
+          </Link>
+
           <Link to='/timeline'>
             <li>Timeline</li>
+          </Link>
+
+          <Link to='/test'>
+            <li>Test</li>
           </Link>
         </ul>
       </nav>

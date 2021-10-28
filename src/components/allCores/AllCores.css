@@ -82,6 +82,8 @@
 
 .launch-hoverBox-name {
   padding: 5% 5% 0% 5%;
+  text-decoration: none;
+  color: black;
 }
 
 .launch-hoverBox-links {
