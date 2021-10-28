@@ -7,15 +7,17 @@ import SingleLaunch from './components/singleLaunch/SingleLaunch'
 import About from './components/about/About'
 import Timeline from './components/timeline/Timeline'
 import AllLaunch from './components/allLaunch/AllLaunch'
+import Chart from './components/chart/Chart'
 
 const Home = () => {
   return (
     <div>
       {/* <AllLaunch data={AllLaunches} cores={Cores}/> */}
       {/* <Timeline /> */}
-      <Test />
+      <Chart />
+      {/* <Test />
       <SingleLaunch />
-      <About />
+      <About /> */}
     </div>
   )
 }

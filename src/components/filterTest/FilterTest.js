@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
+import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
 // import './FilterTest.css'
-import './FilterTest2.css'
+// import './FilterTest2.css'
+import './FilterTest3.css'
 import { LatestLaunch, Cores, AllLaunches, LaunchPads } from '../../data'
 
 const FilterTest = () => {
@@ -116,59 +120,102 @@ const FilterTest = () => {
     <div className='filter'>
 
       <div className='filter-years'>
-        {/* reset to all year */}
-        <button
-          className={yearState.length === allYears.length ? 'SelectButton-active' : 'SelectButton-inactive'}
-          onClick={() => setyearState(allYears)}
-        >All Years</button>
-        {/* set to only 2021 */}
-        <button
-          className={JSON.stringify(yearState) == JSON.stringify([2021]) ? 'SelectButton-active' : 'SelectButton-inactive'}
-          onClick={() => setyearState([2021])}
-        >
-          Only 2021
-        </button>
+        <div className='filter-option'>
+          {allYears.map((year) => {
+            return (
+              <SelectButton name={year} unit={year} array={yearState} fun={() => stateSelect(year, yearState, setyearState)} />
+            )
+          })}
+        </div>
+
+        <div className='filter-option'>
+          {/* reset to all year */}
+          <button
+            className={yearState.length === allYears.length ? 'SelectButton-active' : 'SelectButton-inactive'}
+            onClick={() => setyearState(allYears)}
+          >All Years</button>
+          {/* set to only 2021 */}
+          <button
+            className={JSON.stringify(yearState) == JSON.stringify([2021]) ? 'SelectButton-active' : 'SelectButton-inactive'}
+            onClick={() => setyearState([2021])}
+          >
+            Only 2021
+          </button>
+        </div>
+
       </div>
+
+
 
 
 
       <div className='filter-years'>
-        {allYears.map((year) => {
-          return (
-            <SelectButton name={year} unit={year} array={yearState} fun={() => stateSelect(year, yearState, setyearState)} />
-          )
-        })}
+        <div className='filter-option'>
+          {allSite.map((site, siteIndex) => {
+            return (
+              <SelectButton
+                name={launchPadFetch(site, LaunchPads, 0)}
+                unit={site}
+                array={launchPadState}
+                fun={() => stateSelect(site, launchPadState, setLaunchPadState)}
+              />
+            )
+          })}
+        </div>
       </div>
 
-      <div className='filter-reused'>
-        <SelectButton
-          name={'Reused'}
-          unit={true}
-          array={reusedState}
-          fun={() => stateSelect(true, reusedState, setReusedState)}
-        />
-        <SelectButton
-          name={'Unreused'}
-          unit={false}
-          array={reusedState}
-          fun={() => stateSelect(false, reusedState, setReusedState)}
-        />
-        {/* {console.log(reusedState)}
+      <div className='filter-years'>
+        <div className='filter-option'>
+          <SelectButton
+            name={'Reused'}
+            unit={true}
+            array={reusedState}
+            fun={() => stateSelect(true, reusedState, setReusedState)}
+          />
+          <SelectButton
+            name={'Unreused'}
+            unit={false}
+            array={reusedState}
+            fun={() => stateSelect(false, reusedState, setReusedState)}
+          />
+          {/* {console.log(reusedState)}
         {console.log(yearState)} */}
+        </div>
       </div>
 
-      <div className='filter-sites'>
-        {allSite.map((site, siteIndex) => {
-          return (
-            <SelectButton
-              name={launchPadFetch(site, LaunchPads, 0)}
-              unit={site}
-              array={launchPadState}
-              fun={() => stateSelect(site, launchPadState, setLaunchPadState)}
-            />
-          )
-        })}
-      </div>
+
+
+
+
+      {/* <div className='new-node'>
+
+        <div className='new-node-first'>
+          <img className='new-node-first-patch' src="https://images2.imgbox.com/12/7c/NiniYxoh_o.png" alt="" />
+          <div className='new-node-first-number'>
+            63
+          </div>
+        </div>
+
+        <div className='new-node-second'>
+          <div>Nusantara Satu (PSN-6) / S5 / Beresheet</div>
+        </div>
+
+        <div className='new-node-third'>
+          <div>CCSFS SLC 40</div>
+        </div>
+
+        <div className='new-node-last'>
+          <div>2020-05-19</div>
+          <div className='new-node-links'>
+            <SiYoutube className='new-node-link' />
+            <SiReddit className='new-node-link' />
+            <SiWikipedia className='new-node-link' />
+          </div>
+        </div>
+
+      </div> */}
+
+
 
 
       <div className='filter-nodes'>
@@ -177,11 +224,51 @@ const FilterTest = () => {
           if (filter(launch.date_utc, launch.cores[0].reused, launch.launchpad) === true) {
             return (
               <div className={launch.cores[0].reused === true ? 'filter-node filter-node-reused' : 'filter-node filter-node-unreused'} id={launchIndex}>
-                <div>Number: {launch.flight_number}</div>
-                <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div>
-                <div>Year: {launch.date_utc.substring(0, 4)}</div>
-                {/* {console.log(launch.launchpad)} */}
-                <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div>
+                {/* <div>Number: {launch.flight_number}</div> */}
+                {/* <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div> */}
+                {/* <div>Year: {launch.date_utc.substring(0, 4)}</div> */}
+
+                {/* <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div> */}
+
+                <div className='new-node'>
+
+                  <div className='new-node-first'>
+                    <img className='new-node-first-patch' src={launch.links.patch.small} alt="" />
+                    <div className='new-node-first-number'>
+                      {launch.flight_number}
+                    </div>
+                  </div>
+
+                  <div className='new-node-second'>
+                    <Link to={`/launch/${launch.flight_number}`} className='new-node-second'>
+                      {launch.name}
+                    </Link>
+                  </div>
+
+                  <div className='new-node-third'>
+                    <div className='new-node-reuse'>{launch.cores[0].reused === true ? 'Reused' : 'Unreused'}</div>
+                    <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div>
+                  </div>
+
+                  <div className='new-node-last'>
+                    <div>{launch.date_utc.substring(0, 10)}</div>
+                    <div className='new-node-links'>
+                      <a href={launch.links.webcast}>
+                        <SiYoutube className='new-node-link' />
+                      </a>
+                      <a href={launch.links.reddit.launch}>
+                        <SiReddit className='new-node-link' />
+                      </a>
+                      <a href={launch.links.wikipedia}>
+                        <SiWikipedia className='new-node-link' />
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
               </div>
             )
           } else { return (null) }

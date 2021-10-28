@@ -1,0 +1,16 @@
+.chart {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.single-chart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around
+}
+
+.chart-node {
+  width: 40vw;
+}

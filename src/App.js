@@ -10,8 +10,9 @@ import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
 import FilterTest from './components/filterTest/FilterTest';
 import TestPage from './TestPage';
 import StyleTest from './components/styleTest/StyleTest';
+import Chart from './components/chart/Chart';
 
-import { LatestLaunch, Cores, AllLaunches } from './data'
+import { LatestLaunch, Cores, AllLaunches, LandingPads } from './data'
 
 import TimelinePage from './components/timelinePage/TimelinePage';
 
@@ -30,10 +31,11 @@ function App() {
           <Route path='/filter' exact component={FilterTest} />
           <Route path='/test' exact component={TestPage} />
           <Route path='/style' exact component={StyleTest} />
+          <Route path='/chart' exact component={Chart} />
           <Route
             path='/launch/:number' 
             render={(props) => (
-              <LaunchDetailPage {...props} launches={AllLaunches} cores={Cores} />
+              <LaunchDetailPage {...props} launches={AllLaunches} cores={Cores} landingPads={LandingPads}/>
             )}
           />
           {/* <Route path='/launch/:number' element={<LaunchDetailPage />} /> */}

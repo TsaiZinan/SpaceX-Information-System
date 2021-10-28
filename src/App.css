@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #d9e2e8;
+  background-color: #ebe5d9;
 }
 
 .coresPage {
@@ -9,14 +9,8 @@
 }
 
 
-.TimelinePage{
-  text-align: left;
-  background-color: #d9e2e8;
-}
 
-
-
-button {
+/* button {
   padding: 10px;
   margin: 5px;
 
@@ -32,5 +26,4 @@ button {
   outline: none;
   cursor: pointer;
   transition: .2s ease-in-out;
-}
-
+} */
