@@ -99,13 +99,15 @@ button {
 
   line-height: 0.8;
   color: #ebe5d9;
+
+  padding-right: 5px;
 }
 
 .new-node-second {
   /* display: flex;
   align-items: flex-end; */
 
-  padding: 10px 10px 0px 60px;
+  padding: 5px 5px 5px 50px;
   height: 50px;
 
   text-align: end;
@@ -115,7 +117,9 @@ button {
 
   line-height: 1.1;
   color: #ebe5d9;
+  text-decoration: none;
 }
+
 
 .new-node-third {
   display: flex;

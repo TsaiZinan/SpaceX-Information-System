@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
@@ -239,7 +240,9 @@ const FilterTest = () => {
                   </div>
 
                   <div className='new-node-second'>
-                    <div>{launch.name}</div>
+                    <Link to={`/launch/${launch.flight_number}`} className='new-node-second'>
+                      {launch.name}
+                    </Link>
                   </div>
 
                   <div className='new-node-third'>
