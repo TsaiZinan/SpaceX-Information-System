@@ -1,5 +1,7 @@
-body{
-    background: lightskyblue ;
+.TimelinePage{
+    /* background: lightskyblue ; */
+    text-align: left;
+    background-color: #d9e2e8;
   
     font-size: 16px;
 } 

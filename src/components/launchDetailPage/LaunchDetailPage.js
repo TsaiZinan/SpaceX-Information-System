@@ -129,7 +129,7 @@ const LaunchDetailPage = (props) => {
             <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_type}</div>
 
             <div className='launchDetail-core-h'>Landing Site:</div>
-            <div className='launchDetail-core-p'>{landingPadFetch('5e9e3033383ecbb9e534e7cc', landingData, 1)}</div>
+            <div className='launchDetail-core-p'>{landingPadFetch(singleLaunchData.cores[0].landpad, landingData, 1)}</div>
             {/* <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landpad}</div> */}
 
             <div className='launchDetail-core-h'>Landing Result:</div>
