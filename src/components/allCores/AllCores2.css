@@ -1,0 +1,155 @@
+.allCores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 95%;
+  background-color: #ebe5d9;
+}
+
+.singleCore {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 15px 20px 15px;
+
+  min-width: 190px;
+  /* width: fit-content; */
+
+  border-radius: 19px;
+  background: #c9c5bd;
+  /* box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1; */
+  
+}
+
+.singleCore-name {
+  width: fit-content;
+  
+  font-size: 40px;
+  font-weight: 350;
+  color: #543f2e;
+
+  /* move upper */
+  margin-top: -28px;
+  margin-left: 15px;
+
+  /* padding: 0 5% 0 5%; */
+  
+
+}
+
+.launch-patches {
+  display: flex;
+  padding: 10px;
+}
+
+.launch-patch-div {
+  margin: 0 5px 0 5px;
+}
+
+.launch-patch {
+  max-width: 80px;
+}
+
+.launch-hoverBox {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  z-index: 2;
+
+  visibility: hidden;
+
+  margin-top: -50px;
+  margin-left: -65px;
+  width: 220px;
+
+  border-radius: 10px;
+  color: #ebe5d9;
+  /* box-shadow:  10px 10px 20px #d0d9df,
+               -10px -10px 20px #e2ebf1; */
+}
+
+/* .launch-hoverBox-number {
+  font-size: 45px;
+  font-weight: 150;
+
+  line-height: 1;
+  text-align: start;
+
+  padding-left: 5px;
+  margin-top: -55px;
+} */
+
+.launch-hoverBox-number {
+  font-size: 90px;
+  font-weight: 150;
+
+  opacity: 0.2;
+
+  line-height: 0.5;
+  text-align: end;
+
+  margin-top: -40px;
+}
+
+.launch-hoverBox-img {
+  width: 90px;
+  margin-top: -35px;
+  margin-left: 60px;
+  z-index: 2;
+}
+
+.launch-hoverBox-name {
+  color: #ebe5d9;
+  text-decoration: none;
+
+  font-size: 22px;
+  font-weight: 350;
+  padding: 5px 10px 10px 10px;
+}
+
+/* ======================================= */
+
+.launch-hoverBox-last {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  font-size: 15px;
+  font-weight: 350;
+
+  padding: 0 10px 0 10px;
+}
+
+.launch-hoverBox-links {
+  display: flex;
+  /* padding-left: 10px; */
+}
+
+.launch-hoverBox-link {
+  padding: 5px;
+  color: #ebe5d9;
+}
+
+/* .launch-hoverBox-date {
+  padding-right: 10px;
+} */
+
+/* .launch-hoverBox-details {
+  font-size: 1.75vh;
+  text-align: justify;
+
+  padding: 3% 10% 10% 10%;
+} */
+
+.launch-patch-div:hover .launch-hoverBox {
+  background-color: #9e8a79;
+  color: #ebe5d9;
+  visibility: visible;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.launch-patch-div:hover .launch-patch {
+  visibility: hidden;
+}

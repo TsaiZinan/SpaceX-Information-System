@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
-import './AllCores.css'
+import './AllCores2.css'
 
 const AllCores = (props) => {
   const launchesData = props.launches;
@@ -41,6 +41,10 @@ const AllCores = (props) => {
 
                               <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
 
+                              <div className='launch-hoverBox-number'>
+                                {idLaunches.flight_number}
+                              </div>
+
                               <div className='launch-hoverBox-name'>
                                 <Link to={`/launch/${idLaunches.flight_number}`} className="launch-hoverBox-name">
                                   {idLaunches.name}
@@ -48,30 +52,36 @@ const AllCores = (props) => {
 
                               </div>
 
-                              <div className='launch-hoverBox-date'>
-                                {idLaunches.date_utc.substring(0, 10)}
+
+
+                              <div className='launch-hoverBox-last'>
+                                <div className='launch-hoverBox-links'>
+
+                                  <a href={idLaunches.links.webcast}>
+                                    <SiYoutube className='launch-hoverBox-link' />
+                                  </a>
+                                  <a href={idLaunches.links.reddit.launch}>
+                                    <SiReddit className='launch-hoverBox-link' />
+                                  </a>
+                                  <a href={idLaunches.links.wikipedia}>
+                                    <SiWikipedia className='launch-hoverBox-link' />
+                                  </a>
+                                  <a href={idLaunches.links.presskit}>
+                                    <SiSpacex className='launch-hoverBox-link' />
+                                  </a>
+
+                                </div>
+
+                                <div className='launch-hoverBox-date'>
+                                  {idLaunches.date_utc.substring(0, 10)}
+                                </div>
                               </div>
 
-                              <div className='launch-hoverBox-links'>
 
-                                <a href={idLaunches.links.webcast}>
-                                  <SiYoutube className='launch-hoverBox-link' />
-                                </a>
-                                <a href={idLaunches.links.reddit.launch}>
-                                  <SiReddit className='launch-hoverBox-link' />
-                                </a>
-                                <a href={idLaunches.links.wikipedia}>
-                                  <SiWikipedia className='launch-hoverBox-link' />
-                                </a>
-                                <a href={idLaunches.links.presskit}>
-                                  <SiSpacex className='launch-hoverBox-link' />
-                                </a>
 
-                              </div>
-
-                              <div className='launch-hoverBox-details'>
+                              {/* <div className='launch-hoverBox-details'>
                                 {idLaunches.details}
-                              </div>
+                              </div> */}
 
                             </div>
                           </div>
