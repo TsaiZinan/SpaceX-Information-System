@@ -8,6 +8,14 @@
   justify-content: center;
 }
 
+
+.TimelinePage{
+  text-align: left;
+  background-color: #d9e2e8;
+}
+
+
+
 button {
   padding: 10px;
   margin: 5px;
@@ -25,3 +33,4 @@ button {
   cursor: pointer;
   transition: .2s ease-in-out;
 }
+
