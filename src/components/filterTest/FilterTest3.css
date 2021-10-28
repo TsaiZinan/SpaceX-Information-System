@@ -75,6 +75,10 @@ button {
   margin: 20px;
 }
 
+/* .filter-node :hover {
+  background-color: rgb(110, 146, 163);
+} */
+
 .new-node-first {
   display: flex;
   flex-direction: row;
