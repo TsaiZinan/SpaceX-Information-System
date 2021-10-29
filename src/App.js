@@ -24,7 +24,7 @@ function App() {
         <Nav />
 
         <Switch>
-          <Route path='/' exact component={Home} />
+          <Route path='/' exact component={Chart} />
 
           <Route path='/launches' exact component={Launches} />
           <Route path='/cores' exact component={CoresPage} />
