@@ -18,6 +18,7 @@ import TimelinePage from './components/timelinePage/TimelinePage';
 
 
 function App() {
+  document.title = "SpaceX Information System";
   return (
     <Router>
       <div className="App">
@@ -25,6 +26,7 @@ function App() {
 
         <Switch>
           <Route path='/' exact component={Chart} />
+          <Route path='/SpaceX-info' exact component={Chart} />
 
           <Route path='/launches' exact component={Launches} />
           <Route path='/cores' exact component={CoresPage} />
