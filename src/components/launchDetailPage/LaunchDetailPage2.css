@@ -64,7 +64,7 @@
 .launchDetail-patch {
   display: flex;
   justify-content: end;
-  opacity: 20%;
+  opacity: 0.25;
 
   height: 300px;
 }
