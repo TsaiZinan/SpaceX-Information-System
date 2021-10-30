@@ -26,7 +26,7 @@ function App() {
 
         <Switch>
           <Route path='/' exact component={Chart} />
-          <Route path='/SpaceX-info' exact component={Chart} />
+          <Route path='/SpaceX-Information-System' exact component={Chart} />
 
           <Route path='/launches' exact component={Launches} />
           <Route path='/cores' exact component={CoresPage} />
