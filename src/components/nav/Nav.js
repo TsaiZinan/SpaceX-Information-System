@@ -25,9 +25,9 @@ const Nav = () => {
             <div className='nav-link'>Experiment</div>
           </Link>
 
-          <Link to='/t' style={{ textDecoration: 'none' }}>
+          {/* <Link to='/t' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>T</div>
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </div>
