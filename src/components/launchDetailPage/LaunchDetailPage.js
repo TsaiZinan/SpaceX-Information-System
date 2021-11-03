@@ -8,6 +8,9 @@ const LaunchDetailPage = (props) => {
   const launchesData = props.launches;
   const coresData = props.cores;
   const landingData = props.landingPads;
+
+  let content = 'LOADING'
+
   const launchNumber = props.match.params.number;
   const number = launchNumber - 1;
   const singleLaunchData = launchesData[number]
@@ -70,100 +73,109 @@ const LaunchDetailPage = (props) => {
     }
   }
 
+  if (launchesData.length > 1 && coresData.length > 1 && landingData.length > 1) {
+    // console.log('....................')
+    content =
+      <div className='launchDetail'>
+
+        <div className='launchDetail-controlPanal'>
+          <div>
+            <Link to='/filter' className='launchDetail-controlPanal-button'>
+              {/* <VscArrowLeft className='launchDetail-Button' /> */}
+              BACK
+            </Link>
+          </div>
+
+          <div className='launchDetail-controlPanal-page'>
+
+            <Link to={`/launch/${launchNumber == 1 ? launchDataLength : launchNumber - 1}`} className='launchDetail-controlPanal-button'>
+              {/* <VscArrowLeft className='launchDetail-Button' /> */}
+              PREVIOUS
+            </Link>
+
+
+            <Link to={`/launch/${launchNumber == launchDataLength ? 1 : Number(launchNumber) + 1}`} className='launchDetail-controlPanal-button'>
+              {/* <VscArrowRight className='launchDetail-Button' /> */}
+              NEXT
+            </Link>
+          </div>
+        </div>
+
+        <div className='launchDetail-first'>
+
+          <div className='launchDetail-first-left'>
+
+
+            <div className='launchDetail-patch'>
+              <img className='launchDetail-patch-img' src={singleLaunchData.links.patch.small} alt="" />
+            </div>
+
+            <div className='launchDetail-basic'>
+
+              <div className='launchDetail-basic-name'>{singleLaunchData.name}</div>
+              <div>{singleLaunchData.date_utc.substring(0, 10)}</div>
+              {/* <div>{singleLaunchData.flight_number}</div> */}
+            </div>
+
+
+
+          </div>
+
+          <div className='launchDetail-first-middle'>
+            <div className='launchDetail-core-title'>Core</div>
+            <div className='launchDetail-core'>
+              <div className='launchDetail-core-h'>Name:</div>
+              <div className='launchDetail-core-p'>{coreFetch(singleLaunchData.cores[0].core, coresData, 0)}</div>
+
+              <div className='launchDetail-core-h'>Reused Times:</div>
+              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].flight}</div>
+
+              <div className='launchDetail-core-h'>Landing Type:</div>
+              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_type}</div>
+
+              <div className='launchDetail-core-h'>Landing Site:</div>
+              <div className='launchDetail-core-p'>{landingPadFetch(singleLaunchData.cores[0].landpad, landingData, 1)}</div>
+              {/* <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landpad}</div> */}
+
+              <div className='launchDetail-core-h'>Landing Result:</div>
+              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_success === true ? 'Success' : 'Fail'}</div>
+            </div>
+          </div>
+
+          <div className='launchDetail-first-right'>
+
+            <iframe
+              className='launchDetail-embedVideo'
+              // width="560" 
+              // height="315"
+              src={`https://www.youtube.com/embed/${singleLaunchData.links.youtube_id}`}
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+
+            <div className='launchDetail-detail'>
+              {singleLaunchData.details}
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+  }
+
   return (
     <div className='launchDetail'>
-
-      <div className='launchDetail-controlPanal'>
-        <div>
-          <Link to='/filter' className='launchDetail-controlPanal-button'>
-            {/* <VscArrowLeft className='launchDetail-Button' /> */}
-            BACK
-          </Link>
-        </div>
-
-        <div className='launchDetail-controlPanal-page'>
-
-          <Link to={`/launch/${launchNumber == 1 ? launchDataLength : launchNumber - 1}`} className='launchDetail-controlPanal-button'>
-            {/* <VscArrowLeft className='launchDetail-Button' /> */}
-            PREVIOUS
-          </Link>
-
-
-          <Link to={`/launch/${launchNumber == launchDataLength ? 1 : Number(launchNumber) + 1}`} className='launchDetail-controlPanal-button'>
-            {/* <VscArrowRight className='launchDetail-Button' /> */}
-            NEXT
-          </Link>
-        </div>
-      </div>
-
-      <div className='launchDetail-first'>
-
-        <div className='launchDetail-first-left'>
-          
-
-          <div className='launchDetail-patch'>
-            <img className='launchDetail-patch-img' src={singleLaunchData.links.patch.small} alt="" />
-          </div>
-
-          <div className='launchDetail-basic'>
-
-            <div className='launchDetail-basic-name'>{singleLaunchData.name}</div>
-            <div>{singleLaunchData.date_utc.substring(0, 10)}</div>
-            {/* <div>{singleLaunchData.flight_number}</div> */}
-          </div>
-
-
-
-        </div>
-
-        <div className='launchDetail-first-middle'>
-          <div className='launchDetail-core-title'>Core</div>
-          <div className='launchDetail-core'>
-            <div className='launchDetail-core-h'>Name:</div>
-            <div className='launchDetail-core-p'>{coreFetch(singleLaunchData.cores[0].core, coresData, 0)}</div>
-
-            <div className='launchDetail-core-h'>Reused Times:</div>
-            <div className='launchDetail-core-p'>{singleLaunchData.cores[0].flight}</div>
-
-            <div className='launchDetail-core-h'>Landing Type:</div>
-            <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_type}</div>
-
-            <div className='launchDetail-core-h'>Landing Site:</div>
-            <div className='launchDetail-core-p'>{landingPadFetch(singleLaunchData.cores[0].landpad, landingData, 1)}</div>
-            {/* <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landpad}</div> */}
-
-            <div className='launchDetail-core-h'>Landing Result:</div>
-            <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_success === true ? 'Success' : 'Fail'}</div>
-          </div>
-        </div>
-
-        <div className='launchDetail-first-right'>
-
-          <iframe
-            className='launchDetail-embedVideo'
-            // width="560" 
-            // height="315"
-            src={`https://www.youtube.com/embed/${singleLaunchData.links.youtube_id}`}
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-
-          <div className='launchDetail-detail'>
-            {singleLaunchData.details}
-          </div>
-
-        </div>
-
-
-
-
-      </div>
-
-
-
-
+      {content}
     </div>
   )
 }

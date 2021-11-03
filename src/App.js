@@ -24,9 +24,11 @@ import TimelinePage from './components/timelinePage/TimelinePage';
 function App() {
   document.title = "SpaceX Information System";
 
+  const launchesURL = 'https://api.spacexdata.com/v4/launches'
   const coresURL = 'https://api.spacexdata.com/v4/cores'
   const launchpadsURL = 'https://api.spacexdata.com/v4/launchpads'
   const latestLaunchURL = 'https://api.spacexdata.com/v4/launches/latest'
+  const landingpadsURL = 'https://api.spacexdata.com/v4/landpads'
 
   useEffect(() => {
     console.log('Effect');
@@ -38,20 +40,23 @@ function App() {
     // console.log('AllLaunchpads Effect');
     fetchLatestLaunchData();
     // console.log('LatestLaunch Effect');
+    fetchAllLandingpadsData();
+    // console.log('AllLandingpads Effect');
   }, [])
 
+  //Fetch allLaunchesData
   const [allLaunchesData, setAllLaunchesData] = useState([]);
 
   const fetchAllLaunchData = async () => {
     const data = await fetch(
-      'https://api.spacexdata.com/v4/launches'
+      launchesURL
     );
     const allLaunchesData = await data.json();
     // console.log(allLaunchesData)
     setAllLaunchesData(allLaunchesData)
   }
 
-
+  //Fetch allCoresData
   const [allCoresData, setAllCoresData] = useState([]);
 
   const fetchAllCoresData = async () => {
@@ -63,7 +68,7 @@ function App() {
     setAllCoresData(allCoresData)
   }
 
-
+  //Fetch allLaunchpadsData
   const [allLaunchpadsData, setAllLaunchpadsData] = useState([]);
 
   const fetchAllLaunchpadsData = async () => {
@@ -75,7 +80,7 @@ function App() {
     setAllLaunchpadsData(allLaunchpadsData)
   }
 
-
+  //Fetch latestLaunchData
   const [latestLaunchData, setLatestLaunchData] = useState({});
 
   const fetchLatestLaunchData = async () => {
@@ -85,6 +90,18 @@ function App() {
     const latestLaunchData = await data.json();
     // console.log(latestLaunchData)
     setLatestLaunchData(latestLaunchData)
+  }
+
+  //Fetch allLandingpadsData
+  const [allLandingpadsData, setAllLandingpadsData] = useState({});
+
+  const fetchAllLandingpadsData = async () => {
+    const data = await fetch(
+      landingpadsURL
+    );
+    const allLandingpadsData = await data.json();
+    console.log(allLandingpadsData)
+    setAllLandingpadsData(allLandingpadsData)
   }
 
 
@@ -141,15 +158,15 @@ function App() {
 
 
 
-
-
-          {/* <Route
+          {/* =========================== Single Launch Page Done ==================================== */}
+          {/* <Route path='/launch/:number' element={<LaunchDetailPage />} /> */}
+          <Route
             path='/launch/:number'
             render={(props) => (
-              <LaunchDetailPage {...props} launches={AllLaunches} cores={Cores} landingPads={LandingPads} demo={DemoLaunch} />
+              <LaunchDetailPage {...props} launches={allLaunchesData} cores={allCoresData} landingPads={allLandingpadsData} />
             )}
-          /> */}
-          {/* <Route path='/launch/:number' element={<LaunchDetailPage />} /> */}
+          />
+
 
           {/* =========================================================================== */}
           <Route
