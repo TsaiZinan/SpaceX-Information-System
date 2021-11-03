@@ -6,9 +6,14 @@ import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 // import './FilterTest.css'
 // import './FilterTest2.css'
 import './FilterTest3.css'
-import { LatestLaunch, Cores, AllLaunches, LaunchPads } from '../../data'
+// import {AllLaunches, LaunchPads } from '../../data'
 
-const FilterTest = () => {
+const FilterTest = (props) => {
+  const AllLaunches = props.launches;
+  const LaunchPads = props.launchpads;
+  console.log(LaunchPads)
+
+
   const allYears = [2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
   const allSite = ['5e9e4502f5090995de566f86', '5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88']
 
