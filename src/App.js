@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 
+// import { createBrowserHistory } from "history";
+// const history = createBrowserHistory();
+
 import './App.css';
 import Nav from './components/nav/Nav';
 import Home from './Home';
@@ -20,6 +23,8 @@ import Chart from './components/chart/Chart';
 
 import TimelinePage from './components/timelinePage/TimelinePage';
 
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 function App() {
   document.title = "SpaceX Information System";
@@ -106,7 +111,7 @@ function App() {
 
 
   return (
-    <Router>
+    <Router history={history}>
       <div className="App">
         <Nav />
 
