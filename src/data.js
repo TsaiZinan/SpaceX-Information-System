@@ -13130,3 +13130,80 @@ export const LaunchPads = [
     "id": "5e9e4502f509094188566f88"
   }
 ]
+
+export const DemoLaunch = [
+  {
+    "fairings": null,
+    "links": {
+      "patch": {
+        "small": "https://i.imgur.com/J1uM5nz.png",
+        "large": "https://i.imgur.com/jYYTXwC.png"
+      },
+      "reddit": {
+        "campaign": "https://www.reddit.com/r/spacex/comments/pc1fq7/inspiration4_launch_campaign_thread/",
+        "launch": "https://www.reddit.com/r/spacex/comments/po651k/rspacex_inspiration4_launch_discussion_updates/",
+        "media": null,
+        "recovery": null
+      },
+      "flickr": {
+        "small": [],
+        "original": []
+      },
+      "presskit": null,
+      "webcast": "https://youtu.be/3pv01sSq44w",
+      "youtube_id": "3pv01sSq44w",
+      "article": null,
+      "wikipedia": "https://en.wikipedia.org/wiki/Inspiration4"
+    },
+    "static_fire_date_utc": "2021-09-13T07:07:00.000Z",
+    "static_fire_date_unix": 1631516820,
+    "net": false,
+    "window": 18000,
+    "rocket": "5e9d0d95eda69973a809d1ec",
+    "success": true,
+    "failures": [],
+    "details": "Inspiration4 is the world’s first all-civilian mission to space. The mission will be commanded by Jared Isaacman, the 37-year-old founder and Chief Executive Officer of Shift4 Payments and an accomplished pilot and adventurer. Inspiration4 will leave Earth from Kennedy Space Center’s historic Launch Complex 39A, the embarkation point for Apollo and Space Shuttle missions, and travel across a low earth orbit on a multi-day journey that will continually eclipse more than 90% of the earth’s population. Named in recognition of the four-person crew that will raise awareness and funds for St. Jude Children’s Research Hospital, this milestone represents a new era for human spaceflight and exploration.",
+    "crew": [
+      "607a3a5f5a906a44023e0870",
+      "607a3ab45a906a44023e0872",
+      "607b48375a906a44023e08b8",
+      "607b48da5a906a44023e08b9"
+    ],
+    "ships": [
+      "5ea6ed2f080df4000697c910",
+      "5ee68c683c228f36bd5809b5",
+      "614251b711a64135defb3654"
+    ],
+    "capsules": [
+      "5f6f99fddcfdf403df379709"
+    ],
+    "payloads": [
+      "607a382f5a906a44023e0867"
+    ],
+    "launchpad": "5e9e4502f509094188566f88",
+    "flight_number": 135,
+    "name": "Inspiration4",
+    "date_utc": "2021-09-16T00:02:00.000Z",
+    "date_unix": 1631750520,
+    "date_local": "2021-09-15T20:02:00-04:00",
+    "date_precision": "hour",
+    "upcoming": false,
+    "cores": [
+      {
+        "core": "5f57c5440622a633027900a0",
+        "flight": 3,
+        "gridfins": true,
+        "legs": true,
+        "reused": true,
+        "landing_attempt": true,
+        "landing_success": true,
+        "landing_type": "ASDS",
+        "landpad": "5e9e3033383ecbb9e534e7cc"
+      }
+    ],
+    "auto_update": true,
+    "tbd": false,
+    "launch_library_id": "621d64e6-0513-45dc-8ffa-c9fd56518398",
+    "id": "607a37565a906a44023e0866"
+  }
+]

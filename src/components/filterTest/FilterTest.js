@@ -21,12 +21,12 @@ const FilterTest = () => {
   // for the multiple selecting of launch site
   const [launchPadState, setLaunchPadState] = useState(['5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88'])
 
-  console.log(LaunchPads)
+  // console.log(LaunchPads)
   // id: site id
   // data: site data
   // mode: 0 => abbreviation name of site | 1 => full name of site
   let launchPadFetch = (id, data, mode) => {
-    console.log(id)
+    // console.log(id)
     let abbr_name = 'NET';
     let full_name = 'NET';
     // console.log(data);
