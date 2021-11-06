@@ -59,7 +59,7 @@ const LaunchChart = (props) => {
   const launchesData = props.data;
   // const latestMonth = props.latest.date_utc.substring(0, 7);
   const latestMonth = launchesData[launchesData.length - 1].date_utc.substring(0, 7);
-  console.log(latestMonth)
+  // console.log(latestMonth)
 
   const [yearArray, setYearArray] = useState({})
   const [monthArray, setMonthArray] = useState({})
