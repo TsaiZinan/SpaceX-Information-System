@@ -1,6 +1,10 @@
 .App {
   text-align: center;
   background-color: #ebe5d9;
+
+  display:flex; 
+  flex-direction:column;
+  height:100vh;
 }
 
 .coresPage {

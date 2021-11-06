@@ -2,7 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 95%;
+  /* width: 95%; */
+  padding: 0 2.5% 0 2.5%;
   background-color: #ebe5d9;
 }
 

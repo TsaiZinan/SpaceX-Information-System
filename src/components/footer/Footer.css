@@ -1,0 +1,25 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  background-color: #ebe5d9;
+  margin-top:auto; 
+}
+
+.footer-left {
+  font-size: 40px;
+  color: #543f2e;
+
+  padding: 0 0 0 15px;
+}
+
+.footer-right {
+  font-size: 35px;
+
+  padding: 0 10px 0 0;
+}
+
+.footer-link {
+  color: #543f2e;
+}
