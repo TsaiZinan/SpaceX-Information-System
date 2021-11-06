@@ -7,7 +7,7 @@
 /* filter-option */
 /* =============================== */
 .filter-years {
-  padding: 0 5.5vw 0 5.5vw;
+  padding: 0 2.6vw 0 2.6vw;
   display: flex;
   flex-wrap: wrap;
   /* justify-content:space-between; */
@@ -22,11 +22,12 @@
 /* filter-button */
 /* =============================== */
 .SelectButton-active {
-  color: #2e608b;
+  color: var(--main-font-color);
 }
 
 .SelectButton-inactive {
   color: rgb(158, 155, 155);
+  text-decoration: line-through rgb(158, 155, 155);
 }
 
 button {
@@ -34,8 +35,10 @@ button {
   margin: 5px;
   line-height: 0.5;
 
-  font-weight: 400;
+  font-weight: bold;
   font-size: 30px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Urbanist',
+    sans-serif;
 
   background-color: #ebe5d9;
 
@@ -57,8 +60,8 @@ button {
 .filter-nodes {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 2vw 0 2vw 0;
+  justify-content: space-between;
+  padding: 2vw 2vw 2vw 2vw;
   
 }
 

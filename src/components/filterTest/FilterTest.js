@@ -11,7 +11,15 @@ import './FilterTest3.css'
 const FilterTest = (props) => {
   const AllLaunches = props.launches;
   const LaunchPads = props.launchpads;
-  console.log(LaunchPads)
+  // console.log(LaunchPads)
+
+  const launchIntro = {
+    title: 'Launches Information',
+    text: [
+      'This page provides a way to display the information of each launch by different options.',
+      'You can find more detail by clicking the name of each launch.',
+    ]
+  }
 
 
   const allYears = [2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
@@ -123,6 +131,17 @@ const FilterTest = (props) => {
 
   return (
     <div className='filter'>
+
+      <div className='intro'>
+        <div className='intro-title'>{launchIntro.title}</div>
+        <div className='intro-text'>
+          {launchIntro.text.map((singleText) => {
+            return (
+              <div>{singleText}</div>
+            )
+          })}
+        </div>
+      </div>
 
       <div className='filter-years'>
         <div className='filter-option'>
