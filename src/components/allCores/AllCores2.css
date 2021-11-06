@@ -2,7 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 95%;
+  /* width: 95%; */
+  padding: 0 2.5% 0 2.5%;
   background-color: #ebe5d9;
 }
 
@@ -29,7 +30,7 @@
   color: #543f2e;
 
   /* move upper */
-  margin-top: -28px;
+  margin-top: -24px;
   margin-left: 15px;
 
   /* padding: 0 5% 0 5%; */

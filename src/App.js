@@ -1,11 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 
-// import { createBrowserHistory } from "history";
-// const history = createBrowserHistory();
-
 import './App.css';
 import Nav from './components/nav/Nav';
+import Footer from './components/footer/Footer';
 import Home from './Home';
 import Launches from './Launches';
 import CoresPage from './CoresPage';
@@ -23,8 +21,8 @@ import Chart from './components/chart/Chart';
 
 import TimelinePage from './components/timelinePage/TimelinePage';
 
-import { createBrowserHistory } from "history";
-const history = createBrowserHistory();
+// import { createBrowserHistory } from "history";
+// const history = createBrowserHistory();
 
 function App() {
   document.title = "SpaceX Information System";
@@ -105,13 +103,13 @@ function App() {
       landingpadsURL
     );
     const allLandingpadsData = await data.json();
-    console.log(allLandingpadsData)
+    // console.log(allLandingpadsData)
     setAllLandingpadsData(allLandingpadsData)
   }
 
 
   return (
-    <Router history={history}>
+    <Router>
       <div className="App">
         <Nav />
 
@@ -196,10 +194,12 @@ function App() {
             </div>
           )
         })} */}
+        <Footer />
       </div>
     </Router>
 
   );
+
 }
 
 export default App;

@@ -1,6 +1,15 @@
+:root {
+  --main-font-color: #543f2e;
+  --blue-font-color: #2e608b;
+}
+
 .App {
   text-align: center;
   background-color: #ebe5d9;
+
+  display:flex; 
+  flex-direction:column;
+  height:100vh;
 }
 
 .coresPage {
@@ -8,6 +17,23 @@
   justify-content: center;
 }
 
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--main-font-color);
+  padding: 0 3vw 30px 3vw;
+
+  text-align: start;
+}
+
+.intro-title {
+  font-size: 50px;
+}
+
+.intro-text {
+  font-size: 30px;
+}
 
 
 /* button {

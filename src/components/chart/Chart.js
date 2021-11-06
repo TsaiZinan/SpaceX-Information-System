@@ -20,14 +20,23 @@ const Chart = (props) => {
   // console.log(LatestLaunch)
   // console.log(AllLaunches)
 
-  let content = 'LOADING'
+  let content = <div class="lds-roller">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
 
   if (AllLaunches.length > 1 && LaunchPads.length > 1 && Object.keys(LatestLaunch).length != 0) {
     // console.log('....................')
     content =
       <div className='chart'>
-        
-        <LaunchChart data={AllLaunches} latest={LatestLaunch}/>
+
+        <LaunchChart data={AllLaunches} latest={LatestLaunch} />
         <PadChart data={LaunchPads} />
       </div>
 
@@ -37,7 +46,7 @@ const Chart = (props) => {
   return (
     <div className='chart'>
       {/* {console.log('XXXXXXXXXXXXXXXXX')} */}
-      
+
       {content}
       {/* <LaunchChart data={AllLaunches} latest={LatestLaunch}/> */}
       {/* <PadChart data={LaunchPads}/> */}
