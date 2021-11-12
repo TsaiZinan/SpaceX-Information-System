@@ -16,6 +16,7 @@ import FilterTest from './components/filterTest/FilterTest';
 import TestPage from './TestPage';
 import StyleTest from './components/styleTest/StyleTest';
 import Chart from './components/chart/Chart';
+import MainPage from './components/mainPage/MainPage';
 
 // import { LatestLaunch, Cores, LandingPads, DemoLaunch } from './data'
 
@@ -121,7 +122,7 @@ function App() {
           <Route
             path='/' exact
             render={(props) => (
-              <Chart {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} />
+              <MainPage {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} />
             )}
           />
 
