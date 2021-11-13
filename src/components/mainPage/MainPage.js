@@ -10,10 +10,24 @@ const MainPage = (props) => {
   const AllLaunches = props.launches;
   const LaunchPads = props.launchpads;
 
-  const NextLaunchBlock = () => {
+  const LaunchBlock = () => {
     return(
       <div className='launch-block-m'>
-        XXXXXXXXXX
+        <div className='launch-block-m-patch'>
+          <img className='launch-block-m-patch-img' src="https://i.imgur.com/kIHwGnk.png" alt="" />
+        </div>
+
+        <div className='launch-block-m-title'>
+          Next Launch
+        </div>
+        
+        <div className='launch-block-m-name'>
+          Crew-3
+        </div>
+
+        <div className='launch-block-m-time'>
+          2021-11-11 08:56
+        </div>
       </div>
     )
   }
@@ -46,10 +60,10 @@ const MainPage = (props) => {
     content =
       <div className='mainpage'>
         <div className='mainpage-block'>
-          <NextLaunchBlock />
+          <LaunchBlock />
         </div>
         <div className='mainpage-block'>
-          <NextLaunchBlock />
+          <LaunchBlock />
         </div>
         <div className='mainpage-block'>
           <SmallBlock title='Launch' number='137'/>
