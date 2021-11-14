@@ -58,13 +58,32 @@
 .launch-block-m-name {
   font-size: 40px;
   text-align: start;
-  padding: 4px 0 0 10px;
+  padding: 4px 0 5px 10px;
 }
 
 .launch-block-m-time {
   font-size: 30px;
   text-align: start;
-  padding: 4px 0 0 10px;
+  padding: 4px 0 15px 10px;
+}
+
+.launch-block-m-blockunit {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.blockunit-row {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 3px;
+}
+
+.launch-block-m-blockunit-content {
+  padding-left: 5px;
+  font-size: 28px;
 }
 
 /* -------------SmallBlock------------- */
