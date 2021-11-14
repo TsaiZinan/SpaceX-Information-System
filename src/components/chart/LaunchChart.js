@@ -203,28 +203,50 @@ const LaunchChart = (props) => {
     }
   };
 
-
-  return (
-    <div className='single-chart'>
-      {/* <div className='chart-node'>
-        <Line data={yearLineData} options={lineOptions} />
-      </div>
-      <div className='chart-node'>
-        <Line data={monthLineData} options={lineOptions} />
-      </div> */}
-      <div className='chart-node'>
-        <Bar data={yearBardata} options={barOptions} />
-      </div>
+  if (props.type === 'month') {
+    return (
       <div className='chart-node'>
         <Bar data={monthBardata} options={barOptions} />
       </div>
+    )
+  } else if (props.type === 'year') {
+    return (
+      <div className='chart-node'>
+        <Bar data={yearBardata} options={barOptions} />
+      </div>
+    )
+  }
 
-      {/* <Line data={yearLineData} options={lineOptions} />
-      <Line data={monthLineData} options={lineOptions} />
-      <Bar data={yearBardata} options={barOptions} />
-      <Bar data={monthBardata} options={barOptions} /> */}
-    </div>
-  )
+
+
+  // return (
+  //   <div className='single-chart'>
+  //     {/* <div className='chart-node'>
+  //       <Line data={yearLineData} options={lineOptions} />
+  //     </div>
+  //     <div className='chart-node'>
+  //       <Line data={monthLineData} options={lineOptions} />
+  //     </div> */}
+
+      
+
+
+
+
+
+  //     <div className='chart-node'>
+  //       <Bar data={yearBardata} options={barOptions} />
+  //     </div>
+  //     <div className='chart-node'>
+  //       <Bar data={monthBardata} options={barOptions} />
+  //     </div>
+
+  //     {/* <Line data={yearLineData} options={lineOptions} />
+  //     <Line data={monthLineData} options={lineOptions} />
+  //     <Bar data={yearBardata} options={barOptions} />
+  //     <Bar data={monthBardata} options={barOptions} /> */}
+  //   </div>
+  // )
 }
 
 export default LaunchChart

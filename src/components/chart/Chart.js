@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import './Chart.css'
+// import './Chart.css'
 
 import PadChart from './PadChart';
 import LaunchChart from './LaunchChart';
@@ -36,7 +36,7 @@ const Chart = (props) => {
     content =
       <div className='chart'>
 
-        <LaunchChart data={AllLaunches} latest={LatestLaunch} />
+        <LaunchChart data={AllLaunches}/>
         <PadChart data={LaunchPads} />
       </div>
 
