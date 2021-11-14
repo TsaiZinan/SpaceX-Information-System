@@ -122,7 +122,7 @@ function App() {
           <Route
             path='/' exact
             render={(props) => (
-              <MainPage {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} />
+              <MainPage {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} cores={allCoresData} landingPads={allLandingpadsData} />
             )}
           />
 

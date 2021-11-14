@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {landingPadConverter, launchPadConverter, coresConverter } from '../converter/converter'
+
 import './MainPage.css'
 
 import PadChart from '../chart/PadChart'
@@ -9,8 +11,17 @@ const MainPage = (props) => {
   const LatestLaunch = props.latestLaunch;
   const AllLaunches = props.launches;
   const LaunchPads = props.launchpads;
+  const LandingPads = props.landingPads;
+  const CoresData = props.cores;
+
+  const lastLaunchNumber = LatestLaunch.flight_number;
+  console.log(lastLaunchNumber)
+  console.log(AllLaunches[137])
 
   const LaunchBlock = (props) => {
+
+    let launchBlockData = props.data;
+
     let blockUnit = (name, content) => {
       return (
         <div className='launch-block-m-blockunit'>
@@ -23,7 +34,7 @@ const MainPage = (props) => {
     return (
       <div className='launch-block-m'>
         <div className='launch-block-m-patch'>
-          <img className='launch-block-m-patch-img' src="https://i.imgur.com/kIHwGnk.png" alt="" />
+          <img className='launch-block-m-patch-img' src={launchBlockData.links.patch.small} alt="" />
         </div>
 
         <div className='launch-block-m-title'>
@@ -31,22 +42,22 @@ const MainPage = (props) => {
         </div>
 
         <div className='launch-block-m-name'>
-          Crew-3
+          {launchBlockData.name}
+          {/* Crew-3 */}
         </div>
 
         <div className='launch-block-m-time'>
-          2021-11-11 08:56
+          {launchBlockData.date_utc.substring(0, 19).replace('T', ' ')}
         </div>
 
         <div className='blockunit-row'>
-          {blockUnit('First Stage:', 'B1058.9')}
-          {blockUnit('Launch Site:', 'SLC-4E')}
+          {blockUnit('Launch Site:', launchPadConverter('5e9e4501f509094ba4566f84', LaunchPads, 0))}
+          {blockUnit('First Stage:', coresConverter(launchBlockData.cores[0].core, CoresData, 2))}
         </div>
 
         <div className='blockunit-row'>
-          {blockUnit('Landing Site:', 'Of Course I Still Love You')}
-          {props.mode === 'last' ? blockUnit('Landing Result:', 'Success') : null}
-          
+          {blockUnit('First Stage Landing Site:', landingPadConverter(launchBlockData.cores[0].landpad, LandingPads, 1))}
+          {props.mode === 'last' ? blockUnit('Landing Result:', launchBlockData.cores[0].landing_success === true ? 'Success' : 'fail') : null}
         </div>
 
       </div>
@@ -78,14 +89,16 @@ const MainPage = (props) => {
       <div></div>
     </div>
 
-  if (AllLaunches.length > 1 && LaunchPads.length > 1 && Object.keys(LatestLaunch).length != 0) {
+  if (AllLaunches.length > 1 && LaunchPads.length > 1 && LandingPads.length > 1 && CoresData.length > 1 && Object.keys(LatestLaunch).length != 0) {
+
+
     content =
       <div className='mainpage'>
         <div className='mainpage-block'>
-          <LaunchBlock mode='next'/>
+          <LaunchBlock mode='next' data={AllLaunches[lastLaunchNumber]} />
         </div>
         <div className='mainpage-block'>
-          <LaunchBlock mode='last'/>
+          <LaunchBlock mode='last' data={LatestLaunch} />
         </div>
         <div className='mainpage-block'>
           <SmallBlock title='Launch' number='137' />

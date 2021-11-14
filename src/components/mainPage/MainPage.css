@@ -78,11 +78,11 @@
 .blockunit-row {
   display: flex;
   flex-direction: row;
-  padding-bottom: 3px;
+  padding-bottom: 6px;
 }
 
 .launch-block-m-blockunit-content {
-  padding-left: 5px;
+  /* padding-left: 5px; */
   font-size: 28px;
 }
 
