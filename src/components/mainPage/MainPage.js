@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {landingPadConverter, launchPadConverter, coresConverter } from '../converter/converter'
+import {landingPadConverter, launchPadConverter, coresConverter, countNumberInData, testConverter } from '../converter/converter'
 
 import './MainPage.css'
 
@@ -14,14 +14,17 @@ const MainPage = (props) => {
   const LandingPads = props.landingPads;
   const CoresData = props.cores;
 
+  var CurrentYear = new Date().getFullYear()
+
   const lastLaunchNumber = LatestLaunch.flight_number;
-  console.log(lastLaunchNumber)
-  console.log(AllLaunches[137])
+  // console.log(lastLaunchNumber)
+  // console.log(AllLaunches[137])
 
   const LaunchBlock = (props) => {
 
     let launchBlockData = props.data;
 
+    // display the single block row in launch block
     let blockUnit = (name, content) => {
       return (
         <div className='launch-block-m-blockunit'>
@@ -57,6 +60,7 @@ const MainPage = (props) => {
 
         <div className='blockunit-row'>
           {blockUnit('First Stage Landing Site:', landingPadConverter(launchBlockData.cores[0].landpad, LandingPads, 1))}
+          {/* display the landing result in last launch block instead of next launch block */}
           {props.mode === 'last' ? blockUnit('Landing Result:', launchBlockData.cores[0].landing_success === true ? 'Success' : 'fail') : null}
         </div>
 
@@ -101,10 +105,10 @@ const MainPage = (props) => {
           <LaunchBlock mode='last' data={LatestLaunch} />
         </div>
         <div className='mainpage-block'>
-          <SmallBlock title='Launch' number='137' />
-          <SmallBlock title='Launch this Year' number='20' />
-          <SmallBlock title='Success' number='135' />
-          <SmallBlock title='Recover' number='62' />
+          <SmallBlock title='Launch' number={lastLaunchNumber} />
+          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', AllLaunches.slice(0, 137), CurrentYear.toString())} />
+          <SmallBlock title='Success' number={countNumberInData('.success', AllLaunches, true)} />
+          <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', AllLaunches, true)} />
         </div>
 
         <div className='mainpage-block'>

@@ -81,6 +81,27 @@ export const coresConverter = (id, data, mode) => {
   }
 }
 
-export const testConverter = (id) => {
-  return '========='
+export const countNumberInData = (id, data, condition) => {
+  let location = 'singleData' + id
+  let count = 0;
+  data.forEach((singleData) => {
+    // if (singleData.success === true) {
+    if (eval(location) === condition) {
+      count = count + 1
+    }
+  })
+  return count;
+}
+
+export const testConverter = (id, data, condition) => {
+  let location = 'singleData' + id;
+  // console.log(data)
+  let count = 0;
+  data.forEach((singleData) => {
+    if (eval(location) === condition) {
+      
+      count = count + 1
+    }
+  })
+  return count;
 }
