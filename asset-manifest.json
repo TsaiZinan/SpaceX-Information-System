@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/SpaceX-Information-System/static/css/main.a92df9e4.chunk.css",
-    "main.js": "/SpaceX-Information-System/static/js/main.47a075c2.chunk.js",
-    "main.js.map": "/SpaceX-Information-System/static/js/main.47a075c2.chunk.js.map",
+    "main.css": "/SpaceX-Information-System/static/css/main.b3f16920.chunk.css",
+    "main.js": "/SpaceX-Information-System/static/js/main.50d5f11c.chunk.js",
+    "main.js.map": "/SpaceX-Information-System/static/js/main.50d5f11c.chunk.js.map",
     "runtime-main.js": "/SpaceX-Information-System/static/js/runtime-main.979f054f.js",
     "runtime-main.js.map": "/SpaceX-Information-System/static/js/runtime-main.979f054f.js.map",
     "static/css/2.2aa38b9c.chunk.css": "/SpaceX-Information-System/static/css/2.2aa38b9c.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.3ef1b561.chunk.js.map": "/SpaceX-Information-System/static/js/3.3ef1b561.chunk.js.map",
     "index.html": "/SpaceX-Information-System/index.html",
     "static/css/2.2aa38b9c.chunk.css.map": "/SpaceX-Information-System/static/css/2.2aa38b9c.chunk.css.map",
-    "static/css/main.a92df9e4.chunk.css.map": "/SpaceX-Information-System/static/css/main.a92df9e4.chunk.css.map",
+    "static/css/main.b3f16920.chunk.css.map": "/SpaceX-Information-System/static/css/main.b3f16920.chunk.css.map",
     "static/js/2.62d3ded4.chunk.js.LICENSE.txt": "/SpaceX-Information-System/static/js/2.62d3ded4.chunk.js.LICENSE.txt",
     "static/media/rocket.28f2545a.svg": "/SpaceX-Information-System/static/media/rocket.28f2545a.svg"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.979f054f.js",
     "static/css/2.2aa38b9c.chunk.css",
     "static/js/2.62d3ded4.chunk.js",
-    "static/css/main.a92df9e4.chunk.css",
-    "static/js/main.47a075c2.chunk.js"
+    "static/css/main.b3f16920.chunk.css",
+    "static/js/main.50d5f11c.chunk.js"
   ]
 }
