@@ -155,3 +155,23 @@
 .launch-patch-div:hover .launch-patch {
   visibility: hidden;
 }
+
+@media screen and (max-width: 710px){
+  .allCores {
+    justify-content: center;
+    padding: 10px;
+    /* overflow-x: hidden; */
+  }
+
+  .launch-hoverBox {
+    margin-top: -50px;
+    margin-left: -65px;
+    width: 200px;
+  }
+
+  /* .singleCore {
+    margin: 20px 10px 20px 10px;
+  } */
+
+
+}

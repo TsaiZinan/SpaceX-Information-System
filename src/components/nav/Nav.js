@@ -24,10 +24,6 @@ const Nav = () => {
           <Link to='/test' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>Experiment</div>
           </Link>
-
-          {/* <Link to='/t' style={{ textDecoration: 'none' }}>
-            <div className='nav-link'>T</div>
-          </Link> */}
         </div>
       </nav>
     </div>

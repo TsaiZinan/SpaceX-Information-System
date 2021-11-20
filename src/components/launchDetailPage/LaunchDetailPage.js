@@ -79,7 +79,7 @@ const LaunchDetailPage = (props) => {
       <div className='launchDetail'>
 
         <div className='launchDetail-controlPanal'>
-          <div>
+          <div className='launchDetail-controlPanal-page'>
             <Link to='/filter' className='launchDetail-controlPanal-button'>
               {/* <VscArrowLeft className='launchDetail-Button' /> */}
               BACK

@@ -4,6 +4,10 @@
   flex-wrap: wrap;
   
   justify-content: center;
+
+  background-color: var(--main-bg-color);
+
+  color: var(--main-font-color);
 }
 
 .mainpage-block {
@@ -81,9 +85,15 @@
   padding-bottom: 6px;
 }
 
+.launch-block-m-blockunit-name {
+  font-weight: bold;
+  
+}
+
 .launch-block-m-blockunit-content {
   /* padding-left: 5px; */
   font-size: 28px;
+  
 }
 
 /* -------------SmallBlock------------- */
@@ -116,9 +126,73 @@
   width: 470px;
 }
 
+@media screen and (max-width: 700px){
+  .mainpage-block {
+    width: 90vw;
+    max-width: 500px;
 
+    height: 80vw;
+    max-height: 300px;
+    /* height: 80vw; */
+  }
 
+  .launch-block-m {
+    height: fit-content;
+    padding: 1vw;
+  }
 
+  .launch-block-m-patch-img {
+    height: min(40vw, 170px);
+  }
+
+  /* .launch-block-m-title {
+    margin-top: -50vw;
+  } */
+
+  .launch-block-m-name {
+    font-size: min(12vw, 40px);
+  }
+
+  .launch-block-m-time {
+    font-size: min(8vw, 30px);
+  }
+
+  .launch-block-m-blockunit-name {
+    text-align: start;
+  }
+
+  .launch-block-m-blockunit-content {
+    font-size: min(6vw, 28px);
+    text-align: start;
+  }
+
+  .launch-block-s {
+    width: 35vw;
+    height: 30vw;
+
+    max-width: 210px;
+    max-height: 110px;
+  }
+
+  .launch-block-s-title {
+    font-size: 4vw;
+  }
+
+  .launch-block-s-number {
+    font-size: min(25vw, 100px);
+    margin-top: 0vw;
+  }
+
+  .mainpage-block-chart {
+    width: 90vw;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .launch-block-m-title {
+    margin-top: -52vw;
+  }
+}
 
 
 

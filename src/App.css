@@ -2,7 +2,13 @@
   --main-font-color: #543f2e;
   --blue-font-color: #2e608b;
   --core-bg-color: #c9c5bd;
+  --main-bg-color: #ebe5d9;
+  --core-box-color: #9e8a79;
 }
+
+/* *{
+  background-color: var(--main-bg-color);
+} */
 
 .App {
   text-align: center;
@@ -34,6 +40,20 @@
 
 .intro-text {
   font-size: 30px;
+}
+
+
+@media screen and (max-width: 710px){
+
+  .intro-title {
+    font-size: 12vw;
+  }
+
+  .intro-text {
+    font-size: 8vw;
+  }
+
+
 }
 
 
