@@ -34,8 +34,7 @@ const AllCores = (props) => {
 
       <div className='allCores'>
 
-        {/* {console.log(launchesData)}
-        {console.log(coresData)} */}
+        
         {coresData.map((core, coreIndex) => {
           return (
             <div className='singleCore' id={coreIndex}>
@@ -44,20 +43,19 @@ const AllCores = (props) => {
               </div>
 
               <div className='launch-patches' >
-                {/* {console.log(core.serial)}
-        {console.log(core.reuse_count)} */}
+                
 
                 {core.launches.map((idCoreLaunches, idCoreLaunchesIndex) => {
-                  // console.log(idCoreLaunches)
+                  
                   return (
                     <div className='launch-patch-div' id='idCoreLaunchesIndex'>
                       {launchesData.map((idLaunches, idLaunchesIndex) => {
 
                         if (idCoreLaunches === idLaunches.id) {
-                          // console.log(idLaunches.name)
+                          
                           return (
 
-                            <div id={idLaunchesIndex}>
+                            <div className='launch-patch-id' id={idLaunchesIndex}>
                               <img className='launch-patch' src={idLaunches.links.patch.small} alt="" />
                               <div className='launch-hoverBox'>
 
@@ -79,16 +77,16 @@ const AllCores = (props) => {
                                 <div className='launch-hoverBox-last'>
                                   <div className='launch-hoverBox-links'>
 
-                                    <a href={idLaunches.links.webcast}>
+                                    <a className='launch-hoverBox-a' href={idLaunches.links.webcast}>
                                       <SiYoutube className='launch-hoverBox-link' />
                                     </a>
-                                    <a href={idLaunches.links.reddit.launch}>
+                                    <a className='launch-hoverBox-a' href={idLaunches.links.reddit.launch}>
                                       <SiReddit className='launch-hoverBox-link' />
                                     </a>
-                                    <a href={idLaunches.links.wikipedia}>
+                                    <a className='launch-hoverBox-a' href={idLaunches.links.wikipedia}>
                                       <SiWikipedia className='launch-hoverBox-link' />
                                     </a>
-                                    <a href={idLaunches.links.presskit}>
+                                    <a className='launch-hoverBox-a' href={idLaunches.links.presskit}>
                                       <SiSpacex className='launch-hoverBox-link' />
                                     </a>
 
@@ -100,11 +98,6 @@ const AllCores = (props) => {
                                 </div>
 
 
-
-                                {/* <div className='launch-hoverBox-details'>
-                          {idLaunches.details}
-                        </div> */}
-
                               </div>
                             </div>
 
@@ -115,13 +108,11 @@ const AllCores = (props) => {
                   )
                 })}
               </div>
-
-
-
             </div>
           )
         })}
       </div>
+
     </div>
 
   )

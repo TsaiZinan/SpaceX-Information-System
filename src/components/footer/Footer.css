@@ -8,16 +8,18 @@
 }
 
 .footer-left {
-  font-size: 40px;
+
+  font-size: 30px;
   color: #543f2e;
 
-  padding: 0 0 0 15px;
+  padding: 20px 0 0 15px;
 }
 
 .footer-right {
-  font-size: 35px;
+  font-size: 25px;
 
-  padding: 0 10px 0 0;
+  padding: 20px 10px 0 0;
+  color: #543f2e;
 }
 
 .footer-link {

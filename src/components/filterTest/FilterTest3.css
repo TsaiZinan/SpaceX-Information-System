@@ -1,7 +1,5 @@
 .filter {
   background-color: #ebe5d9;
-  
-  /* padding-top: 20px; */
 }
 
 /* filter-option */
@@ -17,6 +15,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  border-left: solid;
+  margin-bottom: 10px;
 }
 
 /* filter-button */
@@ -37,6 +37,7 @@ button {
 
   font-weight: bold;
   font-size: 30px;
+  /* font-size: min(5vw, 30px); */
   font-family: -apple-system, BlinkMacSystemFont, 'Urbanist',
     sans-serif;
 
@@ -86,6 +87,8 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .new-node-first-patch {
@@ -94,6 +97,8 @@ button {
   margin-left: 20px;
   width: 110px;
   height: 110px;
+
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .new-node-first-number {
@@ -160,6 +165,11 @@ button {
   color: #ebe5d9;
 }
 
+@media screen and (max-width: 710px){
+  .filter-nodes {
+    justify-content: center;
+  }
 
 
+}
 

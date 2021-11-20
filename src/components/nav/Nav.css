@@ -56,3 +56,32 @@
 
   transition: 0.2s;
 }
+
+
+
+@media screen and (max-width: 1300px){
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .nav-title {
+    width: 50%;
+    font-size: min(11vw, 70px);
+  }
+
+  .nav-link{
+    font-size: min(7vw, 55px);
+    border-bottom: solid;
+    border-top: none;
+    margin-bottom: 5px;
+  }
+
+  .nav-link:hover {
+    height: fit-content;
+    line-height: 0.8;
+  }
+
+
+}
