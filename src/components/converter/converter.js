@@ -26,12 +26,23 @@ export const landingPadConverter = (id, data, mode) => {
 
 export const launchConverter = (id, data, mode) => {
   let number = '';
-  
+  let name = '';
+  let upcoming = true;
+  let landing_attempt = true;
+  let landing_success = true;
+  let landing_type = '';
+  // console.log(upcoming)
+
   // console.log(data);
   data.map(launch => {
 
     if (launch.id === id) {
       number = launch.flight_number;
+      name = launch.name;
+      upcoming = launch.upcoming;
+      landing_attempt = launch.cores[0].landing_attempt;
+      landing_success = launch.cores[0].landing_success;
+      landing_type = launch.cores[0].landing_type;
     }
   })
 
@@ -41,7 +52,23 @@ export const launchConverter = (id, data, mode) => {
       break;
 
     case 1:
-      return number
+      return name
+      break;
+
+    case 2:
+      return upcoming
+      break;
+
+    case 3:
+      return landing_attempt
+      break;
+
+    case 4:
+      return landing_success
+      break;
+
+    case 5:
+      return landing_type
       break;
 
     default: return number
@@ -124,7 +151,7 @@ export const testConverter = (id, data, condition) => {
   let count = 0;
   data.forEach((singleData) => {
     if (eval(location) === condition) {
-      
+
       count = count + 1
     }
   })

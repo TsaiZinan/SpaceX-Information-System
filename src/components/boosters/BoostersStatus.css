@@ -20,12 +20,55 @@
   margin-left: 5px;
 }
 
-.boosterPage-block {
-  background-color: black;
+.boosterPage-launchBlock {
   color: white;
   height: 25px;
   width: 25px;
   margin: 2px;
+}
+
+.boosterPage-launchBlock-upcoming {
+  /* color: white; */
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style: double;
+  background-color: gray;
+  
+}
+.boosterPage-launchBlock-noattempt {
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style:groove;
+}
+.boosterPage-launchBlock-fail {
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style: solid;
+  background-color: rgb(231, 136, 136);
+}
+.boosterPage-launchBlock-ocean {
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style: solid;
+  background-color: rgb(197, 157, 82);
+}
+.boosterPage-launchBlock-RTLS {
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style: solid;
+  background-color: rgb(147, 199, 147);
+}
+.boosterPage-launchBlock-ASDS {
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+  border-style: solid;
+  background-color: rgb(173, 203, 221);
 }
 
 .boosterPage-status-active {
