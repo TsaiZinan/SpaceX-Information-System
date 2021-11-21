@@ -13,8 +13,8 @@ const TestPage = () => {
         <button>Color Palette</button>
 
       </Link>
-      <Link to='/chart'>
-        <button>Chart</button>
+      <Link to='/boosters'>
+        <button>Booster</button>
 
       </Link>
 

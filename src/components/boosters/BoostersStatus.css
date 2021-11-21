@@ -1,0 +1,45 @@
+.boosterPage {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+
+  height: 100vh;
+
+  /* background-color: var(--main-bg-color); */
+}
+
+.boosterPage::-webkit-scrollbar {
+  display: none;
+}
+
+
+.boosterPage-core {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 5px;
+}
+
+.boosterPage-block {
+  background-color: black;
+  color: white;
+  height: 25px;
+  width: 25px;
+  margin: 2px;
+}
+
+.boosterPage-status-active {
+  background-color: green;
+}
+.boosterPage-status-lost {
+  background-color: red;
+}
+.boosterPage-status-unknown {
+  background-color: white;
+}
+.boosterPage-status-expended {
+  background-color: yellow;
+}
+.boosterPage-status-inactive {
+  background-color: gray;
+}

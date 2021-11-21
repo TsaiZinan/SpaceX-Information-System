@@ -24,6 +24,31 @@ export const landingPadConverter = (id, data, mode) => {
   }
 }
 
+export const launchConverter = (id, data, mode) => {
+  let number = '';
+  
+  // console.log(data);
+  data.map(launch => {
+
+    if (launch.id === id) {
+      number = launch.flight_number;
+    }
+  })
+
+  switch (mode) {
+    case 0:
+      return number
+      break;
+
+    case 1:
+      return number
+      break;
+
+    default: return number
+      break;
+  }
+}
+
 export const launchPadConverter = (id, data, mode) => {
   // console.log(id)
   let abbr_name = 'NET';
