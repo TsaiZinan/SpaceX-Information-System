@@ -1,4 +1,6 @@
 import React, { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
 
 import { launchConverter } from '../converter/converter'
 
@@ -10,32 +12,57 @@ const BoostersStatus = (props) => {
 
   const Legend = () => {
     return (
-      <div>
-        <div>
-          <div className='legend-block'>
+      <div className='legend'>
+
+        <div className='legend-block-line'>
+          <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-active'>ACT</div>
             <div> ACTIVE </div>
+          </div>
+          <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-lost'>LOST</div>
             <div> LOST </div>
+          </div>
+          <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-unknown'>UNKN</div>
             <div> UNKNOWN </div>
+          </div>
+          <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-expended'>EXPD</div>
             <div> EXPENDED </div>
+          </div>
+          <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-inactive'>INACT</div>
             <div> INACTIVE </div>
           </div>
         </div>
-        <div className='legend-block'>
-          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-fail'></div>
-          <div> Landing Fail </div>
-          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-ocean'></div>
-          <div> Land on Ocean </div>
-          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-noattempt'></div>
-          <div> Landing not Attempt </div>
-          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-RTLS'></div>
-          <div> Land on Land </div>
-          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-ASDS'></div>
-          <div> Land on Ship </div>
+
+        <div className='legend-block-line'>
+          <div className='legend-block-unit'>
+            <div className='legend-singleBlock legend-statusBlock boosterPage-launchBlock-fail'></div>
+            <div> Landing Fail </div>
+          </div>
+          <div className='legend-block-unit'>
+            <div className='legend-singleBlock legend-statusBlock boosterPage-launchBlock-ocean'></div>
+            <div> Land on Ocean </div>
+          </div>
+          <div className='legend-block-unit'>
+            <div className='legend-singleBlock legend-statusBlock boosterPage-launchBlock-noattempt'></div>
+            <div> Landing not Attempt </div>
+          </div>
+          <div className='legend-block-unit'>
+            <div className='legend-singleBlock legend-statusBlock boosterPage-launchBlock-RTLS'></div>
+            <div> Land on Land </div>
+          </div>
+          <div className='legend-block-unit'>
+            <div className='legend-singleBlock legend-statusBlock boosterPage-launchBlock-ASDS'></div>
+            <div> Land on Ship </div>
+          </div>
+
+
+
+
+
         </div>
       </div>
     )
@@ -51,9 +78,9 @@ const BoostersStatus = (props) => {
     }
 
     return (
-      <div>
-        <button onClick={() => moveLeft()}>Left</button>
-        <button onClick={() => moveRight()}>Right</button>
+      <div className='boosterPage-scrollButtons'>
+        <button onClick={() => moveLeft()}><VscArrowLeft /></button>
+        <button onClick={() => moveRight()}><VscArrowRight /></button>
       </div>
     )
   }

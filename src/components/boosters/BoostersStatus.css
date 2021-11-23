@@ -105,17 +105,43 @@
 
 
 /* ===================================================== */
-.legend-block {
+.legend {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+
+}
+
+.legend-block-line {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 
-  
+  padding-bottom: 5px;
+}
+
+.legend-block-unit {
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
 }
 
 .legend-singleBlock {
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.legend-statusBlock {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+
+/* ===================================================== */
+.boosterPage-scrollButtons {
+  display: flex;
+  justify-content: space-between;
 }
