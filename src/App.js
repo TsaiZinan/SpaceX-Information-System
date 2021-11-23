@@ -17,6 +17,7 @@ import TestPage from './TestPage';
 import StyleTest from './components/styleTest/StyleTest';
 import Chart from './components/chart/Chart';
 import MainPage from './components/mainPage/MainPage';
+import BoostersStatus from './components/boosters/BoostersStatus';
 
 // import { LatestLaunch, Cores, LandingPads, DemoLaunch } from './data'
 
@@ -168,6 +169,14 @@ function App() {
             path='/launch/:number'
             render={(props) => (
               <LaunchDetailPage {...props} launches={allLaunchesData} cores={allCoresData} landingPads={allLandingpadsData} />
+            )}
+          />
+
+          {/* =========================================================================== */}
+          <Route
+            path='/boosters' exact
+            render={(props) => (
+              <BoostersStatus {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} cores={allCoresData} landingPads={allLandingpadsData} />
             )}
           />
 

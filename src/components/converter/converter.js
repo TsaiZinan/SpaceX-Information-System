@@ -24,6 +24,70 @@ export const landingPadConverter = (id, data, mode) => {
   }
 }
 
+export const launchConverter = (id, data, mode) => {
+  let number = '';
+  let name = '';
+  let img = '';
+  let date_local = '';
+  let upcoming = true;
+  let landing_attempt = true;
+  let landing_success = true;
+  let landing_type = '';
+  // console.log(upcoming)
+
+  // console.log(data);
+  data.map(launch => {
+
+    if (launch.id === id) {
+      number = launch.flight_number;
+      name = launch.name;
+      img = launch.links.patch.small;
+      date_local = launch.date_local;
+      upcoming = launch.upcoming;
+      landing_attempt = launch.cores[0].landing_attempt;
+      landing_success = launch.cores[0].landing_success;
+      landing_type = launch.cores[0].landing_type;
+    }
+  })
+
+  switch (mode) {
+    case 0:
+      return number
+      break;
+
+    case 1:
+      return name
+      break;
+
+    case 2:
+      return upcoming
+      break;
+
+    case 3:
+      return landing_attempt
+      break;
+
+    case 4:
+      return landing_success
+      break;
+
+    case 5:
+      return landing_type
+      break;
+
+    case 6:
+      return img
+      break;
+
+    case 7:
+      return date_local
+      break;
+
+    default: return number
+      break;
+  }
+}
+
 export const launchPadConverter = (id, data, mode) => {
   // console.log(id)
   let abbr_name = 'NET';
@@ -99,7 +163,7 @@ export const testConverter = (id, data, condition) => {
   let count = 0;
   data.forEach((singleData) => {
     if (eval(location) === condition) {
-      
+
       count = count + 1
     }
   })
