@@ -150,10 +150,33 @@ const BoostersStatus = (props) => {
     }
 
     return (
-      <div className={`${classname} boosterPage-launchBlock`}>
-        {launchConverter(id, allLaunches, 0)}
+      <div className='hover-test'>
+        <div className={`${classname} boosterPage-launchBlock`}>
+          {launchConverter(id, allLaunches, 0)}
+
+          <div className='boosterPage-hoverBox'>
+
+            <div className='boosterPage-hoverBox-imgDiv'>
+              <img className='boosterPage-hoverBox-img' src={launchConverter(id, allLaunches, 6)} alt="" />
+            </div>
+
+            <div className='boosterPage-hoverBox-time'>
+              {launchConverter(id, allLaunches, 7).substring(0, 10).replace('T', ' ')}
+            </div>
+
+            <div className='boosterPage-hoverBox-name'>
+              {/* <Link to={`/launch/${launchConverter(id, allLaunches, 0)}`} className='boosterPage-hoverBox-link'>
+                {launchConverter(id, allLaunches, 1)}
+              </Link> */}
+              {launchConverter(id, allLaunches, 1)}
+            </div>
+
+          </div>
+        </div>
+
 
       </div>
+
     )
   }
 

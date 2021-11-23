@@ -6,6 +6,10 @@
   /* height: 100vh; */
 
   background-color: var(--main-bg-color);
+
+  padding-left: 30px;
+  padding-top: 5px;
+  padding-bottom: 50px;
 }
 
 .boosterPage::-webkit-scrollbar {
@@ -96,6 +100,69 @@
 }
 
 
+
+
+/* ===================================================== */
+.boosterPage-launchBlock {
+  position: relative;
+}
+
+.boosterPage-hoverBox {
+  position: absolute;
+  z-index: 1;
+
+  visibility: hidden;
+
+  width: 120px;
+  height: 120px;
+
+  background-color: rgb(209, 187, 209);
+
+  border-radius: 10px;
+
+  
+  
+}
+
+.boosterPage-launchBlock:hover .boosterPage-hoverBox {
+  visibility: visible;
+}
+
+.boosterPage-hoverBox-imgDiv {
+  margin-top: -20px;
+}
+.boosterPage-hoverBox-img {
+  width: 50px;
+  height: 50px;
+
+}
+
+
+.boosterPage-hoverBox-time {
+  font-size: 20px;
+  font-weight: bold;
+
+  /* padding-top: 10px; */
+
+  color: var(--main-font-color);
+}
+
+.boosterPage-hoverBox-name {
+  font-size: 15px;
+  font-weight: bold;
+
+  padding-top: 5px;
+  height: 80px;
+
+  color: black;
+}
+.boosterPage-hoverBox-link {
+  text-decoration: none;
+  color: black;
+}
+
+
+
 /* ===================================================== */
 .boosterPage-count {
   color: var(--main-font-color);
@@ -144,4 +211,6 @@
 .boosterPage-scrollButtons {
   display: flex;
   justify-content: space-between;
+
+  padding-top: 3px;
 }

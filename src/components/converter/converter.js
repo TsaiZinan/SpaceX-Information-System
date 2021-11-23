@@ -27,6 +27,8 @@ export const landingPadConverter = (id, data, mode) => {
 export const launchConverter = (id, data, mode) => {
   let number = '';
   let name = '';
+  let img = '';
+  let date_local = '';
   let upcoming = true;
   let landing_attempt = true;
   let landing_success = true;
@@ -39,6 +41,8 @@ export const launchConverter = (id, data, mode) => {
     if (launch.id === id) {
       number = launch.flight_number;
       name = launch.name;
+      img = launch.links.patch.small;
+      date_local = launch.date_local;
       upcoming = launch.upcoming;
       landing_attempt = launch.cores[0].landing_attempt;
       landing_success = launch.cores[0].landing_success;
@@ -69,6 +73,14 @@ export const launchConverter = (id, data, mode) => {
 
     case 5:
       return landing_type
+      break;
+
+    case 6:
+      return img
+      break;
+
+    case 7:
+      return date_local
       break;
 
     default: return number

@@ -13,7 +13,7 @@ const TestPage = () => {
         <button>Color Palette</button>
 
       </Link>
-      <Link to='/boosters'>
+      <Link to='/cores'>
         <button>Booster</button>
 
       </Link>
