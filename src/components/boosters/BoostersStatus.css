@@ -3,9 +3,9 @@
   flex-direction: row;
   overflow-x: auto;
 
-  height: 100vh;
+  /* height: 100vh; */
 
-  /* background-color: var(--main-bg-color); */
+  background-color: var(--main-bg-color);
 }
 
 .boosterPage::-webkit-scrollbar {
@@ -16,73 +16,106 @@
 .boosterPage-core {
   display: flex;
   flex-direction: column;
+   align-items: center;
 
   margin-left: 5px;
 }
 
-.boosterPage-launchBlock {
-  color: white;
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-}
+/* ===================================================== */
+.boosterPage-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-style: bottom solid black; */
+  color: var(--main-bg-color);
+  font-size: 17px;
 
-.boosterPage-launchBlock-upcoming {
-  /* color: white; */
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style: double;
-  background-color: gray;
-  
-}
-.boosterPage-launchBlock-noattempt {
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style:groove;
-}
-.boosterPage-launchBlock-fail {
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style: solid;
-  background-color: rgb(231, 136, 136);
-}
-.boosterPage-launchBlock-ocean {
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style: solid;
-  background-color: rgb(197, 157, 82);
-}
-.boosterPage-launchBlock-RTLS {
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style: solid;
-  background-color: rgb(147, 199, 147);
-}
-.boosterPage-launchBlock-ASDS {
-  height: 25px;
-  width: 25px;
-  margin: 2px;
-  border-style: solid;
-  background-color: rgb(173, 203, 221);
+  border-radius: 5px;
+
+  width: 50px;
+  min-height: 25px;
 }
 
 .boosterPage-status-active {
-  background-color: green;
+  background-color: rgb(94, 139, 94);
 }
 .boosterPage-status-lost {
-  background-color: red;
+  background-color: rgb(85, 83, 83);
 }
 .boosterPage-status-unknown {
-  background-color: white;
+  background-color: rgb(169, 204, 168);
 }
 .boosterPage-status-expended {
-  background-color: yellow;
+  background-color: rgb(139, 129, 129);
 }
 .boosterPage-status-inactive {
+  background-color: rgb(212, 120, 120);
+}
+
+
+/* ===================================================== */
+.boosterPage-name {
+  color: var(--main-font-color);
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+
+/* ===================================================== */
+.boosterPage-launchBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-size: 28px;
+
+  height: 45px;
+  width: 45px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.boosterPage-launchBlock-upcoming {
   background-color: gray;
+}
+.boosterPage-launchBlock-noattempt {
+  background-color: rgb(70, 66, 66);
+}
+.boosterPage-launchBlock-fail {
+  background-color: rgb(231, 136, 136);
+}
+.boosterPage-launchBlock-ocean {
+  background-color: rgb(197, 157, 82);
+}
+.boosterPage-launchBlock-RTLS {
+  background-color: rgb(147, 199, 147);
+}
+.boosterPage-launchBlock-ASDS {
+  background-color: rgb(173, 203, 221);
+}
+
+
+/* ===================================================== */
+.boosterPage-count {
+  color: var(--main-font-color);
+  padding-top: 8px;
+  font-weight: bold;
+}
+
+
+/* ===================================================== */
+.legend-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  
+}
+
+.legend-singleBlock {
+  margin-right: 5px;
+  margin-left: 5px;
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { launchConverter } from '../converter/converter'
 
@@ -8,11 +8,85 @@ const BoostersStatus = (props) => {
   const coresData = props.cores;
   const allLaunches = props.launches;
 
-  console.log(allLaunches)
+  const Legend = () => {
+    return (
+      <div>
+        <div>
+          <div className='legend-block'>
+            <div className='legend-singleBlock boosterPage-status boosterPage-status-active'>ACT</div>
+            <div> ACTIVE </div>
+            <div className='legend-singleBlock boosterPage-status boosterPage-status-lost'>LOST</div>
+            <div> LOST </div>
+            <div className='legend-singleBlock boosterPage-status boosterPage-status-unknown'>UNKN</div>
+            <div> UNKNOWN </div>
+            <div className='legend-singleBlock boosterPage-status boosterPage-status-expended'>EXPD</div>
+            <div> EXPENDED </div>
+            <div className='legend-singleBlock boosterPage-status boosterPage-status-inactive'>INACT</div>
+            <div> INACTIVE </div>
+          </div>
+        </div>
+        <div className='legend-block'>
+          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-fail'></div>
+          <div> Landing Fail </div>
+          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-ocean'></div>
+          <div> Land on Ocean </div>
+          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-noattempt'></div>
+          <div> Landing not Attempt </div>
+          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-RTLS'></div>
+          <div> Land on Land </div>
+          <div className='legend-singleBlock boosterPage-launchBlock boosterPage-launchBlock-ASDS'></div>
+          <div> Land on Ship </div>
+        </div>
+      </div>
+    )
+  }
+
+  const ScrollButtons = (props) => {
+    const moveRight = () => {
+      document.getElementById(props.id).scrollLeft += props.x;
+    }
+
+    const moveLeft = () => {
+      document.getElementById(props.id).scrollLeft -= props.x;
+    }
+
+    return (
+      <div>
+        <button onClick={() => moveLeft()}>Left</button>
+        <button onClick={() => moveRight()}>Right</button>
+      </div>
+    )
+  }
 
 
-  console.log(launchConverter("5fe3af43b3467846b324215e", allLaunches, 1));
-  console.log(launchConverter("60428aafc041c16716f73cd7", allLaunches, 1));
+
+  const statusConverter = (input) => {
+
+    switch (input) {
+      case 'active':
+        return 'ACT';
+        break;
+
+      case 'inactive':
+        return 'INACT';
+        break;
+
+      case 'unknown':
+        return 'UNKN';
+        break;
+
+      case 'expended':
+        return 'EXPD';
+        break;
+
+      case 'lost':
+        return 'LOST';
+        break;
+
+      default:
+        break;
+    }
+  }
 
 
   const LaunchBlock = (props) => {
@@ -26,7 +100,7 @@ const BoostersStatus = (props) => {
 
     // console.log(launchConverter(id, allLaunches, 2));
 
-    if(upcoming === true) {
+    if (upcoming === true) {
       classname = 'boosterPage-launchBlock-upcoming'
     } else {
       if (landing_attempt === false) {
@@ -49,57 +123,69 @@ const BoostersStatus = (props) => {
     }
 
     return (
-      <div className={classname}>
+      <div className={`${classname} boosterPage-launchBlock`}>
         {launchConverter(id, allLaunches, 0)}
-        
+
       </div>
     )
   }
 
   return (
-    <div className='boosterPage'>
+    <div>
+      <Legend />
+      <ScrollButtons id='boosterPage' x={55} />
+      <div className='boosterPage' id="boosterPage">
 
-      {coresData.map((core) => {
-        return (
-          <div className='boosterPage-core'>
-            <div>
-              {core.serial}
+        {/* <button onClick={() => onClickRight()}>L</button> */}
+
+
+
+        {coresData.slice(0).reverse().map((core) => {
+          return (
+            <div className='boosterPage-core'>
+
+
+              <div className={
+                core.status === 'active' ? 'boosterPage-status boosterPage-status-active'
+                  : core.status === 'unknown' ? 'boosterPage-status boosterPage-status-unknown'
+                    : core.status === 'expended' ? 'boosterPage-status boosterPage-status-expended'
+                      : core.status === 'inactive' ? 'boosterPage-status boosterPage-status-inactive'
+                        : 'boosterPage-status boosterPage-status-lost'
+              }>
+                {statusConverter(core.status)}
+              </div>
+
+              <div className='boosterPage-name'>
+                {core.serial}
+              </div>
+
+
+              <div>
+                {core.launches.map((launch) => {
+                  return (
+                    <div>
+                      <LaunchBlock id={launch} />
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div className='boosterPage-count'>
+                {/* {core.reuse_count + 1} */}
+                {core.launches.length}
+              </div>
+
+
+
             </div>
+          )
+        })}
 
-            <div className={
-              core.status === 'active' ? 'boosterPage-status-active'
-                : core.status === 'unknown' ? 'boosterPage-status-unknown'
-                  : core.status === 'expended' ? 'boosterPage-status-expended'
-                    : core.status === 'inactive' ? 'boosterPage-status-inactive'
-                      : 'boosterPage-status-lost'
-            }>
-              {core.status}
-            </div>
+      </div>
 
-
-
-            <div>
-              {core.launches.map((launch) => {
-                return (
-                  <div>
-                    <LaunchBlock id={launch} />
-                  </div>
-                )
-              })}
-            </div>
-
-            <div>
-              {/* {core.reuse_count + 1} */}
-              {core.launches.length}
-            </div>
-
-
-
-          </div>
-        )
-      })}
 
     </div>
+
   )
 }
 
