@@ -106,7 +106,7 @@ const MainPage = (props) => {
         </div>
         <div className='mainpage-block'>
           <SmallBlock title='Launch' number={lastLaunchNumber} />
-          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', AllLaunches.slice(0, 137), CurrentYear.toString())} />
+          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', AllLaunches.slice(0, lastLaunchNumber), CurrentYear.toString())} />
           <SmallBlock title='Success' number={countNumberInData('.success', AllLaunches, true)} />
           <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', AllLaunches, true)} />
         </div>
