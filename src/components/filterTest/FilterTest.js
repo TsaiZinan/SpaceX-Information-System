@@ -22,14 +22,14 @@ const FilterTest = (props) => {
   }
 
 
-  const allYears = [2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+  const allYears = [2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
   const allSite = ['5e9e4502f5090995de566f86', '5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88']
 
   // for the selecting of reused state
   const [reusedState, setReusedState] = useState([true, false]);
 
   // for the multiple selecting of years
-  const [yearState, setyearState] = useState([2021])
+  const [yearState, setyearState] = useState([2022])
 
   // for the multiple selecting of launch site
   const [launchPadState, setLaunchPadState] = useState(['5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88'])
@@ -160,10 +160,10 @@ const FilterTest = (props) => {
           >All Years</button>
           {/* set to only 2021 */}
           <button
-            className={JSON.stringify(yearState) == JSON.stringify([2021]) ? 'SelectButton-active' : 'SelectButton-inactive'}
-            onClick={() => setyearState([2021])}
+            className={JSON.stringify(yearState) == JSON.stringify([2022]) ? 'SelectButton-active' : 'SelectButton-inactive'}
+            onClick={() => setyearState([2022])}
           >
-            Only 2021
+            Only 2022
           </button>
         </div>
 
