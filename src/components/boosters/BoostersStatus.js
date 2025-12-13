@@ -129,24 +129,18 @@ const BoostersStatus = (props) => {
 
     if (upcoming === true) {
       classname = 'boosterPage-launchBlock-upcoming'
+    } else if (landing_attempt === false) {
+      classname = 'boosterPage-launchBlock-noattempt'
+    } else if (landing_success === false) {
+      classname = 'boosterPage-launchBlock-fail'
+    } else if (landing_type === 'Ocean') {
+      classname = 'boosterPage-launchBlock-ocean'
+    } else if (landing_type === 'RTLS') {
+      classname = 'boosterPage-launchBlock-RTLS'
+    } else if (landing_type === 'ASDS') {
+      classname = 'boosterPage-launchBlock-ASDS'
     } else {
-      if (landing_attempt === false) {
-        classname = 'boosterPage-launchBlock-noattempt'
-      } else {
-        if (landing_success === false) {
-          classname = 'boosterPage-launchBlock-fail'
-        } else {
-          if (landing_type === 'Ocean') {
-            classname = 'boosterPage-launchBlock-ocean'
-          }
-          if (landing_type === 'RTLS') {
-            classname = 'boosterPage-launchBlock-RTLS'
-          }
-          if (landing_type === 'ASDS') {
-            classname = 'boosterPage-launchBlock-ASDS'
-          }
-        }
-      }
+      classname = 'boosterPage-launchBlock-ASDS'
     }
 
     return (
@@ -180,6 +174,21 @@ const BoostersStatus = (props) => {
     )
   }
 
+  const sortedCores = (() => {
+    const starship = [];
+    const falcon = [];
+    
+    coresData.forEach(core => {
+      if (core.serial.startsWith('Booster') || core.serial.startsWith('SN') || core.serial === 'Starhopper') {
+        starship.push(core);
+      } else {
+        falcon.push(core);
+      }
+    });
+
+    return [...starship.slice(0).reverse(), ...falcon.slice(0).reverse()];
+  })();
+
   return (
     <div>
       <Legend />
@@ -190,7 +199,7 @@ const BoostersStatus = (props) => {
 
 
 
-        {coresData.slice(0).reverse().map((core) => {
+        {sortedCores.map((core) => {
           return (
             <div className='boosterPage-core'>
 

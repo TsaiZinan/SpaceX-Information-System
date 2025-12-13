@@ -34,23 +34,132 @@ function App() {
   const launchpadsURL = 'https://api.spacexdata.com/v4/launchpads'
   const latestLaunchURL = 'https://api.spacexdata.com/v4/launches/latest'
   const landingpadsURL = 'https://api.spacexdata.com/v4/landpads'
+  const newApiURL = 'https://cdn.jsdelivr.net/gh/TsaiZinan/ll2-DATA@main/spacex/spacex-previous-launches-simple.json'
 
   useEffect(() => {
     console.log('Effect');
-    fetchAllLaunchData();
-    // console.log('AllLaunch Effect');
-    fetchAllCoresData();
-    // console.log('AllCores Effect');
+    // fetchAllLaunchData();
+    // fetchAllCoresData();
     fetchAllLaunchpadsData();
-    // console.log('AllLaunchpads Effect');
     fetchLatestLaunchData();
-    // console.log('LatestLaunch Effect');
     fetchAllLandingpadsData();
-    // console.log('AllLandingpads Effect');
+    fetchNewApiData();
   }, [])
 
   //Fetch allLaunchesData
   const [allLaunchesData, setAllLaunchesData] = useState([]);
+
+  const fetchNewApiData = async () => {
+    try {
+      const response = await fetch(newApiURL);
+      const data = await response.json();
+      const rawLaunches = data.launches;
+
+      const processedLaunches = rawLaunches.map((launch, index) => {
+        const coreInfo = (launch.rocket && launch.rocket.launcher_stage && launch.rocket.launcher_stage[0]) || {};
+        const landing = coreInfo.landing || {};
+        const launcher = coreInfo.launcher || {};
+
+        return {
+          id: launch.id,
+          flight_number: rawLaunches.length - index,
+          name: launch.name,
+          date_local: launch.net,
+          date_utc: launch.net,
+          upcoming: new Date(launch.net) > new Date(),
+          links: {
+            patch: {
+              small: launcher.image || 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png'
+            },
+            webcast: null,
+            wikipedia: null,
+            reddit: { launch: null }
+          },
+          cores: [
+            {
+              core: launcher.serial_number,
+              landing_attempt: landing.attempt,
+              landing_success: landing.success,
+              landing_type: (() => {
+                const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
+                const serial = launcher.serial_number || '';
+                
+                if (serial.startsWith('SN') || serial === 'Starhopper') {
+                  return 'RTLS';
+                }
+                if (serial.startsWith('Booster')) {
+                  // IFT-5 (Booster 12) was a catch (RTLS-like), others splashdown.
+                  // Hard to distinguish without specific data, defaulting to Ocean for now as most were splashdowns.
+                  // Or if description says 'catch' or 'tower'?
+                  if (description.includes('catch') || description.includes('tower')) return 'RTLS';
+                  return 'Ocean';
+                }
+
+                if (description.includes('ocean') || description.includes('splashdown')) {
+                  return 'Ocean';
+                }
+                if (description.includes('land at') || description.includes('return to launch site') || description.includes('rtls') || description.includes('landing zone')) {
+                  return 'RTLS';
+                }
+                if (description.includes('drone ship') || description.includes('droneship') || description.includes('asds')) {
+                  return 'ASDS';
+                }
+                
+                // Default fallback
+                return 'ASDS'; 
+              })(),
+              reused: coreInfo.reused,
+              flight: coreInfo.launcher_flight_number
+            }
+          ],
+          launchpad: 'Unknown',
+          details: launch.mission ? launch.mission.description : ''
+        };
+      });
+
+      const coresMap = {};
+      const sortedLaunches = [...processedLaunches].sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
+      
+      sortedLaunches.forEach(launch => {
+        const serial = launch.cores[0].core;
+        const landingSuccess = launch.cores[0].landing_success;
+        
+        if (serial) {
+          if (!coresMap[serial]) {
+            coresMap[serial] = {
+              serial: serial,
+              status: 'unknown',
+              launches: []
+            };
+          }
+
+          coresMap[serial].launches.push(launch.id);
+          
+          if (landingSuccess === false) {
+            coresMap[serial].status = 'lost';
+          } else {
+            const launchDate = new Date(launch.date_utc);
+            const oneYearAgo = new Date();
+            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+            
+            if (launchDate > oneYearAgo) {
+              coresMap[serial].status = 'active';
+            } else {
+              coresMap[serial].status = 'inactive';
+            }
+          }
+        }
+      });
+      
+      const processedCores = Object.values(coresMap);
+
+      setAllLaunchesData(processedLaunches);
+      setAllCoresData(processedCores);
+
+    } catch (error) {
+      console.error("Failed to fetch new API", error);
+    }
+  }
 
   const fetchAllLaunchData = async () => {
     const data = await fetch(
