@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
 
@@ -125,7 +125,72 @@ const BoostersStatus = (props) => {
 
     let classname = ''
 
+    const [hoverPosition, setHoverPosition] = useState(null);
+    const blockRef = useRef(null);
+
+    const launch = allLaunches.find(singleLaunch => singleLaunch.id === id);
+
+    let displayNumber = launchConverter(id, allLaunches, 0);
+
+    if (launch && launch.cores && launch.cores[0]) {
+      const serial = launch.cores[0].core;
+      const isStarship = serial && (serial.startsWith('SN') || serial === 'Starhopper' || serial.startsWith('Booster'));
+
+      if (isStarship) {
+        const name = launch.name || '';
+        let label = '';
+
+        const snMatch = name.match(/\bSN(\d+)\b/i);
+        if (snMatch) {
+          label = `SN${snMatch[1]}`;
+        } else {
+          const flightMatch = name.match(/Flight\s*(\d+)/i);
+          const testMatch = name.match(/Test\s*(\d+)/i);
+
+          if (flightMatch && flightMatch[1]) {
+            label = flightMatch[1];
+          } else if (testMatch && testMatch[1]) {
+            label = testMatch[1];
+          } else if (/Test\b/i.test(name)) {
+            label = '1';
+          }
+        }
+
+        displayNumber = label;
+      }
+    }
+
     // console.log(launchConverter(id, allLaunches, 2));
+
+    const handleMouseEnter = () => {
+      const el = blockRef.current;
+      if (!el) {
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const tooltipWidth = 120;
+      const tooltipHeight = 120;
+      const margin = 8;
+
+      let left = rect.right + margin;
+      if (rect.right + margin + tooltipWidth > viewportWidth && rect.left - margin - tooltipWidth >= 0) {
+        left = rect.left - margin - tooltipWidth;
+      } else if (rect.right + margin + tooltipWidth > viewportWidth && rect.left - margin - tooltipWidth < 0) {
+        left = Math.max(margin, Math.min(rect.left + rect.width / 2 - tooltipWidth / 2, viewportWidth - tooltipWidth - margin));
+      }
+
+      let top = rect.top + rect.height / 2 - tooltipHeight / 2;
+      if (top < margin) {
+        top = margin;
+      }
+      if (top + tooltipHeight + margin > viewportHeight) {
+        top = viewportHeight - tooltipHeight - margin;
+      }
+
+      setHoverPosition({ top, left });
+    };
 
     if (upcoming === true) {
       classname = 'boosterPage-launchBlock-upcoming'
@@ -145,10 +210,17 @@ const BoostersStatus = (props) => {
 
     return (
       <div className='hover-test'>
-        <div className={`${classname} boosterPage-launchBlock`}>
-          {launchConverter(id, allLaunches, 0)}
+        <div
+          ref={blockRef}
+          className={`${classname} boosterPage-launchBlock`}
+          onMouseEnter={handleMouseEnter}
+        >
+          {displayNumber}
 
-          <div className='boosterPage-hoverBox'>
+          <div
+            className='boosterPage-hoverBox'
+            style={hoverPosition ? { top: hoverPosition.top, left: hoverPosition.left } : undefined}
+          >
 
             <div className='boosterPage-hoverBox-imgDiv'>
               <img className='boosterPage-hoverBox-img' src={launchConverter(id, allLaunches, 6)} alt="" />
@@ -174,10 +246,21 @@ const BoostersStatus = (props) => {
     )
   }
 
+  const parseBoosterNumber = (serial) => {
+    if (!serial) {
+      return -Infinity;
+    }
+    const matches = serial.match(/\d+/g);
+    if (!matches || matches.length === 0) {
+      return -Infinity;
+    }
+    return parseInt(matches[matches.length - 1], 10);
+  }
+
   const sortedCores = (() => {
     const starship = [];
     const falcon = [];
-    
+
     coresData.forEach(core => {
       if (core.serial.startsWith('Booster') || core.serial.startsWith('SN') || core.serial === 'Starhopper') {
         starship.push(core);
@@ -186,7 +269,21 @@ const BoostersStatus = (props) => {
       }
     });
 
-    return [...starship.slice(0).reverse(), ...falcon.slice(0).reverse()];
+    const f1Legacy = [];
+    const otherFalcon = [];
+
+    falcon.forEach(core => {
+      if (core.serial && core.serial.startsWith('F1 B000')) {
+        f1Legacy.push(core);
+      } else {
+        otherFalcon.push(core);
+      }
+    });
+
+    const sortedOtherFalcon = otherFalcon.slice(0).sort((a, b) => parseBoosterNumber(b.serial) - parseBoosterNumber(a.serial));
+    const sortedF1Legacy = f1Legacy.slice(0).sort((a, b) => parseBoosterNumber(b.serial) - parseBoosterNumber(a.serial));
+
+    return [...starship.slice(0).reverse(), ...sortedOtherFalcon, ...sortedF1Legacy];
   })();
 
   return (

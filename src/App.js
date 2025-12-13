@@ -55,14 +55,44 @@ function App() {
       const data = await response.json();
       const rawLaunches = data.launches;
 
-      const processedLaunches = rawLaunches.map((launch, index) => {
+      const isStarshipSerial = (serial) => {
+        if (!serial) {
+          return false;
+        }
+        return serial.startsWith('SN') || serial === 'Starhopper' || serial.startsWith('Booster');
+      };
+
+      const sortedRawLaunches = [...rawLaunches].sort((a, b) => new Date(a.net) - new Date(b.net));
+      const nonStarshipIds = [];
+
+      sortedRawLaunches.forEach(launch => {
+        const coreInfo = (launch.rocket && launch.rocket.launcher_stage && launch.rocket.launcher_stage[0]) || {};
+        const launcher = coreInfo.launcher || {};
+        const serial = launcher.serial_number || '';
+
+        if (!isStarshipSerial(serial)) {
+          nonStarshipIds.push(launch.id);
+        }
+      });
+
+      let flightCounter = 1;
+      const flightNumberById = {};
+
+      nonStarshipIds.forEach(id => {
+        flightNumberById[id] = flightCounter;
+        flightCounter = flightCounter + 1;
+      });
+
+      const processedLaunches = rawLaunches.map((launch) => {
         const coreInfo = (launch.rocket && launch.rocket.launcher_stage && launch.rocket.launcher_stage[0]) || {};
         const landing = coreInfo.landing || {};
         const launcher = coreInfo.launcher || {};
+        const serial = launcher.serial_number;
+        const starship = isStarshipSerial(serial || '');
 
         return {
           id: launch.id,
-          flight_number: rawLaunches.length - index,
+          flight_number: starship ? null : flightNumberById[launch.id],
           name: launch.name,
           date_local: launch.net,
           date_utc: launch.net,
@@ -77,20 +107,17 @@ function App() {
           },
           cores: [
             {
-              core: launcher.serial_number,
+              core: serial,
               landing_attempt: landing.attempt,
               landing_success: landing.success,
               landing_type: (() => {
                 const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
-                const serial = launcher.serial_number || '';
+                const serialNumber = serial || '';
                 
-                if (serial.startsWith('SN') || serial === 'Starhopper') {
+                if (serialNumber.startsWith('SN') || serialNumber === 'Starhopper') {
                   return 'RTLS';
                 }
-                if (serial.startsWith('Booster')) {
-                  // IFT-5 (Booster 12) was a catch (RTLS-like), others splashdown.
-                  // Hard to distinguish without specific data, defaulting to Ocean for now as most were splashdowns.
-                  // Or if description says 'catch' or 'tower'?
+                if (serialNumber.startsWith('Booster')) {
                   if (description.includes('catch') || description.includes('tower')) return 'RTLS';
                   return 'Ocean';
                 }
@@ -105,7 +132,6 @@ function App() {
                   return 'ASDS';
                 }
                 
-                // Default fallback
                 return 'ASDS'; 
               })(),
               reused: coreInfo.reused,
