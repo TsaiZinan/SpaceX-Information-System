@@ -118,12 +118,14 @@ const BoostersStatus = (props) => {
 
   const LaunchBlock = (props) => {
     let id = props.id;
-    let upcoming = launchConverter(id, allLaunches, 2);
-    let landing_attempt = launchConverter(id, allLaunches, 3);
-    let landing_success = launchConverter(id, allLaunches, 4);
-    let landing_type = launchConverter(id, allLaunches, 5);
+    const coreSerial = props.coreSerial;
 
-    let classname = ''
+    let upcoming = true;
+    let landing_attempt = true;
+    let landing_success = true;
+    let landing_type = '';
+
+    let classname = '';
 
     const [hoverPosition, setHoverPosition] = useState(null);
     const blockRef = useRef(null);
@@ -131,6 +133,25 @@ const BoostersStatus = (props) => {
     const launch = allLaunches.find(singleLaunch => singleLaunch.id === id);
 
     let displayNumber = launchConverter(id, allLaunches, 0);
+
+    if (launch) {
+      upcoming = launch.upcoming;
+
+      let targetCore = null;
+      if (Array.isArray(launch.cores) && launch.cores.length > 0) {
+        if (coreSerial) {
+          targetCore = launch.cores.find(core => core.core === coreSerial) || launch.cores[0];
+        } else {
+          targetCore = launch.cores[0];
+        }
+      }
+
+      if (targetCore) {
+        landing_attempt = targetCore.landing_attempt;
+        landing_success = targetCore.landing_success;
+        landing_type = targetCore.landing_type;
+      }
+    }
 
     if (launch && launch.cores && launch.cores[0]) {
       const serial = launch.cores[0].core;
@@ -320,7 +341,7 @@ const BoostersStatus = (props) => {
                 {core.launches.map((launch) => {
                   return (
                     <div>
-                      <LaunchBlock id={launch} />
+                      <LaunchBlock id={launch} coreSerial={core.serial} />
                     </div>
                   )
                 })}

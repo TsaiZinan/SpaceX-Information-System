@@ -84,11 +84,51 @@ function App() {
       });
 
       const processedLaunches = rawLaunches.map((launch) => {
-        const coreInfo = (launch.rocket && launch.rocket.launcher_stage && launch.rocket.launcher_stage[0]) || {};
-        const landing = coreInfo.landing || {};
-        const launcher = coreInfo.launcher || {};
-        const serial = launcher.serial_number;
-        const starship = isStarshipSerial(serial || '');
+        const launcherStages = (launch.rocket && launch.rocket.launcher_stage) || [];
+        const primaryStage = launcherStages[0] || {};
+        const primaryLauncher = primaryStage.launcher || {};
+        const primarySerial = primaryLauncher.serial_number;
+        const starship = isStarshipSerial(primarySerial || '');
+        const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
+
+        const getLandingType = (serialNumberRaw) => {
+          const serialNumber = serialNumberRaw || '';
+
+          if (serialNumber.startsWith('SN') || serialNumber === 'Starhopper') {
+            return 'RTLS';
+          }
+          if (serialNumber.startsWith('Booster')) {
+            if (description.includes('catch') || description.includes('tower')) return 'RTLS';
+            return 'Ocean';
+          }
+
+          if (description.includes('ocean') || description.includes('splashdown')) {
+            return 'Ocean';
+          }
+          if (description.includes('land at') || description.includes('return to launch site') || description.includes('rtls') || description.includes('landing zone')) {
+            return 'RTLS';
+          }
+          if (description.includes('drone ship') || description.includes('droneship') || description.includes('asds')) {
+            return 'ASDS';
+          }
+
+          return 'ASDS';
+        };
+
+        const coresArray = launcherStages.map((stage) => {
+          const landing = stage.landing || {};
+          const launcher = stage.launcher || {};
+          const serial = launcher.serial_number || '';
+
+          return {
+            core: serial,
+            landing_attempt: landing.attempt,
+            landing_success: landing.success,
+            landing_type: getLandingType(serial),
+            reused: stage.reused,
+            flight: stage.launcher_flight_number
+          };
+        });
 
         return {
           id: launch.id,
@@ -99,45 +139,13 @@ function App() {
           upcoming: new Date(launch.net) > new Date(),
           links: {
             patch: {
-              small: launcher.image || 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png'
+              small: primaryLauncher.image || 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png'
             },
             webcast: null,
             wikipedia: null,
             reddit: { launch: null }
           },
-          cores: [
-            {
-              core: serial,
-              landing_attempt: landing.attempt,
-              landing_success: landing.success,
-              landing_type: (() => {
-                const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
-                const serialNumber = serial || '';
-                
-                if (serialNumber.startsWith('SN') || serialNumber === 'Starhopper') {
-                  return 'RTLS';
-                }
-                if (serialNumber.startsWith('Booster')) {
-                  if (description.includes('catch') || description.includes('tower')) return 'RTLS';
-                  return 'Ocean';
-                }
-
-                if (description.includes('ocean') || description.includes('splashdown')) {
-                  return 'Ocean';
-                }
-                if (description.includes('land at') || description.includes('return to launch site') || description.includes('rtls') || description.includes('landing zone')) {
-                  return 'RTLS';
-                }
-                if (description.includes('drone ship') || description.includes('droneship') || description.includes('asds')) {
-                  return 'ASDS';
-                }
-                
-                return 'ASDS'; 
-              })(),
-              reused: coreInfo.reused,
-              flight: coreInfo.launcher_flight_number
-            }
-          ],
+          cores: coresArray,
           launchpad: 'Unknown',
           details: launch.mission ? launch.mission.description : ''
         };
@@ -145,36 +153,40 @@ function App() {
 
       const coresMap = {};
       const sortedLaunches = [...processedLaunches].sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
-      
-      sortedLaunches.forEach(launch => {
-        const serial = launch.cores[0].core;
-        const landingSuccess = launch.cores[0].landing_success;
-        
-        if (serial) {
-          if (!coresMap[serial]) {
-            coresMap[serial] = {
-              serial: serial,
-              status: 'unknown',
-              launches: []
-            };
-          }
 
-          coresMap[serial].launches.push(launch.id);
-          
-          if (landingSuccess === false) {
-            coresMap[serial].status = 'lost';
-          } else {
-            const launchDate = new Date(launch.date_utc);
-            const oneYearAgo = new Date();
-            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-            
-            if (launchDate > oneYearAgo) {
-              coresMap[serial].status = 'active';
+      sortedLaunches.forEach(launch => {
+        (launch.cores || []).forEach(core => {
+          const serial = core.core;
+          const landingSuccess = core.landing_success;
+
+          if (serial) {
+            if (!coresMap[serial]) {
+              coresMap[serial] = {
+                serial: serial,
+                status: 'unknown',
+                launches: []
+              };
+            }
+
+            if (!coresMap[serial].launches.includes(launch.id)) {
+              coresMap[serial].launches.push(launch.id);
+            }
+
+            if (landingSuccess === false) {
+              coresMap[serial].status = 'lost';
             } else {
-              coresMap[serial].status = 'inactive';
+              const launchDate = new Date(launch.date_utc);
+              const oneYearAgo = new Date();
+              oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+              if (launchDate > oneYearAgo) {
+                coresMap[serial].status = 'active';
+              } else if (coresMap[serial].status !== 'lost') {
+                coresMap[serial].status = 'inactive';
+              }
             }
           }
-        }
+        });
       });
       
       const processedCores = Object.values(coresMap);
