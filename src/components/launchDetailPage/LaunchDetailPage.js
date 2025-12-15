@@ -27,9 +27,9 @@ const LaunchDetailPage = (props) => {
     // console.log(data);
     data.map(core => {
       // core.id === id ? serialNumber = core.serial : null
-      if (core.id === id) {
+      if (core.serial === id) {
         serialNumber = core.serial;
-        reuse_count = core.reuse_count;
+        reuse_count = core.launches ? core.launches.length : 0;
       }
     })
 
@@ -124,36 +124,48 @@ const LaunchDetailPage = (props) => {
           <div className='launchDetail-first-middle'>
             <div className='launchDetail-core-title'>Core</div>
             <div className='launchDetail-core'>
-              <div className='launchDetail-core-h'>Name:</div>
-              <div className='launchDetail-core-p'>{coreFetch(singleLaunchData.cores[0].core, coresData, 0)}</div>
+              {singleLaunchData.cores && singleLaunchData.cores.length > 0 ? (
+                <>
+                  <div className='launchDetail-core-h'>Name:</div>
+                  <div className='launchDetail-core-p'>{coreFetch(singleLaunchData.cores[0].core, coresData, 0)}</div>
 
-              <div className='launchDetail-core-h'>Reused Times:</div>
-              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].flight}</div>
+                  <div className='launchDetail-core-h'>Reused Times:</div>
+                  <div className='launchDetail-core-p'>{singleLaunchData.cores[0].flight}</div>
 
-              <div className='launchDetail-core-h'>Landing Type:</div>
-              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_type}</div>
+                  <div className='launchDetail-core-h'>Landing Type:</div>
+                  <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_type}</div>
 
-              <div className='launchDetail-core-h'>Landing Site:</div>
-              <div className='launchDetail-core-p'>{landingPadFetch(singleLaunchData.cores[0].landpad, landingData, 1)}</div>
-              {/* <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landpad}</div> */}
+                  <div className='launchDetail-core-h'>Landing Site:</div>
+                  <div className='launchDetail-core-p'>{landingPadFetch(singleLaunchData.cores[0].landpad, landingData, 1)}</div>
+                  {/* <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landpad}</div> */}
 
-              <div className='launchDetail-core-h'>Landing Result:</div>
-              <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_success === true ? 'Success' : 'Fail'}</div>
+                  <div className='launchDetail-core-h'>Landing Result:</div>
+                  <div className='launchDetail-core-p'>{singleLaunchData.cores[0].landing_success === true ? 'Success' : 'Fail'}</div>
+                </>
+              ) : (
+                <div className='launchDetail-core-p'>No Core Information</div>
+              )}
             </div>
           </div>
 
           <div className='launchDetail-first-right'>
 
-            <iframe
-              className='launchDetail-embedVideo'
-              // width="560" 
-              // height="315"
-              src={`https://www.youtube.com/embed/${singleLaunchData.links.youtube_id}`}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            {singleLaunchData.links.youtube_id ? (
+              <iframe
+                className='launchDetail-embedVideo'
+                // width="560" 
+                // height="315"
+                src={`https://www.youtube.com/embed/${singleLaunchData.links.youtube_id}`}
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            ) : (
+              <div className='launchDetail-embedVideo' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', backgroundColor: '#333'}}>
+                No Video Available
+              </div>
+            )}
 
             <div className='launchDetail-detail'>
               {singleLaunchData.details}

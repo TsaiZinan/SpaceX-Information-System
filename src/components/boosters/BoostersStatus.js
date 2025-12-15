@@ -9,6 +9,46 @@ import './BoostersStatus.css'
 const BoostersStatus = (props) => {
   const coresData = props.cores;
   const allLaunches = props.launches;
+  const [showTurnaround, setShowTurnaround] = useState(false);
+
+  const getLaunchDate = (id) => {
+    const launch = allLaunches.find(singleLaunch => singleLaunch.id === id);
+    if (launch && launch.date_local) {
+      return new Date(launch.date_local);
+    }
+    return null;
+  }
+
+  const getTurnaroundColor = (days) => {
+    // Green (Good/Fast): rgb(94, 139, 94)
+    // Yellow (Medium): rgb(219, 219, 112)
+    // Red (Slow): rgb(212, 120, 120)
+    
+    const minDays = 20;
+    const maxDays = 150;
+    
+    let normalized = (days - minDays) / (maxDays - minDays);
+    if (normalized < 0) normalized = 0;
+    if (normalized > 1) normalized = 1;
+    
+    let r, g, b;
+
+    if (normalized < 0.5) {
+      // Green to Yellow (0 to 0.5 -> 0 to 1)
+      const localRatio = normalized * 2;
+      r = Math.round(94 + (219 - 94) * localRatio);
+      g = Math.round(139 + (219 - 139) * localRatio);
+      b = Math.round(94 + (112 - 94) * localRatio);
+    } else {
+      // Yellow to Red (0.5 to 1 -> 0 to 1)
+      const localRatio = (normalized - 0.5) * 2;
+      r = Math.round(219 + (212 - 219) * localRatio);
+      g = Math.round(219 + (120 - 219) * localRatio);
+      b = Math.round(112 + (120 - 112) * localRatio);
+    }
+    
+    return `rgb(${r}, ${g}, ${b})`;
+  }
 
   const Legend = () => {
     return (
@@ -34,6 +74,19 @@ const BoostersStatus = (props) => {
           <div className='legend-block-unit'>
             <div className='legend-singleBlock boosterPage-status boosterPage-status-inactive'>INACT</div>
             <div> INACTIVE </div>
+          </div>
+          <div className='legend-toggle-container'>
+            <input
+              type="checkbox"
+              id="turnaround-switch"
+              className='legend-toggle-checkbox'
+              checked={showTurnaround}
+              onChange={(e) => setShowTurnaround(e.target.checked)}
+            />
+            <label htmlFor="turnaround-switch" className='legend-toggle-label'></label>
+            <label htmlFor="turnaround-switch" className='legend-toggle-text'>
+              Turnaround Days
+            </label>
           </div>
         </div>
 
@@ -278,6 +331,39 @@ const BoostersStatus = (props) => {
     return parseInt(matches[matches.length - 1], 10);
   }
 
+  const getBoosterStatus = (core) => {
+    // Logic to override status based on the last launch
+    if (!core.launches || core.launches.length === 0) return core.status;
+
+    const lastLaunchId = core.launches[core.launches.length - 1];
+    const lastLaunch = allLaunches.find(l => l.id === lastLaunchId);
+
+    if (!lastLaunch) return core.status;
+
+    let targetCore = null;
+    if (Array.isArray(lastLaunch.cores) && lastLaunch.cores.length > 0) {
+      if (core.serial) {
+        targetCore = lastLaunch.cores.find(c => c.core === core.serial) || lastLaunch.cores[0];
+      } else {
+        targetCore = lastLaunch.cores[0];
+      }
+    }
+
+    if (!targetCore) return core.status;
+
+    const { landing_attempt, landing_success, landing_type } = targetCore;
+
+    // If upcoming, use original status (it hasn't failed yet)
+    if (lastLaunch.upcoming) return core.status;
+
+    // "All Landing not Attempt and Land on Ocean and Landing Fail boosters should be LOST"
+    if (landing_attempt === false) return 'lost';
+    if (landing_success === false) return 'lost';
+    if (landing_type === 'Ocean') return 'lost';
+
+    return core.status;
+  }
+
   const sortedCores = (() => {
     const starship = [];
     const falcon = [];
@@ -318,33 +404,23 @@ const BoostersStatus = (props) => {
 
 
         {sortedCores.map((core) => {
+          const finalStatus = getBoosterStatus(core);
           return (
             <div className='boosterPage-core'>
 
 
               <div className={
-                core.status === 'active' ? 'boosterPage-status boosterPage-status-active'
-                  : core.status === 'unknown' ? 'boosterPage-status boosterPage-status-unknown'
-                    : core.status === 'expended' ? 'boosterPage-status boosterPage-status-expended'
-                      : core.status === 'inactive' ? 'boosterPage-status boosterPage-status-inactive'
+                finalStatus === 'active' ? 'boosterPage-status boosterPage-status-active'
+                  : finalStatus === 'unknown' ? 'boosterPage-status boosterPage-status-unknown'
+                    : finalStatus === 'expended' ? 'boosterPage-status boosterPage-status-expended'
+                      : finalStatus === 'inactive' ? 'boosterPage-status boosterPage-status-inactive'
                         : 'boosterPage-status boosterPage-status-lost'
               }>
-                {statusConverter(core.status)}
+                {statusConverter(finalStatus)}
               </div>
 
               <div className='boosterPage-name'>
                 {core.serial}
-              </div>
-
-
-              <div>
-                {core.launches.map((launch) => {
-                  return (
-                    <div>
-                      <LaunchBlock id={launch} coreSerial={core.serial} />
-                    </div>
-                  )
-                })}
               </div>
 
               <div className='boosterPage-count'>
@@ -352,7 +428,30 @@ const BoostersStatus = (props) => {
                 {core.launches.length}
               </div>
 
+              <div>
+                {core.launches.map((launch, index) => {
+                  let turnaroundElement = null;
+                  if (showTurnaround && index > 0) {
+                    const prevLaunchId = core.launches[index - 1];
+                    const currentLaunchId = launch;
+                    const prevDate = getLaunchDate(prevLaunchId);
+                    const currDate = getLaunchDate(currentLaunchId);
 
+                    if (prevDate && currDate) {
+                      const diffTime = Math.abs(currDate - prevDate);
+                      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                      const color = getTurnaroundColor(diffDays);
+                      turnaroundElement = <div className="turnaround-display" style={{ borderColor: color, color: color }}>{diffDays}</div>
+                    }
+                  }
+                  return (
+                    <div key={launch}>
+                      {turnaroundElement}
+                      <LaunchBlock id={launch} coreSerial={core.serial} />
+                    </div>
+                  )
+                })}
+              </div>
 
             </div>
           )

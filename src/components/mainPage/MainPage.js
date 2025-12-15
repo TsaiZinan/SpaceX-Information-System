@@ -16,13 +16,28 @@ const MainPage = (props) => {
 
   var CurrentYear = new Date().getFullYear()
 
-  const lastLaunchNumber = LatestLaunch.flight_number;
+  // Find the last completed launch and next upcoming launch
+  const sortedLaunches = [...AllLaunches].sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
+  let lastLaunchIndex = -1;
+  for (let i = 0; i < sortedLaunches.length; i++) {
+    if (sortedLaunches[i].upcoming) {
+      break;
+    }
+    lastLaunchIndex = i;
+  }
+
+  const LastLaunch = lastLaunchIndex >= 0 ? sortedLaunches[lastLaunchIndex] : {};
+  const NextLaunch = (lastLaunchIndex + 1 < sortedLaunches.length) ? sortedLaunches[lastLaunchIndex + 1] : {};
+  const lastLaunchNumber = LastLaunch.flight_number || 0;
+  const totalLaunchesCount = lastLaunchIndex + 1;
+
   // console.log(lastLaunchNumber)
   // console.log(AllLaunches[137])
 
   const LaunchBlock = (props) => {
 
     let launchBlockData = props.data;
+    if (!launchBlockData || Object.keys(launchBlockData).length === 0) return null;
 
     // display the single block row in launch block
     let blockUnit = (name, content) => {
@@ -33,6 +48,8 @@ const MainPage = (props) => {
         </div>
       )
     }
+
+    const firstCore = launchBlockData.cores && launchBlockData.cores.length > 0 ? launchBlockData.cores[0] : null;
 
     return (
       <div className='launch-block-m'>
@@ -54,14 +71,14 @@ const MainPage = (props) => {
         </div>
 
         <div className='blockunit-row'>
-          {blockUnit('Launch Site:', launchPadConverter('5e9e4501f509094ba4566f84', LaunchPads, 0))}
-          {blockUnit('First Stage:', coresConverter(launchBlockData.cores[0].core, CoresData, 2))}
+          {blockUnit('Launch Site:', launchPadConverter(launchBlockData.launchpad, LaunchPads, 0))}
+          {blockUnit('First Stage:', firstCore ? coresConverter(firstCore.core, CoresData, 2) : 'N/A')}
         </div>
 
         <div className='blockunit-row'>
-          {blockUnit('First Stage Landing Site:', landingPadConverter(launchBlockData.cores[0].landpad, LandingPads, 1))}
+          {blockUnit('First Stage Landing Site:', firstCore ? firstCore.landing_location : 'N/A')}
           {/* display the landing result in last launch block instead of next launch block */}
-          {props.mode === 'last' ? blockUnit('Landing Result:', launchBlockData.cores[0].landing_success === true ? 'Success' : 'fail') : null}
+          {props.mode === 'last' && firstCore ? blockUnit('Landing Result:', firstCore.landing_success === true ? 'Success' : 'fail') : null}
         </div>
 
       </div>
@@ -82,7 +99,7 @@ const MainPage = (props) => {
   }
 
   let content =
-    <div class="lds-roller">
+    <div className='lds-roller'>
       <div></div>
       <div></div>
       <div></div>
@@ -93,33 +110,33 @@ const MainPage = (props) => {
       <div></div>
     </div>
 
-  if (AllLaunches.length > 1 && LaunchPads.length > 1 && LandingPads.length > 1 && CoresData.length > 1 && Object.keys(LatestLaunch).length != 0) {
+  if (AllLaunches.length > 0) {
 
 
     content =
       <div className='mainpage'>
         <div className='mainpage-block'>
-          <LaunchBlock mode='next' data={AllLaunches[lastLaunchNumber]} />
+          <LaunchBlock mode='next' data={NextLaunch} />
         </div>
         <div className='mainpage-block'>
-          <LaunchBlock mode='last' data={LatestLaunch} />
+          <LaunchBlock mode='last' data={LastLaunch} />
         </div>
         <div className='mainpage-block'>
-          <SmallBlock title='Launch' number={lastLaunchNumber} />
-          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', AllLaunches.slice(0, lastLaunchNumber), CurrentYear.toString())} />
-          <SmallBlock title='Success' number={countNumberInData('.success', AllLaunches, true)} />
-          <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', AllLaunches, true)} />
+          <SmallBlock title='Launch' number={totalLaunchesCount} />
+          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', sortedLaunches.slice(0, lastLaunchIndex + 1), CurrentYear.toString())} />
+          <SmallBlock title='Success' number={countNumberInData('.success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
+          <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
         </div>
 
         <div className='mainpage-block'>
           <div className='mainpage-block-chart'>
-            <LaunchChart data={AllLaunches} latest={LatestLaunch} type='month' />
+            <LaunchChart data={AllLaunches} latest={LastLaunch} type='month' />
           </div>
         </div>
 
         <div className='mainpage-block'>
           <div className='mainpage-block-chart'>
-            <LaunchChart data={AllLaunches} latest={LatestLaunch} type='year' />
+            <LaunchChart data={AllLaunches} latest={LastLaunch} type='year' />
           </div>
         </div>
 
