@@ -8,6 +8,7 @@
   background-color: var(--main-bg-color);
 
   padding-left: 30px;
+  padding-right: 180px;
   padding-top: 5px;
   padding-bottom: 50px;
 }
@@ -79,6 +80,7 @@
   justify-content: center;
 
   color: white;
+  font-family: monospace;
   font-size: 24px;
   line-height: 1;
   padding: 2px;
@@ -192,6 +194,27 @@
   flex-direction: column;
 
 
+}
+
+.boosterPage-topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px 30px 5px 30px;
+}
+
+.boosterPage-downloadButton {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--main-font-color);
+  color: var(--main-bg-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boosterPage-downloadButton:hover {
+  opacity: 0.9;
 }
 
 .legend-block-line {

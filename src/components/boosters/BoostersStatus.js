@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { VscArrowLeft, VscArrowRight } from "react-icons/vsc";
+import html2canvas from 'html2canvas'
 
 import { launchConverter } from '../converter/converter'
 
@@ -10,6 +11,48 @@ const BoostersStatus = (props) => {
   const coresData = props.cores;
   const allLaunches = props.launches;
   const [showTurnaround, setShowTurnaround] = useState(false);
+
+  const handleDownloadImage = () => {
+    const element = document.getElementById('boosterPage');
+    if (!element) {
+      return;
+    }
+
+    const previousOverflowX = element.style.overflowX;
+    const previousWidth = element.style.width;
+
+    element.style.overflowX = 'visible';
+    element.style.width = element.scrollWidth + 'px';
+
+    const rect = element.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const varBg = rootStyles.getPropertyValue('--main-bg-color').trim();
+    const elementBg = window.getComputedStyle(element).backgroundColor;
+    const backgroundColor = varBg || elementBg || '#ffffff';
+
+    html2canvas(element, {
+      useCORS: true,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      width: width,
+      height: height,
+      backgroundColor: backgroundColor
+    }).then((canvas) => {
+      element.style.overflowX = previousOverflowX;
+      element.style.width = previousWidth;
+
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'boosters.png';
+      link.click();
+    }).catch(() => {
+      element.style.overflowX = previousOverflowX;
+      element.style.width = previousWidth;
+    });
+  }
 
   const getLaunchDate = (id) => {
     const launch = allLaunches.find(singleLaunch => singleLaunch.id === id);
@@ -395,7 +438,12 @@ const BoostersStatus = (props) => {
 
   return (
     <div>
-      <Legend />
+      <div className='boosterPage-topRow'>
+        <Legend />
+        <button className='boosterPage-downloadButton' onClick={handleDownloadImage}>
+          Download Image
+        </button>
+      </div>
       <ScrollButtons id='boosterPage' x={55} />
       <div className='boosterPage' id="boosterPage">
 
