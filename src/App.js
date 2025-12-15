@@ -91,8 +91,24 @@ function App() {
         const starship = isStarshipSerial(primarySerial || '');
         const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
 
-        const getLandingType = (serialNumberRaw) => {
+        const getLandingType = (serialNumberRaw, landing) => {
           const serialNumber = serialNumberRaw || '';
+          const location = landing && landing.landing_location ? landing.landing_location : null;
+          const abbrev = location && location.abbrev ? String(location.abbrev).toUpperCase() : '';
+          const locationName = location && location.name ? location.name.toLowerCase() : '';
+          const locationDescription = location && location.description ? location.description.toLowerCase() : '';
+
+          if (abbrev === 'ATL' || abbrev === 'GOM' || abbrev === 'PAC' || locationName.includes('ocean')) {
+            return 'Ocean';
+          }
+
+          if (abbrev === 'OCISLY' || abbrev === 'JRTI' || abbrev === 'ASOG' || locationName.includes('of course i still love you') || locationName.includes('just read the instructions') || locationName.includes('shortfall of gravitas') || locationDescription.includes('drone ship') || locationDescription.includes('droneship') || locationDescription.includes('asds')) {
+            return 'ASDS';
+          }
+
+          if (abbrev === 'LZ' || abbrev === 'LZ-1' || abbrev === 'LZ-2' || abbrev === 'LZ-4' || abbrev === 'OLM-A' || locationName.includes('landing zone')) {
+            return 'RTLS';
+          }
 
           if (serialNumber.startsWith('SN') || serialNumber === 'Starhopper') {
             return 'RTLS';
@@ -124,11 +140,36 @@ function App() {
             core: serial,
             landing_attempt: landing.attempt,
             landing_success: landing.success,
-            landing_type: getLandingType(serial),
+            landing_type: getLandingType(serial, landing),
             reused: stage.reused,
             flight: stage.launcher_flight_number
           };
         });
+
+        let patchUrl = null;
+        if (Array.isArray(launch.mission_patches) && launch.mission_patches.length > 0) {
+          const primaryPatch = launch.mission_patches[0];
+          if (primaryPatch) {
+            if (primaryPatch.image_url) {
+              patchUrl = primaryPatch.image_url;
+            } else if (primaryPatch.image && primaryPatch.image.image_url) {
+              patchUrl = primaryPatch.image.image_url;
+            }
+          }
+        }
+
+        if (!patchUrl) {
+          const launcherImage = primaryLauncher.image;
+          if (launcherImage && launcherImage.image_url) {
+            patchUrl = launcherImage.image_url;
+          } else if (typeof launcherImage === 'string') {
+            patchUrl = launcherImage;
+          }
+        }
+
+        if (!patchUrl) {
+          patchUrl = 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png';
+        }
 
         return {
           id: launch.id,
@@ -139,7 +180,7 @@ function App() {
           upcoming: new Date(launch.net) > new Date(),
           links: {
             patch: {
-              small: primaryLauncher.image || 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png'
+              small: patchUrl
             },
             webcast: null,
             wikipedia: null,
