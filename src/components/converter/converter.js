@@ -90,6 +90,7 @@ export const launchConverter = (id, data, mode) => {
 
 export const launchPadConverter = (id, data, mode) => {
   // console.log(id)
+  if (id === 'Unknown') return 'Unknown';
   let abbr_name = 'NET';
   let full_name = 'NET';
   // console.log(data);
@@ -121,9 +122,9 @@ export const coresConverter = (id, data, mode) => {
   // console.log(data);
   data.map(core => {
     // core.id === id ? serialNumber = core.serial : null
-    if (core.id === id) {
+    if (core.serial === id) {
       serialNumber = core.serial;
-      reuse_count = core.reuse_count;
+      reuse_count = core.launches ? core.launches.length : 0;
     }
   })
 
@@ -149,9 +150,13 @@ export const countNumberInData = (id, data, condition) => {
   let location = 'singleData' + id
   let count = 0;
   data.forEach((singleData) => {
-    // if (singleData.success === true) {
-    if (eval(location) === condition) {
-      count = count + 1
+    try {
+      // if (singleData.success === true) {
+      if (eval(location) === condition) {
+        count = count + 1
+      }
+    } catch (e) {
+      // ignore errors
     }
   })
   return count;

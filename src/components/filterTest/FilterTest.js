@@ -22,24 +22,48 @@ const FilterTest = (props) => {
   }
 
 
-  const allYears = [2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
-  const allSite = ['5e9e4502f5090995de566f86', '5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88']
+  const allYears = [...new Set(AllLaunches.map(launch => parseInt(launch.date_utc.substring(0, 4))))].sort((a, b) => a - b);
+  const allLandingStatuses = [
+    'Landing Fail',
+    'Land on Ocean',
+    'Landing not Attempt',
+    'Land on Land',
+    'Land on Ship'
+  ];
+
+  const getLandingStatus = (launch) => {
+    const core = launch.cores && launch.cores[0] ? launch.cores[0] : null;
+    if (!core) return 'Landing not Attempt';
+
+    const { landing_attempt, landing_success, landing_type } = core;
+
+    if (landing_attempt === false) return 'Landing not Attempt';
+    if (landing_success === false) return 'Landing Fail';
+    if (landing_type === 'Ocean') return 'Land on Ocean';
+    if (landing_type === 'RTLS') return 'Land on Land';
+    if (landing_type === 'ASDS') return 'Land on Ship';
+
+    return 'Landing not Attempt';
+  }
 
   // for the selecting of reused state
   const [reusedState, setReusedState] = useState([true, false]);
 
   // for the multiple selecting of years
-  const [yearState, setyearState] = useState([2022])
+  const [yearState, setyearState] = useState([])
 
-  // for the multiple selecting of launch site
-  const [launchPadState, setLaunchPadState] = useState(['5e9e4501f509094ba4566f84', '5e9e4502f509092b78566f87', '5e9e4502f509094188566f88'])
+  // for the multiple selecting of landing status
+  const [landingStatusState, setLandingStatusState] = useState(allLandingStatuses);
 
-  // console.log(LaunchPads)
-  // id: site id
-  // data: site data
-  // mode: 0 => abbreviation name of site | 1 => full name of site
+  useEffect(() => {
+    if (allYears.length > 0 && yearState.length === 0) {
+      setyearState([allYears[allYears.length - 1]]);
+    }
+  }, [allYears]);
+
   let launchPadFetch = (id, data, mode) => {
     // console.log(id)
+    if (id === 'Unknown') return 'Unknown';
     let abbr_name = 'NET';
     let full_name = 'NET';
     // console.log(data);
@@ -96,17 +120,18 @@ const FilterTest = (props) => {
 
 
   // for the filter condition
-  const filter = (launchDateUTC, reusedData, launchpad) => {
+  const filter = (launchDateUTC, reusedData, launch) => {
     //take the first fourth digitals of launchDateUTC as year 
     // check if this year in yearState array
     let yearStatement = yearState.includes(parseInt(launchDateUTC.substring(0, 4)));
     // check if this reused in reusedState array
     let reusedStatement = reusedState.includes(reusedData);
 
-    let launchpadStatement = launchPadState.includes(launchpad);
+    let landingStatus = getLandingStatus(launch);
+    let landingStatusStatement = landingStatusState.includes(landingStatus);
 
 
-    if (yearStatement && reusedStatement && launchpadStatement) {
+    if (yearStatement && reusedStatement && landingStatusStatement) {
       return true;
     } else {
       return false;
@@ -158,12 +183,12 @@ const FilterTest = (props) => {
             className={yearState.length === allYears.length ? 'SelectButton-active' : 'SelectButton-inactive'}
             onClick={() => setyearState(allYears)}
           >All Years</button>
-          {/* set to only 2021 */}
+          {/* set to only Latest Year */}
           <button
-            className={JSON.stringify(yearState) == JSON.stringify([2022]) ? 'SelectButton-active' : 'SelectButton-inactive'}
-            onClick={() => setyearState([2022])}
+            className={JSON.stringify(yearState) == JSON.stringify([allYears[allYears.length - 1]]) ? 'SelectButton-active' : 'SelectButton-inactive'}
+            onClick={() => setyearState([allYears[allYears.length - 1]])}
           >
-            Only 2022
+            Only {allYears[allYears.length - 1]}
           </button>
         </div>
 
@@ -175,13 +200,13 @@ const FilterTest = (props) => {
 
       <div className='filter-years'>
         <div className='filter-option'>
-          {allSite.map((site, siteIndex) => {
+          {allLandingStatuses.map((status, index) => {
             return (
               <SelectButton
-                name={launchPadFetch(site, LaunchPads, 0)}
-                unit={site}
-                array={launchPadState}
-                fun={() => stateSelect(site, launchPadState, setLaunchPadState)}
+                name={status}
+                unit={status}
+                array={landingStatusState}
+                fun={() => stateSelect(status, landingStatusState, setLandingStatusState)}
               />
             )
           })}
@@ -245,11 +270,14 @@ const FilterTest = (props) => {
       <div className='filter-nodes'>
         {/* {console.log(AllLaunches)} */}
         {AllLaunches.map((launch, launchIndex) => {
-          if (filter(launch.date_utc, launch.cores[0].reused, launch.launchpad) === true) {
+          const firstCore = launch.cores && launch.cores.length > 0 ? launch.cores[0] : null;
+          const reused = firstCore ? firstCore.reused : false;
+
+          if (filter(launch.date_utc, reused, launch) === true) {
             return (
-              <div className={launch.cores[0].reused === true ? 'filter-node filter-node-reused' : 'filter-node filter-node-unreused'} id={launchIndex}>
+              <div className={reused === true ? 'filter-node filter-node-reused' : 'filter-node filter-node-unreused'} id={launchIndex}>
                 {/* <div>Number: {launch.flight_number}</div> */}
-                {/* <div>Reused: {launch.cores[0].reused === true ? 'Yes' : 'No'}</div> */}
+                {/* <div>Reused: {reused === true ? 'Yes' : 'No'}</div> */}
                 {/* <div>Year: {launch.date_utc.substring(0, 4)}</div> */}
 
                 {/* <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div> */}
@@ -270,8 +298,8 @@ const FilterTest = (props) => {
                   </div>
 
                   <div className='new-node-third'>
-                    <div className='new-node-reuse'>{launch.cores[0].reused === true ? 'Reused' : 'Unreused'}</div>
-                    <div>{launchPadFetch(launch.launchpad, LaunchPads, 0)}</div>
+                    <div className='new-node-reuse'>{reused === true ? 'Reused' : 'Unreused'}</div>
+                    <div>{getLandingStatus(launch)}</div>
                   </div>
 
                   <div className='new-node-last'>

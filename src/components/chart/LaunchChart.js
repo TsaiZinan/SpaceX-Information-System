@@ -21,26 +21,27 @@ function count_duplicate(a) {
 // add the existing month object to empty month object because the existing month object miss the monthes which have no launch
 const combineMonth = (latestMon, valueMon) => {
   // generate an empty month object
-  const generateMonth = (latestMonth) => {
-    const start = '2006-03';
-    const emptyObject = {};
-    for (let y = 2006; y < 2022; y++) {
-      for (let m = 1; m < 13; m++) {
-        var yearKey = y.toString()
-        var monthKey = m.toString()
+    const generateMonth = (latestMonth) => {
+      const start = '2006-03';
+      const emptyObject = {};
+      const currentYear = new Date().getFullYear();
+      for (let y = 2006; y <= currentYear + 1; y++) {
+        for (let m = 1; m < 13; m++) {
+          var yearKey = y.toString()
+          var monthKey = m.toString()
 
-        if (m < 10) {
-          monthKey = '0' + monthKey
+          if (m < 10) {
+            monthKey = '0' + monthKey
+          }
+
+          var key = yearKey + '-' + monthKey
+          emptyObject[key] = 0;
+
+          if (key === latestMonth) { break; }
         }
-
-        var key = yearKey + '-' + monthKey
-        emptyObject[key] = 0;
-
-        if (key === latestMonth) { break; }
       }
+      return emptyObject;
     }
-    return emptyObject;
-  }
 
   // add the existing month object to empty month object because the existing month object miss the monthes which have no launch
   function extend(obj, src) {

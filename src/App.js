@@ -135,12 +135,14 @@ function App() {
           const landing = stage.landing || {};
           const launcher = stage.launcher || {};
           const serial = launcher.serial_number || '';
+          const location = landing && landing.landing_location ? landing.landing_location.name : 'Unknown';
 
           return {
             core: serial,
             landing_attempt: landing.attempt,
             landing_success: landing.success,
             landing_type: getLandingType(serial, landing),
+            landing_location: location,
             reused: stage.reused,
             flight: stage.launcher_flight_number
           };
@@ -178,6 +180,7 @@ function App() {
           date_local: launch.net,
           date_utc: launch.net,
           upcoming: new Date(launch.net) > new Date(),
+          success: launch.status ? (launch.status.name === 'Launch Successful' || launch.status.abbrev === 'Success') : false,
           links: {
             patch: {
               small: patchUrl
