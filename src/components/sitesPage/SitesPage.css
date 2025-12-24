@@ -1,0 +1,131 @@
+.sitesPage {
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color);
+}
+
+.sitesPage-gridWrapper {
+  padding: 0 30px 50px 30px;
+  overflow-x: auto;
+}
+
+.sitesPage-gridWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.sitesPage-gridHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  background-color: var(--main-bg-color);
+  padding: 5px 0;
+}
+
+.sitesPage-axisHeaderCell {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  min-width: 120px;
+  width: 120px;
+  background-color: var(--main-bg-color);
+  text-align: left;
+  font-weight: bold;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
+
+.sitesPage-headerCell {
+  min-width: 90px;
+  width: 90px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--main-font-color);
+  padding: 6px 0;
+}
+
+.sitesPage-gridBody {
+  display: flex;
+}
+
+.sitesPage-axisColumn {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 120px;
+  width: 120px;
+  background-color: var(--main-bg-color);
+}
+
+.sitesPage-axisTimeline {
+  position: relative;
+  width: 120px;
+  box-sizing: border-box;
+  border-left: 1px solid rgba(84, 63, 46, 0.25);
+  border-right: 1px solid rgba(84, 63, 46, 0.25);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(84, 63, 46, 0.15) 0px,
+    rgba(84, 63, 46, 0.15) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+}
+
+.sitesPage-axisTick {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.sitesPage-axisLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgba(84, 63, 46, 0.35);
+}
+
+.sitesPage-axisLabel {
+  position: absolute;
+  left: 8px;
+  top: -10px;
+  font-size: 12px;
+  color: var(--main-font-color);
+  background-color: var(--main-bg-color);
+  padding: 0 4px;
+}
+
+.sitesPage-column {
+  min-width: 90px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+}
+
+.sitesPage-timeline {
+  position: relative;
+  width: 90px;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(84, 63, 46, 0.25);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(84, 63, 46, 0.15) 0px,
+    rgba(84, 63, 46, 0.15) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+}
+
+.sitesPage-timeline-first {
+  border-left: 1px solid rgba(84, 63, 46, 0.25);
+}
+
+.sitesPage-marker {
+  position: absolute;
+}
+
+.sitesPage-markerLink {
+  text-decoration: none;
+}

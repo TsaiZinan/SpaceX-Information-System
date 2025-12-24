@@ -20,6 +20,9 @@ const Nav = () => {
           <Link to='/boosters' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>Cores</div>
           </Link>
+          <Link to='/sites' style={{ textDecoration: 'none' }}>
+            <div className='nav-link'>Sites</div>
+          </Link>
 
           <Link to='/test' style={{ textDecoration: 'none' }}>
             <div className='nav-link'>Experiment</div>
