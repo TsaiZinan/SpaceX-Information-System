@@ -14,15 +14,6 @@ const SitesPage = (props) => {
       .filter(time => Number.isFinite(time));
   }, [props.launches]);
 
-  const launchpadsById = useMemo(() => {
-    const allLaunchpads = Array.isArray(props.launchpads) ? props.launchpads : [];
-    const map = {};
-    allLaunchpads.forEach(pad => {
-      if (pad && pad.id) map[pad.id] = pad;
-    });
-    return map;
-  }, [props.launchpads]);
-
   const launchesWithSite = useMemo(() => {
     const allLaunches = Array.isArray(props.launches) ? props.launches : [];
     return allLaunches
@@ -45,11 +36,9 @@ const SitesPage = (props) => {
       const bUnknown = b === 'Unknown';
       if (aUnknown && !bUnknown) return 1;
       if (!aUnknown && bUnknown) return -1;
-      const aName = (launchpadsById[a] && launchpadsById[a].name) ? launchpadsById[a].name : a;
-      const bName = (launchpadsById[b] && launchpadsById[b].name) ? launchpadsById[b].name : b;
-      return String(aName).localeCompare(String(bName));
+      return String(a).localeCompare(String(b));
     });
-  }, [launchesWithSite, launchpadsById]);
+  }, [launchesWithSite]);
 
   const timeline = useMemo(() => {
     if (!launchesWithDate.length) return null;
@@ -138,8 +127,6 @@ const SitesPage = (props) => {
   }, [launchesWithSite, padIds]);
 
   const getPadCode = (padId) => {
-    const pad = launchpadsById[padId];
-    if (pad && pad.name) return pad.name;
     return padId;
   };
 
@@ -256,6 +243,7 @@ const SitesPage = (props) => {
       </div>
     );
   };
+
 
   if (!timeline || !padIds.length) {
     return (
