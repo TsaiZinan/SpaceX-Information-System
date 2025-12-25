@@ -34,15 +34,15 @@ function App() {
   const [allLandingpadsData] = useState({}); // Removed setter
 
   useEffect(() => {
-    console.log('Effect');
     fetchNewApiData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []) 
 
   const fetchNewApiData = async () => {
     try {
       const response = await fetch(newApiURL);
       const data = await response.json();
+      
       const rawLaunches = data.launches;
 
       const isStarshipSerial = (serial) => {
@@ -83,7 +83,7 @@ function App() {
         const flightNumber = starship ? null : flightNumberById[launch.id];
         
         const padObj = launch.launch_pad || launch.pad;
-        const launchpadId = (padObj && padObj.name) ? padObj.name : 'Unknown';
+        const launchpadId = (padObj && padObj.name) ? padObj.name : ((padObj && padObj.location && padObj.location.name) ? padObj.location.name : 'Unknown');
 
         const getLandingType = (serialNumberRaw, landing) => {
           const serialNumber = serialNumberRaw || '';

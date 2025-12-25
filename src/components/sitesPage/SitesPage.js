@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import './SitesPage.css'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
+const MS_PER_WEEK = 7 * MS_PER_DAY;
 
 const SitesPage = (props) => {
   const launchesWithDate = useMemo(() => {
@@ -32,6 +33,17 @@ const SitesPage = (props) => {
       if (launch._padId) ids.add(launch._padId);
     });
     return Array.from(ids).sort((a, b) => {
+      // Custom order: Omelek Island and Orbital Launch Pad 1 at the end
+      const specialPads = ['Omelek Island', 'Orbital Launch Pad 1'];
+      const aSpecial = specialPads.includes(a);
+      const bSpecial = specialPads.includes(b);
+
+      if (aSpecial && !bSpecial) return 1;
+      if (!aSpecial && bSpecial) return -1;
+      if (aSpecial && bSpecial) {
+         return specialPads.indexOf(a) - specialPads.indexOf(b);
+      }
+
       const aUnknown = a === 'Unknown';
       const bUnknown = b === 'Unknown';
       if (aUnknown && !bUnknown) return 1;
@@ -52,14 +64,25 @@ const SitesPage = (props) => {
 
     const start = new Date(min);
     start.setHours(0, 0, 0, 0);
+    // Align start to the beginning of the week (e.g. Monday)
+    const day = start.getDay();
+    const diff = start.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    start.setDate(diff);
+
     const end = new Date(max);
     end.setHours(0, 0, 0, 0);
+    // Align end to the end of the week (next Sunday)
+    const endDay = end.getDay();
+    const endDiff = end.getDate() - endDay + (endDay === 0 ? 0 : 7);
+    end.setDate(endDiff);
 
-    const totalDays = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / MS_PER_DAY) + 1);
-    const pixelsPerDay = 5;
-    const height = totalDays * pixelsPerDay;
 
-    return { start: start.getTime(), end: end.getTime(), pixelsPerDay, height };
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const totalWeeks = Math.max(1, Math.ceil(diffTime / MS_PER_WEEK) + 1);
+    const pixelsPerWeek = 50;
+    const height = totalWeeks * pixelsPerWeek;
+
+    return { start: start.getTime(), end: end.getTime(), pixelsPerWeek, height };
   }, [launchesWithDate]);
 
   const axisTicks = useMemo(() => {
@@ -68,46 +91,55 @@ const SitesPage = (props) => {
     const ticks = [];
     const start = new Date(timeline.start);
     const end = new Date(timeline.end);
-    start.setHours(0, 0, 0, 0);
-    end.setHours(0, 0, 0, 0);
-
-    const monthCursor = new Date(start.getTime());
-    monthCursor.setDate(1);
-    monthCursor.setHours(0, 0, 0, 0);
-
-    if (monthCursor.getTime() < start.getTime()) {
-      monthCursor.setMonth(monthCursor.getMonth() + 1);
-    }
-
-    const format = (time) => {
-      const d = new Date(time);
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
+    
+    // Generate weekly ticks
+    // We want ticks for every week. Let's iterate from end down to start.
+    const cursor = new Date(end.getTime());
+    
+    // Helper to get Year-Week
+    const getYearWeek = (d) => {
+        const date = new Date(d.getTime());
+        date.setHours(0, 0, 0, 0);
+        // Thursday in current week decides the year.
+        date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+        // January 4 is always in week 1.
+        const week1 = new Date(date.getFullYear(), 0, 4);
+        // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+        return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
     };
 
-    ticks.push({ time: end.getTime(), label: format(end.getTime()), kind: 'edge' });
-
-    while (monthCursor.getTime() <= end.getTime()) {
-      const time = monthCursor.getTime();
-      if (time >= start.getTime() && time <= end.getTime()) {
-        const y = monthCursor.getFullYear();
-        const m = String(monthCursor.getMonth() + 1).padStart(2, '0');
-        ticks.push({ time, label: `${y}-${m}`, kind: 'month' });
-      }
-      monthCursor.setMonth(monthCursor.getMonth() + 1);
+    while (cursor.getTime() >= start.getTime()) {
+      const time = cursor.getTime();
+      const d = new Date(time);
+      
+      // ISO Week calculation logic roughly
+      // But simpler formatting: YYYY-Www
+      const year = d.getFullYear();
+      // Simple week number approximation or use a library if available.
+      // Since we don't have moment/date-fns, let's stick to a simple label or the helper above.
+      // Actually, let's use the helper but be careful about year boundaries.
+      // The helper above returns week number.
+      
+      // Let's just use a simple approach: Year + Week Index relative to year start?
+      // Or just standard ISO week.
+      const weekNum = getYearWeek(d);
+      // Adjust year if week 1 is in December or week 52/53 is in January.
+      // The helper uses the year of the Thursday.
+      const targetDate = new Date(d.getTime());
+      targetDate.setDate(targetDate.getDate() + 3 - (targetDate.getDay() + 6) % 7);
+      const targetYear = targetDate.getFullYear();
+      
+      const label = `${targetYear}-W${String(weekNum).padStart(2, '0')}`;
+      
+      let kind = 'week';
+      if (d.getDate() <= 7) kind = 'month'; 
+      
+      ticks.push({ time, label, kind });
+      
+      cursor.setDate(cursor.getDate() - 7);
     }
-
-    ticks.push({ time: start.getTime(), label: format(start.getTime()), kind: 'edge' });
-
-    const seen = new Set();
-    return ticks.filter(t => {
-      const key = String(t.time);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
+    
+    return ticks;
   }, [timeline]);
 
   const launchesByPad = useMemo(() => {
@@ -125,6 +157,41 @@ const SitesPage = (props) => {
     });
     return map;
   }, [launchesWithSite, padIds]);
+
+  const columnWidths = useMemo(() => {
+    if (!timeline) return {};
+    const widths = {};
+    padIds.forEach(padId => {
+      const launches = launchesByPad[padId] || [];
+      const weekStack = {};
+      let maxStack = 0;
+      
+      launches.forEach(launch => {
+         const weekIndex = Math.floor((timeline.end - launch._time) / MS_PER_WEEK);
+         const key = String(weekIndex);
+         const stackIndex = weekStack[key] || 0;
+         weekStack[key] = stackIndex + 1;
+         if (stackIndex + 1 > maxStack) maxStack = stackIndex + 1;
+      });
+      
+      // Calculate width
+      // item width 35, gap 20. Stride = 55.
+      // Offset = 5px.
+      // left = stackIndex * 55 + 5
+      // right edge = left + 35 = stackIndex * 55 + 5 + 35 = stackIndex * 55 + 40
+      // max right edge = (maxStack - 1) * 55 + 40
+      // Add right padding 5px.
+      // Total required width = (maxStack - 1) * 55 + 45.
+      
+      const minStack = 4;
+      const effectiveStack = Math.max(maxStack, minStack);
+      
+      let width = (effectiveStack - 1) * 55 + 45;
+      
+      widths[padId] = width;
+    });
+    return widths;
+  }, [padIds, launchesByPad, timeline]);
 
   const getPadCode = (padId) => {
     return padId;
@@ -202,8 +269,8 @@ const SitesPage = (props) => {
     const number = getDisplayNumber(launch);
     const wrapperStyle = {
       top: offsetPx,
-      left: '50%',
-      transform: `translate(-50%, -50%) translateX(${stackIndex * 12}px)`
+      left: `${stackIndex * 55 + 5}px`, // 35px width + 20px gap = 55px per item + 5px padding
+      transform: `translateY(-50%)`
     };
 
     const content = (
@@ -277,8 +344,8 @@ const SitesPage = (props) => {
           <div className='sitesPage-axisColumn'>
             <div className='sitesPage-axisTimeline' style={{ height: timeline.height }}>
               {axisTicks.map(tick => {
-                const dayIndex = Math.floor((timeline.end - tick.time) / MS_PER_DAY);
-                const offsetPx = dayIndex * timeline.pixelsPerDay;
+                const weekIndex = Math.floor((timeline.end - tick.time) / MS_PER_WEEK);
+                const offsetPx = weekIndex * timeline.pixelsPerWeek;
                 return (
                   <div key={tick.time} className={`sitesPage-axisTick sitesPage-axisTick-${tick.kind}`} style={{ top: offsetPx }}>
                     <div className='sitesPage-axisLine' />
@@ -294,12 +361,12 @@ const SitesPage = (props) => {
             const dayStack = {};
 
             return (
-              <div key={padId} className='sitesPage-column'>
+              <div key={padId} className='sitesPage-column' style={{ width: columnWidths[padId], minWidth: columnWidths[padId] }}>
                 <div className={`sitesPage-timeline ${padIndex === 0 ? 'sitesPage-timeline-first' : ''}`} style={{ height: timeline.height }}>
                   {launches.map(launch => {
-                    const dayIndex = Math.floor((timeline.end - launch._time) / MS_PER_DAY);
-                    const offsetPx = dayIndex * timeline.pixelsPerDay;
-                    const key = String(dayIndex);
+                    const weekIndex = Math.floor((timeline.end - launch._time) / MS_PER_WEEK);
+                    const offsetPx = weekIndex * timeline.pixelsPerWeek;
+                    const key = String(weekIndex);
                     const stackIndex = dayStack[key] || 0;
                     dayStack[key] = stackIndex + 1;
 

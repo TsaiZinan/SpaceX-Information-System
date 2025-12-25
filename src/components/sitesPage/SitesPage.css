@@ -4,7 +4,7 @@
 }
 
 .sitesPage-gridWrapper {
-  padding: 0 30px 50px 30px;
+  padding: 20px 30px 50px 30px;
   overflow-x: auto;
 }
 
@@ -35,12 +35,14 @@
 }
 
 .sitesPage-headerCell {
-  min-width: 90px;
-  width: 90px;
+  min-width: 210px;
+  width: 210px;
   text-align: center;
   font-weight: bold;
   color: var(--main-font-color);
   padding: 6px 0;
+  box-sizing: border-box;
+  border-right: 3px solid #000;
 }
 
 .sitesPage-gridBody {
@@ -54,21 +56,14 @@
   min-width: 120px;
   width: 120px;
   background-color: var(--main-bg-color);
+  padding-top: 50px;
 }
 
 .sitesPage-axisTimeline {
   position: relative;
   width: 120px;
   box-sizing: border-box;
-  border-left: 1px solid rgba(84, 63, 46, 0.25);
-  border-right: 1px solid rgba(84, 63, 46, 0.25);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(84, 63, 46, 0.15) 0px,
-    rgba(84, 63, 46, 0.15) 1px,
-    transparent 1px,
-    transparent 5px
-  );
+  /* Removed border-right */
 }
 
 .sitesPage-axisTick {
@@ -80,11 +75,7 @@
 }
 
 .sitesPage-axisLine {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: rgba(84, 63, 46, 0.35);
+  display: none;
 }
 
 .sitesPage-axisLabel {
@@ -98,24 +89,20 @@
 }
 
 .sitesPage-column {
-  min-width: 90px;
-  width: 90px;
+  min-width: 210px;
+  width: 210px;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
+  border-right: 3px solid #000;
+  padding-top: 50px;
 }
 
 .sitesPage-timeline {
   position: relative;
-  width: 90px;
+  width: 100%;
   box-sizing: border-box;
-  border-right: 1px solid rgba(84, 63, 46, 0.25);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(84, 63, 46, 0.15) 0px,
-    rgba(84, 63, 46, 0.15) 1px,
-    transparent 1px,
-    transparent 5px
-  );
+  /* Removed border-right and background-image */
 }
 
 .sitesPage-timeline-first {
