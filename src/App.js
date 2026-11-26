@@ -2,11 +2,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 
 import './App.css';
+import { getLaunchMetadata } from './launchMetadata';
 import Nav from './components/nav/Nav';
 import Footer from './components/footer/Footer';
-import Home from './Home';
 import Launches from './Launches';
-import CoresPage from './CoresPage';
 import AllCores from './components/allCores/AllCores';
 
 import Test from './components/Test'
@@ -15,43 +14,35 @@ import LaunchDetailPage from './components/launchDetailPage/LaunchDetailPage';
 import FilterTest from './components/filterTest/FilterTest';
 import TestPage from './TestPage';
 import StyleTest from './components/styleTest/StyleTest';
-import Chart from './components/chart/Chart';
 import MainPage from './components/mainPage/MainPage';
 import BoostersStatus from './components/boosters/BoostersStatus';
 
-// import { LatestLaunch, Cores, LandingPads, DemoLaunch } from './data'
+import { AllLaunches as archivedLaunches, Cores as archivedCores, LandingPads as archivedLandingPads } from './data'
 
 import TimelinePage from './components/timelinePage/TimelinePage';
 
 // import { createBrowserHistory } from "history";
 // const history = createBrowserHistory();
 
+const launchpadsURL = 'https://api.spacexdata.com/v4/launchpads';
+const newApiURL = process.env.REACT_APP_LAUNCH_DATA_URL || 'https://cdn.jsdelivr.net/gh/TsaiZinan/ll2-DATA@main/spacex/spacex-previous-launches-simple.json';
+
 function App() {
   document.title = "SpaceX Information System";
 
-  const launchesURL = 'https://api.spacexdata.com/v4/launches'
-  const coresURL = 'https://api.spacexdata.com/v4/cores'
-  const launchpadsURL = 'https://api.spacexdata.com/v4/launchpads'
-  const latestLaunchURL = 'https://api.spacexdata.com/v4/launches/latest'
-  const landingpadsURL = 'https://api.spacexdata.com/v4/landpads'
-  const newApiURL = 'https://cdn.jsdelivr.net/gh/TsaiZinan/ll2-DATA@main/spacex/spacex-previous-launches-simple.json'
-
   useEffect(() => {
-    console.log('Effect');
-    // fetchAllLaunchData();
-    // fetchAllCoresData();
     fetchAllLaunchpadsData();
-    fetchLatestLaunchData();
-    fetchAllLandingpadsData();
     fetchNewApiData();
   }, [])
 
   //Fetch allLaunchesData
   const [allLaunchesData, setAllLaunchesData] = useState([]);
+  const [launchLoadState, setLaunchLoadState] = useState('loading');
 
   const fetchNewApiData = async () => {
     try {
       const response = await fetch(newApiURL);
+      if (!response.ok) throw new Error(`Launch feed returned HTTP ${response.status}`);
       const data = await response.json();
       const rawLaunches = data.launches;
 
@@ -173,14 +164,16 @@ function App() {
           patchUrl = 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png';
         }
 
+        const metadata = getLaunchMetadata(launch);
         return {
+          ...metadata,
           id: launch.id,
           flight_number: starship ? null : flightNumberById[launch.id],
           name: launch.name,
           date_local: launch.net,
           date_utc: launch.net,
           upcoming: new Date(launch.net) > new Date(),
-          success: launch.status ? (launch.status.name === 'Launch Successful' || launch.status.abbrev === 'Success') : false,
+          success: metadata.launchOutcome === 'success',
           links: {
             patch: {
               small: patchUrl
@@ -237,72 +230,31 @@ function App() {
 
       setAllLaunchesData(processedLaunches);
       setAllCoresData(processedCores);
+      setLaunchLoadState('ready');
 
     } catch (error) {
+      setLaunchLoadState('error');
       console.error("Failed to fetch new API", error);
     }
   }
 
-  const fetchAllLaunchData = async () => {
-    const data = await fetch(
-      launchesURL
-    );
-    const allLaunchesData = await data.json();
-    // console.log(allLaunchesData)
-    setAllLaunchesData(allLaunchesData)
-  }
-
-  //Fetch allCoresData
   const [allCoresData, setAllCoresData] = useState([]);
-
-  const fetchAllCoresData = async () => {
-    const data = await fetch(
-      coresURL
-    );
-    const allCoresData = await data.json();
-    // console.log(allCoresData)
-    setAllCoresData(allCoresData)
-  }
-
-  //Fetch allLaunchpadsData
   const [allLaunchpadsData, setAllLaunchpadsData] = useState([]);
 
   const fetchAllLaunchpadsData = async () => {
-    const data = await fetch(
-      launchpadsURL
-    );
-    const allLaunchpadsData = await data.json();
-    // console.log(allLaunchpadsData)
-    setAllLaunchpadsData(allLaunchpadsData)
+    try {
+      const response = await fetch(launchpadsURL);
+      if (response.ok) {
+        const pads = await response.json();
+        if (Array.isArray(pads)) setAllLaunchpadsData(pads);
+      }
+    } catch (error) {
+      console.warn('The launch pad chart is unavailable.', error);
+    }
   }
-
-  //Fetch latestLaunchData
-  const [latestLaunchData, setLatestLaunchData] = useState({});
-
-  const fetchLatestLaunchData = async () => {
-    const data = await fetch(
-      latestLaunchURL
-    );
-    const latestLaunchData = await data.json();
-    // console.log(latestLaunchData)
-    setLatestLaunchData(latestLaunchData)
-  }
-
-  //Fetch allLandingpadsData
-  const [allLandingpadsData, setAllLandingpadsData] = useState({});
-
-  const fetchAllLandingpadsData = async () => {
-    const data = await fetch(
-      landingpadsURL
-    );
-    const allLandingpadsData = await data.json();
-    // console.log(allLandingpadsData)
-    setAllLandingpadsData(allLandingpadsData)
-  }
-
 
   return (
-    <Router>
+    <Router basename={new URL(process.env.PUBLIC_URL || '/', window.location.origin).pathname.replace(/\/$/, '')}>
       <div className="App">
         <Nav />
 
@@ -314,7 +266,7 @@ function App() {
           <Route
             path='/' exact
             render={(props) => (
-              <MainPage {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} cores={allCoresData} landingPads={allLandingpadsData} />
+              <MainPage {...props} launches={allLaunchesData} loadState={launchLoadState} launchpads={allLaunchpadsData} cores={allCoresData} />
             )}
           />
 
@@ -323,7 +275,7 @@ function App() {
           <Route
             path='/SpaceX-Information-System' exact
             render={(props) => (
-              <MainPage {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} cores={allCoresData} landingPads={allLandingpadsData} />
+              <MainPage {...props} launches={allLaunchesData} loadState={launchLoadState} launchpads={allLaunchpadsData} cores={allCoresData} />
             )}
           />
 
@@ -355,11 +307,16 @@ function App() {
 
 
           {/* =========================== Single Launch Page Done ==================================== */}
-          {/* <Route path='/launch/:number' element={<LaunchDetailPage />} /> */}
           <Route
-            path='/launch/:number'
+            exact path='/launch/archive/:launchKey'
             render={(props) => (
-              <LaunchDetailPage {...props} launches={allLaunchesData} cores={allCoresData} landingPads={allLandingpadsData} />
+              <LaunchDetailPage {...props} archived launches={archivedLaunches} cores={archivedCores} landingPads={archivedLandingPads} />
+            )}
+          />
+          <Route
+            exact path='/launch/:launchKey'
+            render={(props) => (
+              <LaunchDetailPage {...props} launches={allLaunchesData} loadState={launchLoadState} />
             )}
           />
 
@@ -367,7 +324,7 @@ function App() {
           <Route
             path='/boosters' exact
             render={(props) => (
-              <BoostersStatus {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} latestLaunch={latestLaunchData} cores={allCoresData} landingPads={allLandingpadsData} />
+              <BoostersStatus {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} cores={allCoresData} />
             )}
           />
 

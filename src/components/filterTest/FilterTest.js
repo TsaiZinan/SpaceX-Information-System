@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { launchPath } from '../../launchPath'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
@@ -292,7 +293,7 @@ const FilterTest = (props) => {
                   </div>
 
                   <div className='new-node-second'>
-                    <Link to={`/launch/${launch.flight_number}`} className='new-node-second'>
+                    <Link to={launchPath(launch.id)} className='new-node-second'>
                       {launch.name}
                     </Link>
                   </div>

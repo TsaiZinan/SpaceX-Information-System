@@ -10,6 +10,11 @@
   color: var(--main-font-color);
 }
 
+.mainpage-summary {
+  flex-basis: 100%;
+  min-width: 0;
+}
+
 .mainpage-block {
   display: flex;
   /* flex-direction: column; */

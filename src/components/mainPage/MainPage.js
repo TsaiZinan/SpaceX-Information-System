@@ -1,17 +1,16 @@
 import React from 'react'
 
-import {landingPadConverter, launchPadConverter, coresConverter, countNumberInData, testConverter } from '../converter/converter'
+import {launchPadConverter, coresConverter, countNumberInData, testConverter } from '../converter/converter'
 
 import './MainPage.css'
 
 import PadChart from '../chart/PadChart'
 import LaunchChart from '../chart/LaunchChart'
+import LaunchHeatmap from '../launchHeatmap/LaunchHeatmap'
 
 const MainPage = (props) => {
-  const LatestLaunch = props.latestLaunch;
   const AllLaunches = props.launches;
   const LaunchPads = props.launchpads;
-  const LandingPads = props.landingPads;
   const CoresData = props.cores;
 
   var CurrentYear = new Date().getFullYear()
@@ -28,7 +27,6 @@ const MainPage = (props) => {
 
   const LastLaunch = lastLaunchIndex >= 0 ? sortedLaunches[lastLaunchIndex] : {};
   const NextLaunch = (lastLaunchIndex + 1 < sortedLaunches.length) ? sortedLaunches[lastLaunchIndex + 1] : {};
-  const lastLaunchNumber = LastLaunch.flight_number || 0;
   const totalLaunchesCount = lastLaunchIndex + 1;
 
   // console.log(lastLaunchNumber)
@@ -71,7 +69,7 @@ const MainPage = (props) => {
         </div>
 
         <div className='blockunit-row'>
-          {blockUnit('Launch Site:', launchPadConverter(launchBlockData.launchpad, LaunchPads, 0))}
+          {blockUnit('Launch Site:', launchBlockData.launchSite || launchPadConverter(launchBlockData.launchpad, LaunchPads, 0))}
           {blockUnit('First Stage:', firstCore ? coresConverter(firstCore.core, CoresData, 2) : 'N/A')}
         </div>
 
@@ -114,44 +112,46 @@ const MainPage = (props) => {
 
 
     content =
-      <div className='mainpage'>
-        <div className='mainpage-block'>
-          <LaunchBlock mode='next' data={NextLaunch} />
-        </div>
-        <div className='mainpage-block'>
-          <LaunchBlock mode='last' data={LastLaunch} />
-        </div>
-        <div className='mainpage-block'>
-          <SmallBlock title='Launch' number={totalLaunchesCount} />
-          <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', sortedLaunches.slice(0, lastLaunchIndex + 1), CurrentYear.toString())} />
-          <SmallBlock title='Success' number={countNumberInData('.success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
-          <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
-        </div>
+      <>
+        <div className='mainpage mainpage-summary'>
+          {NextLaunch.id && <div className='mainpage-block'>
+            <LaunchBlock mode='next' data={NextLaunch} />
+          </div>}
+          <div className='mainpage-block'>
+            <LaunchBlock mode='last' data={LastLaunch} />
+          </div>
+          <div className='mainpage-block'>
+            <SmallBlock title='Launch' number={totalLaunchesCount} />
+            <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', sortedLaunches.slice(0, lastLaunchIndex + 1), CurrentYear.toString())} />
+            <SmallBlock title='Success' number={countNumberInData('.success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
+            <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
+          </div>
 
-        <div className='mainpage-block'>
-          <div className='mainpage-block-chart'>
-            <LaunchChart data={AllLaunches} latest={LastLaunch} type='month' />
+          <div className='mainpage-block'>
+            <div className='mainpage-block-chart'>
+              <LaunchChart data={AllLaunches} latest={LastLaunch} type='month' />
+            </div>
+          </div>
+
+          <div className='mainpage-block'>
+            <div className='mainpage-block-chart'>
+              <LaunchChart data={AllLaunches} latest={LastLaunch} type='year' />
+            </div>
+          </div>
+
+          <div className='mainpage-block'>
+            <PadChart data={LaunchPads} />
           </div>
         </div>
-
-        <div className='mainpage-block'>
-          <div className='mainpage-block-chart'>
-            <LaunchChart data={AllLaunches} latest={LastLaunch} type='year' />
-          </div>
-        </div>
-
-        <div className='mainpage-block'>
-          <PadChart data={LaunchPads} />
-        </div>
-
-
-
-      </div>
+        <LaunchHeatmap launches={AllLaunches} />
+      </>
   }
 
   return (
     <div className='mainpage'>
-      {content}
+      {props.loadState === 'error' ? <p role='alert'>Launch data could not be loaded. Refresh to try again.</p>
+        : props.loadState === 'ready' && AllLaunches.length === 0 ? <p>No launch records are available.</p>
+        : content}
     </div>
   )
 }

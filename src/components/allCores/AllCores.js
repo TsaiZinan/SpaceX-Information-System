@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { launchPath } from '../../launchPath'
 
 import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
 
@@ -66,7 +67,7 @@ const AllCores = (props) => {
                                 </div>
 
                                 <div className='launch-hoverBox-name'>
-                                  <Link to={`/launch/${idLaunches.flight_number}`} className="launch-hoverBox-name">
+                                  <Link to={launchPath(idLaunches.id)} className="launch-hoverBox-name">
                                     {idLaunches.name}
                                   </Link>
 

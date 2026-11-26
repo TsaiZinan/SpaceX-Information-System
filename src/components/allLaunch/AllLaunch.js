@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { launchPath } from '../../launchPath'
 import './AllLaunch.css'
 
 import { FaRecycle } from "react-icons/fa";
@@ -21,7 +22,7 @@ const AllLaunch = (props) => {
             <div className="allLaunch-card-first">
 
               <div className="allLaunch-card-first-number">
-                <Link to={`/launch/${launch.flight_number}`} className="allLaunch-card-first-number">
+                <Link to={launchPath(launch.id, true)} className="allLaunch-card-first-number">
                   {launch.flight_number}
                 </Link>
               </div>

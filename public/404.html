@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SpaceX Information System</title>
+  <script>
+    // GitHub Pages serves this file for a direct request to a project subroute.
+    var base = '/SpaceX-Information-System/';
+    if (location.pathname.indexOf(base) === 0) {
+      var route = location.pathname.slice(base.length) + location.search + location.hash;
+      location.replace(base + '?spa=' + encodeURIComponent(route));
+    }
+  </script>
+</head>
+<body><a href="/SpaceX-Information-System/">Open SpaceX Information System</a></body>
+</html>
