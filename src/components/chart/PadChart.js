@@ -1,76 +1,58 @@
-import React, { useState, useEffect } from 'react'
-import { Doughnut } from 'react-chartjs-2';
+import React, { useMemo } from 'react'
+import './SummaryCharts.css'
 
-const lightBlue = 'rgba(124, 169, 192, 1)'
-const lightYellow = 'rgba(252, 210, 100, 1)'
-const lightPink = 'rgba(246, 177, 161, 1)'
-const lightGreen = 'rgba(184, 217, 206, 1)'
-const lightWhite = 'rgba(224, 215, 196, 1)'
-const backgroundColor = 'rgba(235, 229, 217, 1)'
+function rankSites(data) {
+  const counts = new Map()
+  for (const record of data) {
+    if (!record || record.upcoming) continue
+    // Older chart callers supply aggregated SpaceX v4 launch pad records.
+    const aggregated = Number.isFinite(record.launch_attempts)
+    const site = (aggregated ? record.name : record.launchSite) || 'Unknown'
+    counts.set(site, (counts.get(site) || 0) + (aggregated ? record.launch_attempts : 1))
+  }
+  return [...counts].sort(([left, a], [right, b]) => b - a || left.localeCompare(right, 'en'))
+}
 
-const PadChart = (props) => {
-
-  // array for Labels in launchPadsData
-  const [siteAttemptsArray, setSiteAttemptsArray] = useState([])
-  // array for data in launchPadsData
-  const [siteNameArray, setSiteNameArray] = useState([])
-
-  const LaunchPads = props.data;
-
-  // extra Labels and data in datafile then put them in arrays
-  useEffect(() => {
-    const launchPadNumberArray = () => {
-      var attemptsArray = [];
-      var nameArray = [];
-
-      LaunchPads.forEach(pad => {
-        attemptsArray.push(pad.launch_attempts);
-        nameArray.push(pad.name);
-      });
-      setSiteAttemptsArray(attemptsArray);
-      setSiteNameArray(nameArray);
-    }
-    launchPadNumberArray();
-  }, []);
-
-
-  const launchPadsData = {
-    // labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    labels: siteNameArray,
-    datasets: [
-      {
-        label: '# of Votes',
-        data: siteAttemptsArray,
-        // data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          lightWhite,
-          lightGreen,
-          'rgba(48, 95, 139, 1)',
-          lightYellow,
-          lightPink,
-          lightBlue,
-        ],
-        borderColor: [
-          backgroundColor,
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const padOptions = {
-    plugins: {
-      legend: {
-        position: 'bottom'
-      }
-    }
-  };
-
+function SiteRows({ rows, maximum }) {
   return (
-    <div className='single-chart'>
-      <Doughnut data={launchPadsData} options={padOptions}/>
-    </div>
+    <ul className="summary-site-list">
+      {rows.map(([site, count]) => (
+        <li key={site}>
+          <span>{site}</span><strong>{count.toLocaleString('en')}</strong>
+          <div className="summary-site-track" aria-hidden="true">
+            <span style={{ width: count / maximum * 100 + '%' }} />
+          </div>
+        </li>
+      ))}
+    </ul>
   )
 }
 
-export default PadChart
+export default function PadChart({ data = [] }) {
+  const sites = useMemo(() => rankSites(data), [data])
+  const maximum = Math.max(1, sites[0]?.[1] || 0)
+  const extraCount = sites.length - 4
+
+  return (
+    <section className="summary-chart-panel" aria-label="Launch sites">
+      <header className="summary-chart-header">
+        <h2>Launch sites</h2>
+        {sites.length > 0 && <span>All years</span>}
+      </header>
+      {sites.length ? (
+        <>
+          <SiteRows rows={sites.slice(0, 4)} maximum={maximum} />
+          {extraCount > 0 && (
+            <details className="summary-chart-data">
+              <summary>
+                <span className="summary-sites-more">{extraCount} more {extraCount === 1 ? 'site' : 'sites'}</span>
+                <span className="summary-sites-less">Show fewer sites</span>
+              </summary>
+              <SiteRows rows={sites.slice(4)} maximum={maximum} />
+            </details>
+          )}
+        </>
+      ) : <p className="summary-chart-empty">No launch sites recorded.</p>}
+    </section>
+  )
+}

@@ -52,3 +52,16 @@ test('a failed feed is distinct from a missing mission', () => {
   openDetail('/launch/first', { launches: [], loadState: 'error' })
   expect(screen.getByRole('status')).toHaveTextContent('Launch data could not be loaded.')
 })
+
+test('shows each Falcon Heavy booster and its own landing record', () => {
+  openDetail('/launch/heavy', {
+    launches: [{ ...records[0], id: 'heavy', cores: [
+      { core: 'B1055', landing_attempt: false },
+      { core: 'B1052', landing_success: true, landing_location: 'Landing Zone 1' },
+      { core: 'B1053', landing_success: true, landing_location: 'Landing Zone 2' },
+    ] }],
+  })
+  for (const text of ['B1055', 'Not attempted', 'B1052', 'Landing Zone 1', 'B1053', 'Landing Zone 2']) {
+    expect(screen.getByText(text)).toBeInTheDocument()
+  }
+})

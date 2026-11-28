@@ -38,6 +38,21 @@ test('uses any value within a filter and requires all selected dimensions', () =
   expect(aggregateHeatmap(index, { ...filters, recoverySites: null }).totals.get(2024)).toBe(3);
 });
 
+test('filters the original vehicle variants as four families and preserves the unfiltered total', () => {
+  const models = [
+    'Falcon 1', 'Falcon 9 v1.0', 'Falcon 9 v1.1', 'Falcon 9 Full Thrust', 'Falcon 9 Block 4',
+    'Falcon 9 Block 5', 'Falcon Heavy', 'Starship SN15', 'Starship Hopper', 'Starship', null,
+  ];
+  const index = buildHeatmapIndex(models.map((rocketModel, id) => launch(String(id), { rocketModel })));
+  expect(index.options.rocketModel).toEqual(['Falcon 1', 'Falcon 9', 'Falcon Heavy', 'Starship']);
+  expect(aggregateHeatmap(index).totals.get(2024)).toBe(models.length);
+  expect(aggregateHeatmap(index, { rocketModel: [] }).days.size).toBe(0);
+  const count = family => aggregateHeatmap(index, { rocketModel: [family] }).totals.get(2024);
+  expect(index.options.rocketModel.map(count)).toEqual([1, 5, 1, 3]);
+  const starshipDay = aggregateHeatmap(index, { rocketModel: ['Starship'] }).days.get('2024-02-29');
+  expect(starshipDay.launches.map(item => item.rocketModel)).toEqual(['Starship SN15', 'Starship Hopper', 'Starship']);
+});
+
 test('keeps the full year range including empty years and supports unknown categories', () => {
   const index = buildHeatmapIndex([
     launch('old', { date_utc: '2022-01-01T00:00:00Z', launchSite: null, recoverySites: [] }), launch('new')

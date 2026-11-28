@@ -132,7 +132,8 @@
   padding: 3% 10% 10% 10%;
 } */
 
-.launch-patch-div:hover .launch-hoverBox {
+.launch-patch-div:hover .launch-hoverBox,
+.launch-patch-div:focus-within .launch-hoverBox {
   background-color: #9e8a79;
   color: #ebe5d9;
   visibility: visible;
@@ -140,8 +141,14 @@
   text-align: center;
 }
 
-.launch-patch-div:hover .launch-patch {
-  visibility: hidden;
+.core-patch-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--main-font-color); }
+.core-patch-link:focus-visible { outline: 2px solid var(--blue-font-color); outline-offset: 2px; }
+.singleCore { max-width: 100%; }
+.launch-patch-div { position: relative; }
+.launch-patch-div .launch-hoverBox { bottom: 85%; left: 0; margin: 0; padding-top: 6px; }
+.launch-patch-div .launch-hoverBox-number { margin: 0 8px; font-size: 28px; line-height: 1; }
+@media (hover: none) {
+  .launch-patch-div .launch-hoverBox { display: none; }
 }
 
 @media screen and (max-width: 710px){

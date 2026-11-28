@@ -1,4 +1,4 @@
-import { getLaunchMetadata } from './launchMetadata';
+import { getLaunchMetadata, isStarshipLaunch } from './launchMetadata';
 
 test('uses a configured rocket model and distinct recovery locations for a multi-core launch', () => {
   const landing = (name) => ({ landing: { attempt: true, landing_location: { name } } });
@@ -29,4 +29,12 @@ test('uses the vehicle in old LL2 titles and keeps missing or unfinished data un
     .toMatchObject({ rocketModel: 'Falcon 9 Block 5', launchOutcome: 'success' });
   expect(getLaunchMetadata({ name: 'Mission without a vehicle', status: { abbrev: 'TBD' } }))
     .toEqual({ rocketModel: 'Unknown', launchSite: 'Unknown', recoverySites: ['Unknown'], launchOutcome: 'unknown' });
+});
+
+test('identifies Starship without a stage and only falls back to its serial when the vehicle is unknown', () => {
+  const rocket = { launcher_stage: [{ launcher: { serial_number: 'Booster 14' } }] };
+  expect(isStarshipLaunch({ name: 'Starship | Flight 14' })).toBe(true);
+  expect(isStarshipLaunch({ name: 'Unknown mission', rocket })).toBe(true);
+  expect(isStarshipLaunch({ name: 'Falcon Heavy | Mission', rocket })).toBe(false);
+  expect(isStarshipLaunch({ name: 'Unknown mission' })).toBe(false);
 });

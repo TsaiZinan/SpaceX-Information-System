@@ -1,8 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'
 
 import './App.css';
-import { getLaunchMetadata } from './launchMetadata';
+import { getLaunchMetadata, isStarshipLaunch } from './launchMetadata';
+import { loadLaunchRecords } from './launchFeed';
 import Nav from './components/nav/Nav';
 import Footer from './components/footer/Footer';
 import Launches from './Launches';
@@ -21,68 +22,36 @@ import { AllLaunches as archivedLaunches, Cores as archivedCores, LandingPads as
 
 import TimelinePage from './components/timelinePage/TimelinePage';
 
-// import { createBrowserHistory } from "history";
-// const history = createBrowserHistory();
-
-const launchpadsURL = 'https://api.spacexdata.com/v4/launchpads';
-const newApiURL = process.env.REACT_APP_LAUNCH_DATA_URL || 'https://cdn.jsdelivr.net/gh/TsaiZinan/ll2-DATA@main/spacex/spacex-previous-launches-simple.json';
-
 function App() {
-  document.title = "SpaceX Information System";
-
-  useEffect(() => {
-    fetchAllLaunchpadsData();
-    fetchNewApiData();
-  }, [])
-
-  //Fetch allLaunchesData
   const [allLaunchesData, setAllLaunchesData] = useState([]);
+  const [allCoresData, setAllCoresData] = useState([]);
   const [launchLoadState, setLaunchLoadState] = useState('loading');
 
-  const fetchNewApiData = async () => {
-    try {
-      const response = await fetch(newApiURL);
-      if (!response.ok) throw new Error(`Launch feed returned HTTP ${response.status}`);
-      const data = await response.json();
-      const rawLaunches = data.launches;
+  useEffect(() => {
+    const controller = new AbortController();
+    loadData(controller.signal);
+    return () => controller.abort();
+  }, []);
 
-      const isStarshipSerial = (serial) => {
-        if (!serial) {
-          return false;
-        }
-        return serial.startsWith('SN') || serial === 'Starhopper' || serial.startsWith('Booster');
-      };
+  async function loadData(signal) {
+    try {
+      const rawLaunches = await loadLaunchRecords(signal);
+      if (signal.aborted) return;
 
       const sortedRawLaunches = [...rawLaunches].sort((a, b) => new Date(a.net) - new Date(b.net));
-      const nonStarshipIds = [];
-
+      const flightNumberById = new Map();
       sortedRawLaunches.forEach(launch => {
-        const coreInfo = (launch.rocket && launch.rocket.launcher_stage && launch.rocket.launcher_stage[0]) || {};
-        const launcher = coreInfo.launcher || {};
-        const serial = launcher.serial_number || '';
-
-        if (!isStarshipSerial(serial)) {
-          nonStarshipIds.push(launch.id);
-        }
-      });
-
-      let flightCounter = 1;
-      const flightNumberById = {};
-
-      nonStarshipIds.forEach(id => {
-        flightNumberById[id] = flightCounter;
-        flightCounter = flightCounter + 1;
+        if (!isStarshipLaunch(launch)) flightNumberById.set(launch.id, flightNumberById.size + 1);
       });
 
       const processedLaunches = rawLaunches.map((launch) => {
         const launcherStages = (launch.rocket && launch.rocket.launcher_stage) || [];
         const primaryStage = launcherStages[0] || {};
         const primaryLauncher = primaryStage.launcher || {};
-        const primarySerial = primaryLauncher.serial_number;
-        const starship = isStarshipSerial(primarySerial || '');
-        const description = (launch.mission && launch.mission.description) ? launch.mission.description.toLowerCase() : '';
+        const description = (launch.mission?.description || '').toLowerCase();
 
         const getLandingType = (serialNumberRaw, landing) => {
+          if (landing.attempt === false) return null;
           const serialNumber = serialNumberRaw || '';
           const location = landing && landing.landing_location ? landing.landing_location : null;
           const abbrev = location && location.abbrev ? String(location.abbrev).toUpperCase() : '';
@@ -97,29 +66,24 @@ function App() {
             return 'ASDS';
           }
 
-          if (abbrev === 'LZ' || abbrev === 'LZ-1' || abbrev === 'LZ-2' || abbrev === 'LZ-4' || abbrev === 'OLM-A' || locationName.includes('landing zone')) {
+          if (/^LZ(?:-\d+)?$/.test(abbrev) || /^OLM-[AB]$/.test(abbrev) || locationName.includes('landing zone') || locationName.includes('starship landing pad')) {
             return 'RTLS';
           }
 
           if (serialNumber.startsWith('SN') || serialNumber === 'Starhopper') {
             return 'RTLS';
           }
-          if (serialNumber.startsWith('Booster')) {
-            if (description.includes('catch') || description.includes('tower')) return 'RTLS';
-            return 'Ocean';
-          }
+          if (serialNumber.startsWith('Booster') && (description.includes('catch') || description.includes('tower'))) return 'RTLS';
 
           if (description.includes('ocean') || description.includes('splashdown')) {
             return 'Ocean';
           }
-          if (description.includes('land at') || description.includes('return to launch site') || description.includes('rtls') || description.includes('landing zone')) {
-            return 'RTLS';
-          }
           if (description.includes('drone ship') || description.includes('droneship') || description.includes('asds')) {
             return 'ASDS';
           }
+          if (description.includes('return to launch site') || description.includes('rtls') || description.includes('landing zone')) return 'RTLS';
 
-          return 'ASDS';
+          return 'Unknown';
         };
 
         const coresArray = launcherStages.map((stage) => {
@@ -168,7 +132,7 @@ function App() {
         return {
           ...metadata,
           id: launch.id,
-          flight_number: starship ? null : flightNumberById[launch.id],
+          flight_number: flightNumberById.get(launch.id) ?? null,
           name: launch.name,
           date_local: launch.net,
           date_utc: launch.net,
@@ -233,23 +197,9 @@ function App() {
       setLaunchLoadState('ready');
 
     } catch (error) {
+      if (signal.aborted) return;
       setLaunchLoadState('error');
       console.error("Failed to fetch new API", error);
-    }
-  }
-
-  const [allCoresData, setAllCoresData] = useState([]);
-  const [allLaunchpadsData, setAllLaunchpadsData] = useState([]);
-
-  const fetchAllLaunchpadsData = async () => {
-    try {
-      const response = await fetch(launchpadsURL);
-      if (response.ok) {
-        const pads = await response.json();
-        if (Array.isArray(pads)) setAllLaunchpadsData(pads);
-      }
-    } catch (error) {
-      console.warn('The launch pad chart is unavailable.', error);
     }
   }
 
@@ -257,101 +207,39 @@ function App() {
     <Router basename={new URL(process.env.PUBLIC_URL || '/', window.location.origin).pathname.replace(/\/$/, '')}>
       <div className="App">
         <Nav />
-
-
-
         <Switch>
-          {/* =========================== Chart Done ==================================== */}
-          {/* <Route path='/' exact component={Chart} /> */}
-          <Route
-            path='/' exact
-            render={(props) => (
-              <MainPage {...props} launches={allLaunchesData} loadState={launchLoadState} launchpads={allLaunchpadsData} cores={allCoresData} />
-            )}
+          <Route exact path={['/', '/SpaceX-Information-System']}>
+            <MainPage launches={allLaunchesData} loadState={launchLoadState} />
+          </Route>
+          <Route exact path='/filter'>
+            <FilterTest launches={allLaunchesData} loadState={launchLoadState} />
+          </Route>
+          <Route exact path='/boosters'>
+            <BoostersStatus launches={allLaunchesData} cores={allCoresData} loadState={launchLoadState} />
+          </Route>
+          <Route exact path='/launch/archive/:launchKey'
+            render={props => <LaunchDetailPage {...props} archived launches={archivedLaunches} cores={archivedCores} landingPads={archivedLandingPads} />}
           />
-
-          {/* =========================== Main Page Done ==================================== */}
-          {/* <Route path='/SpaceX-Information-System' exact component={Chart} /> */}
-          <Route
-            path='/SpaceX-Information-System' exact
-            render={(props) => (
-              <MainPage {...props} launches={allLaunchesData} loadState={launchLoadState} launchpads={allLaunchpadsData} cores={allCoresData} />
-            )}
+          <Route exact path='/launch/:launchKey'
+            render={props => <LaunchDetailPage {...props} launches={allLaunchesData} loadState={launchLoadState} />}
           />
-
-          <Route path='/launches' exact component={Launches} />
-
-          {/* =========================== AllCores Done ==================================== */}
-          {/* <Route path='/cores' exact component={CoresPage} /> */}
-          <Route
-            path='/cores' exact
-            render={(props) => (
-              <AllCores {...props} launches={allLaunchesData} cores={allCoresData} />
-            )}
-          />
-
-
-          {/* =========================== Filter Done ==================================== */}
-          {/* <Route path='/filter' exact component={FilterTest} /> */}
-          <Route
-            path='/filter' exact
-            render={(props) => (
-              <FilterTest {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} />
-            )}
-          />
-
-
-
-
-
-
-
-          {/* =========================== Single Launch Page Done ==================================== */}
-          <Route
-            exact path='/launch/archive/:launchKey'
-            render={(props) => (
-              <LaunchDetailPage {...props} archived launches={archivedLaunches} cores={archivedCores} landingPads={archivedLandingPads} />
-            )}
-          />
-          <Route
-            exact path='/launch/:launchKey'
-            render={(props) => (
-              <LaunchDetailPage {...props} launches={allLaunchesData} loadState={launchLoadState} />
-            )}
-          />
-
-          {/* =========================================================================== */}
-          <Route
-            path='/boosters' exact
-            render={(props) => (
-              <BoostersStatus {...props} launches={allLaunchesData} launchpads={allLaunchpadsData} cores={allCoresData} />
-            )}
-          />
-
-
-          {/* =========================================================================== */}
-          <Route
-            path='/t'
-            render={(props) => (
-              <Test {...props} launches={allLaunchesData} />
-            )}
-          />
-          {/* =========================================================================== */}
-
-          <Route path='/test' exact component={TestPage} />
-          <Route path='/style' exact component={StyleTest} />
-          <Route path='/timeline' exact component={TimelinePage} />
-
+          <Route exact path='/cores'>
+            <AllCores launches={allLaunchesData} cores={allCoresData} loadState={launchLoadState} />
+          </Route>
+          <Route exact path='/launches' component={Launches} />
+          <Route exact path='/t'>
+            <Test launches={allLaunchesData} />
+          </Route>
+          <Route exact path='/test' component={TestPage} />
+          <Route exact path='/style' component={StyleTest} />
+          <Route exact path='/timeline' component={TimelinePage} />
+          <Route>
+            <main className='route-not-found'>
+              <h1>Page not found</h1>
+              <Link to='/'>Return to Summary</Link>
+            </main>
+          </Route>
         </Switch>
-
-        {/* {allLaunchesData.map((launch, index) => {
-          return (
-            <div>
-              <p>{launch.name}</p>
-              <p>{launch.links.patch.small}</p>
-            </div>
-          )
-        })} */}
         <Footer />
       </div>
     </Router>

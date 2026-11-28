@@ -1,159 +1,116 @@
-import React from 'react'
-
-import {launchPadConverter, coresConverter, countNumberInData, testConverter } from '../converter/converter'
-
+import React, { useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import { launchPath } from '../../launchPath'
+import { getRocketFamily } from '../../launchMetadata'
+import LaunchChart from '../chart/LaunchChart'
+import PadChart from '../chart/PadChart'
+import LaunchHeatmap from '../launchHeatmap/LaunchHeatmap'
 import './MainPage.css'
 
-import PadChart from '../chart/PadChart'
-import LaunchChart from '../chart/LaunchChart'
-import LaunchHeatmap from '../launchHeatmap/LaunchHeatmap'
+const utcDate = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric', month: 'short', day: '2-digit', timeZone: 'UTC'
+})
+const utcTime = new Intl.DateTimeFormat('en-GB', {
+  hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZone: 'UTC'
+})
 
-const MainPage = (props) => {
-  const AllLaunches = props.launches;
-  const LaunchPads = props.launchpads;
-  const CoresData = props.cores;
+function getSummary(launches, year) {
+  const seen = new Set()
+  const dated = launches.filter(launch => {
+    if (!launch || !Number.isFinite(Date.parse(launch.date_utc))) return false
+    if (launch.id && seen.has(launch.id)) return false
+    if (launch.id) seen.add(launch.id)
+    return true
+  }).sort((a, b) => Date.parse(a.date_utc) - Date.parse(b.date_utc))
 
-  var CurrentYear = new Date().getFullYear()
-
-  // Find the last completed launch and next upcoming launch
-  const sortedLaunches = [...AllLaunches].sort((a, b) => new Date(a.date_utc) - new Date(b.date_utc));
-  let lastLaunchIndex = -1;
-  for (let i = 0; i < sortedLaunches.length; i++) {
-    if (sortedLaunches[i].upcoming) {
-      break;
-    }
-    lastLaunchIndex = i;
+  const completed = dated.filter(launch => !launch.upcoming)
+  return {
+    completed,
+    last: completed[completed.length - 1],
+    next: dated.find(launch => launch.upcoming),
+    thisYear: completed.filter(launch => new Date(launch.date_utc).getUTCFullYear() === year).length,
+    successful: completed.filter(launch => launch.launchOutcome === 'success' ||
+      (!launch.launchOutcome && launch.success === true)).length,
+    recoveries: completed.reduce((count, launch) => count + (launch.cores || []).filter(core =>
+      core && core.landing_attempt !== false && core.landing_success === true).length, 0)
   }
+}
 
-  const LastLaunch = lastLaunchIndex >= 0 ? sortedLaunches[lastLaunchIndex] : {};
-  const NextLaunch = (lastLaunchIndex + 1 < sortedLaunches.length) ? sortedLaunches[lastLaunchIndex + 1] : {};
-  const totalLaunchesCount = lastLaunchIndex + 1;
+function Metric({ label, value }) {
+  return <div className="summary-metric"><dt>{label}</dt><dd>{value.toLocaleString('en-US')}</dd></div>
+}
 
-  // console.log(lastLaunchNumber)
-  // console.log(AllLaunches[137])
-
-  const LaunchBlock = (props) => {
-
-    let launchBlockData = props.data;
-    if (!launchBlockData || Object.keys(launchBlockData).length === 0) return null;
-
-    // display the single block row in launch block
-    let blockUnit = (name, content) => {
-      return (
-        <div className='launch-block-m-blockunit'>
-          <div className='launch-block-m-blockunit-name'>{name}</div>
-          <div className='launch-block-m-blockunit-content'>{content}</div>
-        </div>
-      )
-    }
-
-    const firstCore = launchBlockData.cores && launchBlockData.cores.length > 0 ? launchBlockData.cores[0] : null;
-
-    return (
-      <div className='launch-block-m'>
-        <div className='launch-block-m-patch'>
-          <img className='launch-block-m-patch-img' src={launchBlockData.links.patch.small} alt="" />
-        </div>
-
-        <div className='launch-block-m-title'>
-          {props.mode === 'next' ? 'Next Launch' : 'Last Launch'}
-        </div>
-
-        <div className='launch-block-m-name'>
-          {launchBlockData.name}
-          {/* Crew-3 */}
-        </div>
-
-        <div className='launch-block-m-time'>
-          {launchBlockData.date_utc.substring(0, 19).replace('T', ' ')}
-        </div>
-
-        <div className='blockunit-row'>
-          {blockUnit('Launch Site:', launchBlockData.launchSite || launchPadConverter(launchBlockData.launchpad, LaunchPads, 0))}
-          {blockUnit('First Stage:', firstCore ? coresConverter(firstCore.core, CoresData, 2) : 'N/A')}
-        </div>
-
-        <div className='blockunit-row'>
-          {blockUnit('First Stage Landing Site:', firstCore ? firstCore.landing_location : 'N/A')}
-          {/* display the landing result in last launch block instead of next launch block */}
-          {props.mode === 'last' && firstCore ? blockUnit('Landing Result:', firstCore.landing_success === true ? 'Success' : 'fail') : null}
-        </div>
-
-      </div>
-    )
-  }
-
-  const SmallBlock = (props) => {
-    return (
-      <div className='launch-block-s'>
-        <div className='launch-block-s-title'>
-          {props.title}
-        </div>
-        <div className='launch-block-s-number'>
-          {props.number}
-        </div>
-      </div>
-    )
-  }
-
-  let content =
-    <div className='lds-roller'>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-
-  if (AllLaunches.length > 0) {
-
-
-    content =
-      <>
-        <div className='mainpage mainpage-summary'>
-          {NextLaunch.id && <div className='mainpage-block'>
-            <LaunchBlock mode='next' data={NextLaunch} />
-          </div>}
-          <div className='mainpage-block'>
-            <LaunchBlock mode='last' data={LastLaunch} />
-          </div>
-          <div className='mainpage-block'>
-            <SmallBlock title='Launch' number={totalLaunchesCount} />
-            <SmallBlock title='Launch this Year' number={testConverter('.date_utc.substring(0,4)', sortedLaunches.slice(0, lastLaunchIndex + 1), CurrentYear.toString())} />
-            <SmallBlock title='Success' number={countNumberInData('.success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
-            <SmallBlock title='Recover' number={countNumberInData('.cores[0].landing_success', sortedLaunches.slice(0, lastLaunchIndex + 1), true)} />
-          </div>
-
-          <div className='mainpage-block'>
-            <div className='mainpage-block-chart'>
-              <LaunchChart data={AllLaunches} latest={LastLaunch} type='month' />
-            </div>
-          </div>
-
-          <div className='mainpage-block'>
-            <div className='mainpage-block-chart'>
-              <LaunchChart data={AllLaunches} latest={LastLaunch} type='year' />
-            </div>
-          </div>
-
-          <div className='mainpage-block'>
-            <PadChart data={LaunchPads} />
-          </div>
-        </div>
-        <LaunchHeatmap launches={AllLaunches} />
-      </>
-  }
-
+function MissionCard({ launch, scheduled = false }) {
+  const date = new Date(launch.date_utc)
+  const fullName = launch.name || 'Unnamed mission'
+  const missionName = fullName.split('|').slice(1).join('|').trim() || fullName
+  const family = getRocketFamily(launch.rocketModel)
+  const cores = (launch.cores || []).filter(Boolean)
+  const sites = [...new Set(launch.recoverySites?.length ? launch.recoverySites :
+    cores.map(core => core.landing_attempt === false ? 'No recovery attempt' : core.landing_location).filter(Boolean))]
+  const serials = cores.filter(core => core.core).map(core => core.flight ? core.core + '.' + core.flight : core.core)
+  const landingResults = cores.map(core => {
+    if (core.landing_attempt === false) return 'Not attempted'
+    if (core.landing_success === true) return 'Success'
+    if (core.landing_success === false) return 'Failed'
+    return 'Unknown'
+  })
+  const patch = launch.links?.patch?.small
   return (
-    <div className='mainpage'>
-      {props.loadState === 'error' ? <p role='alert'>Launch data could not be loaded. Refresh to try again.</p>
-        : props.loadState === 'ready' && AllLaunches.length === 0 ? <p>No launch records are available.</p>
-        : content}
-    </div>
+    <article className={'summary-mission' + (scheduled ? ' summary-mission-next' : '')}>
+      <div className="summary-mission-body">
+        {patch && <img className="summary-patch" src={patch} alt="" onError={event => { event.currentTarget.hidden = true }} />}
+        <h2 className="summary-label">{scheduled ? 'Next launch' : 'Latest launch'}</h2>
+        <h3 className="summary-mission-name">
+          {launch.id ? <Link to={launchPath(launch.id)}>{missionName} <span aria-hidden="true">↗</span></Link> : missionName}
+        </h3>
+        <p className="summary-mission-date"><time dateTime={launch.date_utc}>{utcDate.format(date)} · {utcTime.format(date)} UTC</time></p>
+      </div>
+      <dl className="summary-mission-facts">
+        {family && <div><dt>Rocket</dt><dd>{family}</dd></div>}
+        <div><dt>Launch site</dt><dd>{launch.launchSite || 'Unknown'}</dd></div>
+        <div><dt>{serials.length > 1 ? 'First stages' : 'First stage'}</dt><dd>{serials.join(' / ') || 'Unknown'}</dd></div>
+        <div><dt>Recovery site</dt><dd>{sites.join(' / ') || 'Unknown'}</dd></div>
+        {!scheduled && <div><dt>Landing result</dt><dd>{landingResults.join(' / ') || 'Unknown'}</dd></div>}
+      </dl>
+    </article>
   )
 }
 
-export default MainPage
+export default function MainPage({ launches, loadState }) {
+  const year = new Date().getUTCFullYear()
+  const summary = useMemo(() => getSummary(launches, year), [launches, year])
+
+  if (loadState === 'error') return <main className="summary-status"><p role="alert">Launch data could not be loaded. Refresh to try again.</p></main>
+  if (!launches.length) return (
+    <main className="summary-status"><p role="status">{loadState === 'ready' ? 'No launch records are available.' : 'Loading launch data…'}</p></main>
+  )
+
+  return (
+    <main className="mainpage">
+      <div className="summary-row">
+        <div className="summary-dashboard">
+          <header className="summary-heading">
+            <h1>Launch summary</h1>
+            <Link to="/filter">Explore launches <span aria-hidden="true">→</span></Link>
+          </header>
+          <dl className="summary-metrics" aria-label="Launch statistics">
+            <Metric label="Total launches" value={summary.completed.length} />
+            <Metric label={'Launches in ' + year} value={summary.thisYear} />
+            <Metric label="Successful launches" value={summary.successful} />
+            <Metric label="Successful landings" value={summary.recoveries} />
+          </dl>
+          {(summary.last || summary.next) && <div className="summary-missions">
+            {summary.last && <MissionCard launch={summary.last} />}
+            {summary.next && <MissionCard launch={summary.next} scheduled />}
+          </div>}
+          <div className="summary-charts">
+            <LaunchChart data={summary.completed} />
+            <PadChart data={summary.completed} />
+          </div>
+        </div>
+      </div>
+      <LaunchHeatmap launches={launches} />
+    </main>
+  )
+}

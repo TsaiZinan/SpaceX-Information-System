@@ -1,33 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, NavLink } from 'react-router-dom'
 import './Nav.css'
 
-const Nav = () => {
-  return (
-    <div>
-      <nav className='nav'>
-        <div className='nav-title'>
-          SpaceX Information System
-        </div>
-        <div className='nav-links'>
-          <Link to='/' style={{ textDecoration: 'none' }}>
-            <div className='nav-link'>Summary</div>
-          </Link>
-          <Link to='/filter' style={{ textDecoration: 'none' }}>
-            <div className='nav-link'>Launches</div>
-          </Link>
-          <Link to='/boosters' style={{ textDecoration: 'none' }}>
-            <div className='nav-link'>Cores</div>
-          </Link>
+const links = [
+  { label: 'Summary', to: '/', paths: ['/', '/SpaceX-Information-System'] },
+  { label: 'Launches', to: '/filter', paths: ['/filter', '/launch', '/launches'] },
+  { label: 'Cores', to: '/boosters', paths: ['/boosters', '/cores'] },
+  { label: 'Experiment', to: '/test', paths: ['/test', '/style', '/timeline', '/t'] },
+]
 
-          <Link to='/test' style={{ textDecoration: 'none' }}>
-            <div className='nav-link'>Experiment</div>
-          </Link>
-        </div>
-      </nav>
-    </div>
+export default function Nav() {
+  return (
+    <nav className="nav" aria-label="Main navigation">
+      <Link className="nav-title" to="/">SpaceX Information System</Link>
+      <div className="nav-links">
+        {links.map(({ label, to, paths }) => (
+          <NavLink key={to} to={to} className="nav-link"
+            isActive={(_, location) => paths.some(path =>
+              location.pathname === path || (path !== '/' && location.pathname.startsWith(path + '/'))
+            )}>
+            {label}
+          </NavLink>
+        ))}
+      </div>
+    </nav>
   )
 }
-
-export default Nav

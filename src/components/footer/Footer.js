@@ -1,24 +1,15 @@
 import React from 'react'
-import { AiOutlineFacebook, AiOutlineLinkedin, AiOutlineInstagram, AiOutlineGithub } from "react-icons/ai";
+import { AiOutlineGithub } from "react-icons/ai";
 
 import './Footer.css'
 
 const Footer = () => {
   return (
-    <div className='footer'>
+    <footer className='footer'>
 
       <div className='footer-left'>
-        <a className='footer-link' href="https://github.com/TsaiZinan">
+        <a className='footer-link' href="https://github.com/TsaiZinan" aria-label="TsaiZinan on GitHub">
           <AiOutlineGithub />
-        </a>
-        <a className='footer-link' href="">
-          <AiOutlineLinkedin />
-        </a>
-        <a className='footer-link' href="">
-          <AiOutlineInstagram />
-        </a>
-        <a className='footer-link' href="">
-          <AiOutlineFacebook />
         </a>
       </div>
 
@@ -26,7 +17,7 @@ const Footer = () => {
         @Tsai 2021
       </div>
 
-    </div>
+    </footer>
   )
 }
 

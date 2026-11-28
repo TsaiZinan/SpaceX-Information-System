@@ -35,11 +35,7 @@ function LaunchDetailPage({ launches, cores = [], landingPads = [], loadState = 
   const launch = ordered[selectedIndex]
   const previous = ordered[(selectedIndex - 1 + ordered.length) % ordered.length]
   const next = ordered[(selectedIndex + 1) % ordered.length]
-  const firstCore = launch.cores && launch.cores[0]
-  const archiveCore = archived && firstCore && cores.find(core => core.id === firstCore.core)
-  const pad = firstCore && firstCore.landpad && Array.isArray(landingPads)
-    ? landingPads.find(site => site.id === firstCore.landpad)
-    : null
+  const missionCores = (launch.cores || []).filter(Boolean)
 
   return (
     <div className="launchDetail">
@@ -59,32 +55,33 @@ function LaunchDetailPage({ launches, cores = [], landingPads = [], loadState = 
             {launch.links.patch.small && <img className="launchDetail-patch-img" src={launch.links.patch.small} alt="" />}
           </div>
           <div className="launchDetail-basic">
-            <div className="launchDetail-basic-name">{launch.name}</div>
+            <h1 className="launchDetail-basic-name">{launch.name}</h1>
             <div>{launch.date_utc.substring(0, 10)}</div>
             {archived && <div>Archived record</div>}
           </div>
         </div>
 
         <div className="launchDetail-first-middle">
-          <div className="launchDetail-core-title">Core</div>
-          <div className="launchDetail-core">
-            {firstCore ? (
-              <>
+          <h2 className="launchDetail-core-title">{missionCores.length > 1 ? 'Cores' : 'Core'}</h2>
+          {missionCores.length === 0 && <div className="launchDetail-core-p">No Core Information</div>}
+          {missionCores.map((core, index) => {
+            const archiveCore = archived && cores.find(record => record.id === core.core)
+            const pad = core.landpad && landingPads.find(site => site.id === core.landpad)
+            return (
+              <div className="launchDetail-core" key={core.core || index}>
                 <div className="launchDetail-core-h">Name:</div>
-                <div className="launchDetail-core-p">{(archived ? archiveCore?.serial : firstCore.core) || 'Unknown'}</div>
+                <div className="launchDetail-core-p">{(archived ? archiveCore?.serial : core.core) || 'Unknown'}</div>
                 <div className="launchDetail-core-h">Core flight:</div>
-                <div className="launchDetail-core-p">{firstCore.flight ?? 'Unknown'}</div>
+                <div className="launchDetail-core-p">{core.flight ?? 'Unknown'}</div>
                 <div className="launchDetail-core-h">Landing Type:</div>
-                <div className="launchDetail-core-p">{firstCore.landing_type || 'Unknown'}</div>
+                <div className="launchDetail-core-p">{core.landing_type || 'Unknown'}</div>
                 <div className="launchDetail-core-h">Landing Site:</div>
-                <div className="launchDetail-core-p">{firstCore.landing_location || pad?.full_name || pad?.name || 'Unknown'}</div>
+                <div className="launchDetail-core-p">{core.landing_location || pad?.full_name || pad?.name || 'Unknown'}</div>
                 <div className="launchDetail-core-h">Landing Result:</div>
-                <div className="launchDetail-core-p">{landingResult(firstCore)}</div>
-              </>
-            ) : (
-              <div className="launchDetail-core-p">No Core Information</div>
-            )}
-          </div>
+                <div className="launchDetail-core-p">{landingResult(core)}</div>
+              </div>
+            )
+          })}
         </div>
 
         <div className="launchDetail-first-right">

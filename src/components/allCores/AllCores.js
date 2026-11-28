@@ -1,122 +1,63 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from 'react-icons/si'
 import { launchPath } from '../../launchPath'
-
-import { SiReddit, SiYoutube, SiWikipedia, SiSpacex } from "react-icons/si";
-
 import './AllCores2.css'
 
-const AllCores = (props) => {
-  const launchesData = props.launches;
-  const coresData = props.cores;
-
-  const coreIntro = {
-    title: 'Cores Information',
-    text: [
-      'As SpaceX begins to recover and reuse the rocket, one rocket can be launched multiple times.',
-      'This page shows the list of rockets SpaceX use and patch of each launch with that rocket.',
-    ]
-  }
+export default function AllCores({ launches, cores, loadState = 'ready' }) {
+  const launchById = useMemo(() => new Map(launches.map(launch => [launch.id, launch])), [launches])
+  let message = 'No cores to display.'
+  if (loadState === 'loading') message = 'Loading core data…'
+  if (loadState === 'error') message = 'Core data could not be loaded. Refresh to try again.'
 
   return (
-    <div className='core'>
-
-      <div className='intro'>
-        <div className='intro-title'>{coreIntro.title}</div>
-        <div className='intro-text'>
-          {coreIntro.text.map((singleText) => {
-            return (
-              <div>{singleText}</div>
-            )
-          })}
-        </div>
-
+    <main className="core">
+      <div className="intro">
+        <div className="intro-title">Cores Information</div>
+        <div className="intro-text">Select a mission patch to see the flight details for that core.</div>
       </div>
-
-      <div className='allCores'>
-
-        
-        {coresData.map((core, coreIndex) => {
-          return (
-            <div className='singleCore' id={coreIndex}>
-              <div className='singleCore-name'>
-                {core.serial}
-              </div>
-
-              <div className='launch-patches' >
-                
-
-                {core.launches.map((idCoreLaunches, idCoreLaunchesIndex) => {
-                  
-                  return (
-                    <div className='launch-patch-div' id='idCoreLaunchesIndex'>
-                      {launchesData.map((idLaunches, idLaunchesIndex) => {
-
-                        if (idCoreLaunches === idLaunches.id) {
-                          
-                          return (
-
-                            <div className='launch-patch-id' id={idLaunchesIndex}>
-                              <img className='launch-patch' src={idLaunches.links.patch.small} alt="" />
-                              <div className='launch-hoverBox'>
-
-                                <img className='launch-hoverBox-img' src={idLaunches.links.patch.small} alt="" />
-
-                                <div className='launch-hoverBox-number'>
-                                  {idLaunches.flight_number}
-                                </div>
-
-                                <div className='launch-hoverBox-name'>
-                                  <Link to={launchPath(idLaunches.id)} className="launch-hoverBox-name">
-                                    {idLaunches.name}
-                                  </Link>
-
-                                </div>
-
-
-
-                                <div className='launch-hoverBox-last'>
-                                  <div className='launch-hoverBox-links'>
-
-                                    <a className='launch-hoverBox-a' href={idLaunches.links.webcast}>
-                                      <SiYoutube className='launch-hoverBox-link' />
-                                    </a>
-                                    <a className='launch-hoverBox-a' href={idLaunches.links.reddit.launch}>
-                                      <SiReddit className='launch-hoverBox-link' />
-                                    </a>
-                                    <a className='launch-hoverBox-a' href={idLaunches.links.wikipedia}>
-                                      <SiWikipedia className='launch-hoverBox-link' />
-                                    </a>
-                                    <a className='launch-hoverBox-a' href={idLaunches.links.presskit}>
-                                      <SiSpacex className='launch-hoverBox-link' />
-                                    </a>
-
-                                  </div>
-
-                                  <div className='launch-hoverBox-date'>
-                                    {idLaunches.date_utc.substring(0, 10)}
-                                  </div>
-                                </div>
-
-
-                              </div>
-                            </div>
-
-                          )
-                        }
-                      })}
+      {!cores.length && <p role="status">{message}</p>}
+      <div className="allCores">
+        {cores.map(core => (
+          <div className="singleCore" key={core.serial}>
+            <div className="singleCore-name">{core.serial}</div>
+            <div className="launch-patches">
+              {core.launches.map(id => {
+                const mission = launchById.get(id)
+                if (!mission) return null
+                const { name, links, flight_number, date_utc } = mission
+                const iconLinks = [
+                  ['Webcast', links?.webcast, SiYoutube],
+                  ['Reddit', links?.reddit?.launch, SiReddit],
+                  ['Wikipedia', links?.wikipedia, SiWikipedia],
+                  ['Press kit', links?.presskit, SiSpacex],
+                ]
+                return (
+                  <div className="launch-patch-div" key={id}>
+                    <Link className="core-patch-link" to={launchPath(id)} aria-label={`${core.serial}: ${name}`}>
+                      {links?.patch?.small ? <img className="launch-patch" src={links.patch.small} alt="" loading="lazy" /> : name}
+                    </Link>
+                    <div className="launch-hoverBox">
+                      <div className="launch-hoverBox-number">{flight_number}</div>
+                      <Link to={launchPath(id)} className="launch-hoverBox-name">{name}</Link>
+                      <div className="launch-hoverBox-last">
+                        <div className="launch-hoverBox-links">
+                          {iconLinks.filter(([, href]) => href).map(([label, href, Icon]) => (
+                            <a key={label} className="launch-hoverBox-a" href={href} aria-label={label}>
+                              <Icon className="launch-hoverBox-link" />
+                            </a>
+                          ))}
+                        </div>
+                        <div className="launch-hoverBox-date">{date_utc?.slice(0, 10)}</div>
+                      </div>
                     </div>
-                  )
-                })}
-              </div>
+                  </div>
+                )
+              })}
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
-
-    </div>
-
+    </main>
   )
 }
-
-export default AllCores

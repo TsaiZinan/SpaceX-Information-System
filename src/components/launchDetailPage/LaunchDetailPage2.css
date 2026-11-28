@@ -42,13 +42,14 @@
 }
 
 .launchDetail-first-left {
+  position: relative;
   border-top: solid;
   /* display: flex; */
   /* flex-direction: column; */
   padding-top: 20px;
   width: 30%;
   /* min-width: 300px; */
-  height: 200px;
+  min-height: 200px;
 }
 
 @media (min-width: 600px) and (max-width: 900px) {
@@ -105,29 +106,39 @@
 
 /* ==================Left================== */
 .launchDetail-patch {
+  position: absolute;
+  inset: 20px 0 auto;
+  pointer-events: none;
   display: flex;
   justify-content: end;
   opacity: 0.25;
 
   height: 200px;
 }
+.launchDetail-patch-img { max-width: 100%; object-fit: contain; }
 
 .launchDetail-basic {
+  position: relative;
   color: #543f2e;
   font-size: 2em;
   text-align: start;
 
-  height: 300px;
-  margin-top: -200px;
+  padding-bottom: 20px;
+  overflow-wrap: anywhere;
 }
 
 .launchDetail-basic-name {
   font-size: 1.5em;
+  font-weight: inherit;
+  line-height: 1.1;
+  margin: 0 0 .2em;
 }
 
 /* ==================Middle================== */
 .launchDetail-core-title {
   font-size: 3em;
+  font-weight: inherit;
+  margin: 0;
 }
 
 .launchDetail-core {
@@ -170,10 +181,11 @@
 @media screen and (max-width: 710px) {
   .launchDetail-controlPanal {
     flex-direction: column;
+    gap: 10px;
   }
 
-  .launchDetail-controlPanal {
-    flex-direction: column;
+  .launchDetail-controlPanal-page {
+    max-width: 100%;
   }
 
   /* .launchDetail-controlPanal-button {

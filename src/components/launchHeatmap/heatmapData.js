@@ -1,3 +1,5 @@
+import { getRocketFamily, ROCKET_FAMILIES } from '../../launchMetadata';
+
 const dimensions = ['rocketModel', 'launchSite', 'recoverySites'];
 const dayInMilliseconds = 24 * 60 * 60 * 1000;
 const optionOrder = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
@@ -7,7 +9,8 @@ function optionName(value) {
 }
 
 export function buildHeatmapIndex(launches) {
-  const values = { rocketModel: new Set(), launchSite: new Set(), recoverySites: new Set() };
+  const launchSites = new Set();
+  const recoverySiteOptions = new Set();
   const seenIds = new Set();
   const records = [];
   let earliestYear = Infinity;
@@ -23,15 +26,14 @@ export function buildHeatmapIndex(launches) {
     if (launch.id) seenIds.add(launch.id);
     const date = new Date(time);
     const year = date.getUTCFullYear();
-    const rocketModel = optionName(launch.rocketModel);
+    const rocketModel = getRocketFamily(launch.rocketModel);
     const launchSite = optionName(launch.launchSite);
     const recoverySites = Array.isArray(launch.recoverySites) && launch.recoverySites.length
       ? [...new Set(launch.recoverySites.map(optionName))]
       : ['Unknown'];
 
-    values.rocketModel.add(rocketModel);
-    values.launchSite.add(launchSite);
-    recoverySites.forEach(site => values.recoverySites.add(site));
+    launchSites.add(launchSite);
+    recoverySites.forEach(site => recoverySiteOptions.add(site));
     earliestYear = Math.min(earliestYear, year);
     latestYear = Math.max(latestYear, year);
     records.push({ launch, day: date.toISOString().slice(0, 10), year, rocketModel, launchSite, recoverySites });
@@ -41,10 +43,11 @@ export function buildHeatmapIndex(launches) {
   for (let year = latestYear; year >= earliestYear; year -= 1) {
     years.push(year);
   }
-  const options = {};
-  for (const key of dimensions) {
-    options[key] = [...values[key]].sort(optionOrder.compare);
-  }
+  const options = {
+    rocketModel: ROCKET_FAMILIES,
+    launchSite: [...launchSites].sort(optionOrder.compare),
+    recoverySites: [...recoverySiteOptions].sort(optionOrder.compare),
+  };
   return { years, options, records };
 }
 
