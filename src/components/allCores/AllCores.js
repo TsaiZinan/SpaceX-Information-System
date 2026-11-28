@@ -14,7 +14,10 @@ export default function AllCores({ launches, cores, loadState = 'ready' }) {
     <main className="core">
       <div className="intro">
         <div className="intro-title">Cores Information</div>
-        <div className="intro-text">Select a mission patch to see the flight details for that core.</div>
+        <div className="intro-text">
+          <div>As SpaceX begins to recover and reuse the rocket, one rocket can be launched multiple times.</div>
+          <div>This page shows the list of rockets SpaceX use and patch of each launch with that rocket.</div>
+        </div>
       </div>
       {!cores.length && <p role="status">{message}</p>}
       <div className="allCores">

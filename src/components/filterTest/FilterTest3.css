@@ -2,15 +2,6 @@
   background-color: #ebe5d9;
 }
 
-.filter .intro-title,
-.filter .intro-text {
-  margin: 0;
-}
-
-.filter .intro-text {
-  margin-top: .4em;
-}
-
 .filter-status {
   padding: 1rem 3vw;
   color: var(--main-font-color);

@@ -11,18 +11,20 @@ const links = [
 
 export default function Nav() {
   return (
-    <nav className="nav" aria-label="Main navigation">
-      <Link className="nav-title" to="/">SpaceX Information System</Link>
-      <div className="nav-links">
-        {links.map(({ label, to, paths }) => (
-          <NavLink key={to} to={to} className="nav-link"
-            isActive={(_, location) => paths.some(path =>
-              location.pathname === path || (path !== '/' && location.pathname.startsWith(path + '/'))
-            )}>
-            {label}
-          </NavLink>
-        ))}
-      </div>
-    </nav>
+    <div>
+      <nav className="nav" aria-label="Main navigation">
+        <Link className="nav-title" to="/" style={{ textDecoration: 'none' }}>SpaceX Information System</Link>
+        <div className="nav-links">
+          {links.map(({ label, to, paths }) => (
+            <NavLink key={to} to={to} style={{ textDecoration: 'none' }}
+              isActive={(_, location) => paths.some(path =>
+                location.pathname === path || (path !== '/' && location.pathname.startsWith(path + '/'))
+              )}>
+              <div className="nav-link">{label}</div>
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+    </div>
   )
 }

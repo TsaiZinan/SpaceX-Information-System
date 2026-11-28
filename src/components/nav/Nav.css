@@ -1,45 +1,87 @@
 .nav {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  gap: 20px 32px;
-  padding: 12px 3vw 28px;
-  background: var(--main-bg-color);
-  color: var(--main-font-color);
-  text-align: left;
+  /* align-items: center;
+  min-height: 10vh; */
+  background: #ebe5d9;
+  padding-bottom: 40px;
 }
 
 .nav-title {
-  max-width: 13ch;
-  color: inherit;
-  font-size: clamp(36px, 4.8vw, 70px);
-  line-height: .93;
-  text-decoration: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 500px;
+
+  padding-bottom: 30px;
+
+  font-size: 70px;
+  line-height: 0.75;
+  text-align: start;
+  color: #543f2e;
 }
 
 .nav-links {
+  width: 70%;
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 4px clamp(10px, 1.8vw, 28px);
+  align-items: flex-start;
+
+  
 }
+
 
 .nav-link {
-  padding: 5px 3px 7px;
-  border-top: 4px solid currentColor;
-  color: inherit;
-  font-size: clamp(20px, 2.9vw, 48px);
-  line-height: 1;
-  text-decoration: none;
+  line-height: 0.8;
+  font-size: 55px;
+  color: #543f2e;
+
+  border-top-style: solid;
+  border-width: 6px;
+  
+  padding: 0 1px 0 1px;
+  margin-left: 25px;
 }
 
-.nav-link.active { border-color: var(--blue-font-color); }
-.nav-link:hover { background: var(--main-font-color); color: var(--main-bg-color); }
-.nav a:focus-visible { outline: 2px solid var(--blue-font-color); outline-offset: 3px; }
+.nav-link:hover {
+  background-color: #543f2e;
+  border-color: #543f2e;
+  color: #ebe5d9;
+  height: 180px;
 
-@media (max-width: 740px) {
-  .nav { flex-direction: column; gap: 14px; padding: 16px 14px 22px; }
-  .nav-title { max-width: none; font-size: clamp(29px, 6.5vw, 42px); line-height: 1.05; }
-  .nav-links { justify-content: flex-start; gap: 5px 12px; }
-  .nav-link { display: inline-flex; align-items: center; min-height: 32px; padding: 3px 1px; border-width: 2px; font-size: clamp(16px, 3.2vw, 22px); }
+  line-height: 1;
+
+  display: flex;
+  align-items: flex-end;
+
+  transition: 0.2s;
+}
+
+
+
+@media screen and (max-width: 1300px){
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .nav-title {
+    width: 50%;
+    font-size: min(11vw, 70px);
+  }
+
+  .nav-link{
+    font-size: min(7vw, 55px);
+    border-bottom: solid;
+    border-top: none;
+    margin-bottom: 5px;
+  }
+
+  .nav-link:hover {
+    height: fit-content;
+    line-height: 0.8;
+  }
+
+
 }

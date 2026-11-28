@@ -81,8 +81,11 @@ export default function FilterTest({ launches, loadState }) {
   return (
     <main className="filter">
       <div className="intro">
-        <h1 className="intro-title">Launches Information</h1>
-        <p className="intro-text">Filter launches by year, landing and booster reuse. Select a mission to see its details.</p>
+        <div className="intro-title" role="heading" aria-level="1">Launches Information</div>
+        <div className="intro-text">
+          <div>This page provides a way to display the information of each launch by different options.</div>
+          <div>You can find more detail by clicking the name of each launch.</div>
+        </div>
       </div>
 
       {records.length > 0 && <>
